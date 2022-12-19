@@ -13,7 +13,8 @@
 
   <ItemGroup>
     <Folder Include="Dtos\" />
-    <Folder Include="Services\" />
+    <Folder Include="Validators\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>
