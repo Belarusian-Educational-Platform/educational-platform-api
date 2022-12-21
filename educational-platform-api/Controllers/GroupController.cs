@@ -7,20 +7,26 @@ namespace educational_platform_api.Controllers
     [Route("/group")]
     public class GroupController : ControllerBase
     {
-        [HttpGet("get")]
-        public Group GetGroup()
+        [HttpGet("get-all")]
+        public List<Group> GetAllGroups()
+        {
+            return new List<Group>();
+        }
+
+        [HttpGet("get-by-id")]
+        public Group GetGroup(int groupId)
         {
             return new Group();
         }
 
         [HttpPost("post")]
-        public ActionResult PostGroup(Group group)
+        public ActionResult PostGroup([FromBody] Group group)
         {
             return Ok(group);
         }
 
         [HttpPut("put")]
-        public ActionResult PutGroup(Group group)
+        public ActionResult PutGroup([FromBody] Group group)
         {
             return Ok(group);
         }

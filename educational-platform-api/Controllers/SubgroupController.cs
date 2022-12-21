@@ -7,20 +7,26 @@ namespace educational_platform_api.Controllers
     [Route("/subgroup")]
     public class SubgroupController : ControllerBase
     {
-        [HttpGet("get")]
-        public Subgroup GetSubgroup()
+        [HttpGet("get-all")]
+        public List<Subgroup> GetAllSubgroups()
+        {
+            return new List<Subgroup>();
+        }
+
+        [HttpGet("get-by-id")]
+        public Subgroup GetSubgroup(int subgroupId)
         {
             return new Subgroup();
         }
 
         [HttpPost("post")]
-        public ActionResult PostSubgroup(Subgroup subgroup)
+        public ActionResult PostSubgroup([FromBody] Subgroup subgroup)
         {
             return Ok(subgroup);
         }
 
         [HttpPut("put")]
-        public ActionResult PutSubgroup(Subgroup subgroup)
+        public ActionResult PutSubgroup([FromBody] Subgroup subgroup)
         {
             return Ok(subgroup);
         }

@@ -7,20 +7,26 @@ namespace educational_platform_api.Controllers
     [Route("/user")]
     public class UserController : ControllerBase
     {
-        [HttpGet("get")]
-        public User GetUser()
+        [HttpGet("get-all")]
+        public List<User> GetAllUsers()
+        {
+            return new List<User>();
+        }
+
+        [HttpGet("get-by-id")]
+        public User GetUser(int userId)
         {
             return new User();
         }
 
         [HttpPost("post")]
-        public ActionResult PostUser(User user)
+        public ActionResult PostUser([FromBody] User user)
         {
             return Ok(user);
         }
 
         [HttpPut("put")]
-        public ActionResult PutUser(User user)
+        public ActionResult PutUser([FromBody] User user)
         {
             return Ok(user);
         }
