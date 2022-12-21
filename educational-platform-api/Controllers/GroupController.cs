@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.Models;
+using educational_platform_api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace educational_platform_api.Controllers
@@ -7,6 +8,13 @@ namespace educational_platform_api.Controllers
     [Route("/group")]
     public class GroupController : ControllerBase
     {
+        private readonly IGroupService groupService;
+
+        public GroupController (IGroupService groupService)
+        {
+            this.groupService = groupService;
+        }
+
         [HttpGet("get-all")]
         public List<Group> GetAllGroups()
         {
