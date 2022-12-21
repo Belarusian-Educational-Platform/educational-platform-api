@@ -1,11 +1,17 @@
+using educational_platform_api.Contexts;
 using educational_platform_api.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var AllowOrigins = "_allowOrigins";
-string connection = ""; // builder.Configuration.GetConnectionString("DefaultConnection");
+string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
+builder.Services.AddDbContext<MySQLContext>(options => {
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
