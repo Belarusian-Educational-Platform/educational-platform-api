@@ -1,4 +1,9 @@
+using educational_platform_api.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var AllowOrigins = "_allowOrigins";
+string connection = ""; // builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 
@@ -6,6 +11,25 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Services
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IOrganisationService, OrganisationService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<ISubgroupService, SubgroupService>();
+
+// Repositories
+
+// Validators
+
+
+builder.Services.AddCors(p => p.AddPolicy(AllowOrigins, builder =>
+{
+    builder.WithOrigins("https://localhost:44413")
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials();
+}));
 
 var app = builder.Build();
 
