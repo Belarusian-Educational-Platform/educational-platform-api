@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.Models;
+using educational_platform_api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace educational_platform_api.Controllers
@@ -7,6 +8,13 @@ namespace educational_platform_api.Controllers
     [Route("/user")]
     public class UserController : ControllerBase
     {
+        private readonly IUserService userService;
+
+        public UserController(IUserService userService)
+        {
+            this.userService = userService;
+        }
+
         [HttpGet("get-all")]
         public List<User> GetAllUsers()
         {

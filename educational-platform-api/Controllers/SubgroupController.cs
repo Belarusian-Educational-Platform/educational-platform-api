@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.Models;
+using educational_platform_api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace educational_platform_api.Controllers
@@ -7,6 +8,13 @@ namespace educational_platform_api.Controllers
     [Route("/subgroup")]
     public class SubgroupController : ControllerBase
     {
+        private readonly ISubgroupService subgroupService;
+
+        public SubgroupController(ISubgroupService subgroupService)
+        {
+            this.subgroupService = subgroupService;
+        }
+
         [HttpGet("get-all")]
         public List<Subgroup> GetAllSubgroups()
         {
