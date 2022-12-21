@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen();
 
 // Services
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IOrganisationService, OrganisationService>();
+builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<ISubgroupService, SubgroupService>();
 

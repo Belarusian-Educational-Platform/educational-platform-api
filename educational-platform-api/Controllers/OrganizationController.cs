@@ -5,28 +5,28 @@ namespace educational_platform_api.Controllers
 {
     [ApiController]
     [Route("/organisation")]
-    public class OrganisationController : ControllerBase
+    public class OrganizationController : ControllerBase
     {
         [HttpGet("get-all")]
-        public List<Organisation> GetAllOrganisations()
+        public List<Organization> GetAllOrganisations()
         {
-            return new List<Organisation>();
+            return new List<Organization>();
         }
 
         [HttpGet("get-by-id")]
-        public Organisation GetOrganisation(int organisationId)
+        public Organization GetOrganisation(int organisationId)
         {
-            return new Organisation();
+            return new Organization();
         }
 
         [HttpPost("post")]
-        public ActionResult PostOrganisation([FromBody] Organisation organisation)
+        public ActionResult PostOrganisation([FromBody] Organization organisation)
         {
             return Ok(organisation);
         }
 
         [HttpPut("put")]
-        public ActionResult PutOrganisation([FromBody] Organisation organisation)
+        public ActionResult PutOrganisation([FromBody] Organization organisation)
         {
             return Ok(organisation);
         }

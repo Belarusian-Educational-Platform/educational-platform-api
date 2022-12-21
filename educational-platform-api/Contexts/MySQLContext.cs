@@ -6,12 +6,12 @@ namespace educational_platform_api.Contexts
     public class MySQLContext : DbContext
     {
         public DbSet<User>? Users { get; set; }
-        public DbSet<Organisation>? Organisations { get; set; }
+        public DbSet<Organization>? Organizations { get; set; }
         public DbSet<Group>? Groups { get; set; }
         public DbSet<Subgroup>? Subgroups { get; set; }
         public DbSet<UserGroupRelation>? UserGroupRelations { get; set; }
         public DbSet<UserSubgroupRelation>? UserSubgroupRelations { get; set; }
-        public DbSet<GroupOrganisationRelation>? GroupOrganisationRelations { get; set; }
+        public DbSet<GroupOrganizationRelation>? GroupOrganizationRelations { get; set; }
 
         public MySQLContext(DbContextOptions<MySQLContext> options) : base(options) { }
 
@@ -23,13 +23,13 @@ namespace educational_platform_api.Contexts
                .HasKey(c => new { c.Id });
             modelBuilder.Entity<Subgroup>()
                .HasKey(c => new { c.Id });
-            modelBuilder.Entity<Organisation>()
+            modelBuilder.Entity<Organization>()
                .HasKey(c => new { c.Id });
 
             modelBuilder.Entity<UserGroupRelation>()
                .HasKey(c => new { c.UserId, c.GroupId });
-            modelBuilder.Entity<GroupOrganisationRelation>()
-               .HasKey(c => new { c.GroupId, c.OrganisationId });
+            modelBuilder.Entity<GroupOrganizationRelation>()
+               .HasKey(c => new { c.GroupId, c.OrganizationId });
             modelBuilder.Entity<UserSubgroupRelation>()
                .HasKey(c => new { c.UserId, c.SubgroupId });
 
