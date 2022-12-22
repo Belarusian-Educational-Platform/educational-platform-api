@@ -15,6 +15,12 @@ namespace educational_platform_api.Controllers
             this.groupService = groupService;
         }
 
+        [HttpGet("get-page")]
+        public List<Group> GetGroupsPage(int page, int size)
+        {
+            return new List<Group>();
+        }
+
         [HttpGet("get-all")]
         public List<Group> GetAllGroups()
         {

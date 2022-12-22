@@ -15,6 +15,12 @@ namespace educational_platform_api.Controllers
             this.userService = userService;
         }
 
+        [HttpGet("get-page")]
+        public List<User> GetUsersPage(int page, int size)
+        {
+            return new List<User>();
+        }
+
         [HttpGet("get-all")]
         public List<User> GetAllUsers()
         {

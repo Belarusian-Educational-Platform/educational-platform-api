@@ -15,6 +15,12 @@ namespace educational_platform_api.Controllers
             this.subgroupService = subgroupService;
         }
 
+        [HttpGet("get-page")]
+        public List<Subgroup> GetSubgroupsPage(int page, int size)
+        {
+            return new List<Subgroup>();
+        }
+
         [HttpGet("get-all")]
         public List<Subgroup> GetAllSubgroups()
         {

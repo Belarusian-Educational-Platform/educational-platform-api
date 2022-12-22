@@ -15,6 +15,12 @@ namespace educational_platform_api.Controllers
             this.organizationService = organizationService;
         }
 
+        [HttpGet("get-page")]
+        public List<Organization> GetOrganizationsPage(int page, int size)
+        {
+            return new List<Organization>();
+        }
+
         [HttpGet("get-all")]
         public List<Organization> GetAllOrganisations()
         {
