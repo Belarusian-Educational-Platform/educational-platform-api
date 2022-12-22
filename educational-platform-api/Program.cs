@@ -1,4 +1,5 @@
 using educational_platform_api.Contexts;
+using educational_platform_api.Repositories;
 using educational_platform_api.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,13 +19,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<ISubgroupRepository, SubgroupRepository>();
+builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+
 // Services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<ISubgroupService, SubgroupService>();
-
-// Repositories
 
 // Validators
 
