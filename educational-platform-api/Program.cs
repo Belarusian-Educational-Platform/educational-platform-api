@@ -2,6 +2,8 @@ using educational_platform_api.Contexts;
 using educational_platform_api.Repositories;
 using educational_platform_api.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>();
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -50,6 +55,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapGraphQL();
 
 app.UseHttpsRedirection();
 
