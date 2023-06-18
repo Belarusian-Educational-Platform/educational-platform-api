@@ -2,7 +2,7 @@
 using educational_platform_api.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace educational_platform_api.Controllers
+namespace educational_platform_api.Queries
 {
     [ApiController]
     [Route("/user")]

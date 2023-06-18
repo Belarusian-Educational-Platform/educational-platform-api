@@ -1,7 +1,15 @@
-﻿namespace educational_platform_api.Controllers
+﻿using educational_platform_api.Models;
+
+namespace educational_platform_api.Queries
 {
     public class Query
     {
-        public string GetString() => "Hello";
+        public Group GetGroup()
+        {
+            return new Group { 
+                Id = 0,
+                Name = "Hello"
+            };
+        }
     }
 }

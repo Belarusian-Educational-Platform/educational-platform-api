@@ -4,6 +4,7 @@ using educational_platform_api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using educational_platform_api.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services
     .AddGraphQLServer()
-    .AddQueryType<Query>();
+    .AddQueryType<educational_platform_api.Queries.Query>();
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -52,8 +53,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    //app.UseSwagger();
+    //app.UseSwaggerUI();
 }
 
 app.MapGraphQL();
