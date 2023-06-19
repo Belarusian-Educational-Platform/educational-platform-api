@@ -6,11 +6,11 @@ namespace educational_platform_api.Queries
 {
     [ApiController]
     [Route("/group")]
-    public class GroupController : ControllerBase
+    public class GroupQuery : ControllerBase
     {
         private readonly IGroupService groupService;
 
-        public GroupController (IGroupService groupService)
+        public GroupQuery (IGroupService groupService)
         {
             this.groupService = groupService;
         }

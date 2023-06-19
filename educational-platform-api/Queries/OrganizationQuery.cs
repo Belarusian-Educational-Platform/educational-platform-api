@@ -6,11 +6,11 @@ namespace educational_platform_api.Queries
 {
     [ApiController]
     [Route("/organisation")]
-    public class OrganizationController : ControllerBase
+    public class OrganizationQuery : ControllerBase
     {
         private readonly IOrganizationService organizationService;
 
-        public OrganizationController(IOrganizationService organizationService)
+        public OrganizationQuery(IOrganizationService organizationService)
         {
             this.organizationService = organizationService;
         }

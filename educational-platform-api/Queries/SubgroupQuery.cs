@@ -6,11 +6,11 @@ namespace educational_platform_api.Queries
 {
     [ApiController]
     [Route("/subgroup")]
-    public class SubgroupController : ControllerBase
+    public class SubgroupQuery : ControllerBase
     {
         private readonly ISubgroupService subgroupService;
 
-        public SubgroupController(ISubgroupService subgroupService)
+        public SubgroupQuery(ISubgroupService subgroupService)
         {
             this.subgroupService = subgroupService;
         }

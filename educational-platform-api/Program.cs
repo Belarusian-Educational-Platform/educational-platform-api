@@ -3,25 +3,32 @@ using educational_platform_api.Repositories;
 using educational_platform_api.Services;
 using Microsoft.EntityFrameworkCore;
 using educational_platform_api.Queries;
+using educational_platform_api.Mutations;
+using educational_platform_api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var AllowOrigins = "_allowOrigins";
-string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Add services to the container.
+// DB context setup
 builder.Services.AddDbContext<MySQLContext>(options => {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// GraphQL setup
 builder.Services
     .AddGraphQLServer()
-    .AddQueryType<Query>();
+    .AddErrorFilter<GlobalErrorFilter>()
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
+    .AddTypeExtension<UserQuery>()
+    .AddTypeExtension<UserMutation>();
+    
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -38,6 +45,7 @@ builder.Services.AddScoped<ISubgroupService, SubgroupService>();
 // Validators
 
 
+// CORS Policy
 builder.Services.AddCors(p => p.AddPolicy(AllowOrigins, builder =>
 {
     builder.WithOrigins("https://localhost:44413")
