@@ -24,6 +24,7 @@ builder.Services
     .AddGraphQLServer()
     .AddFiltering()
     .AddSorting()
+    .RegisterDbContext<MySQLContext>()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
     // Queries

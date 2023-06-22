@@ -5,9 +5,5 @@ namespace educational_platform_api.Services
 {
     public class UserService : IUserService
     {
-        public IQueryable<User> GetUsers([Service] IUserRepository userRepository)
-        {
-            return userRepository.GetUsers();
-        }
     }
 }

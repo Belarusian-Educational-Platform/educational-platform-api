@@ -10,9 +10,9 @@ namespace educational_platform_api.Queries
         [UseOffsetPaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<User> GetUsers([Service] IUserService userService)
+        public IEnumerable<User> GetUsers([Service] IUserService userService)
         {
-            return userService.GetUsers();
+            return new List<User>();
         }
 
         [GraphQLName("userById")]

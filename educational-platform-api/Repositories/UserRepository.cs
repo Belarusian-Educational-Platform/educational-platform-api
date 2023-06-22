@@ -4,20 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
 {
-    public class UserRepository : IUserRepository, IAsyncDisposable
+    public class UserRepository : IUserRepository
     {
-        private readonly MySQLContext dbContext;
-
-        public UserRepository(IDbContextFactory<MySQLContext> dbContextFactory)
-        {
-            dbContext = dbContextFactory.CreateDbContext();
-        }
-
-        public IQueryable<User> GetUsers() => dbContext.Users;
-
-        public ValueTask DisposeAsync()
-        {
-            return dbContext.DisposeAsync();
-        }
     }
 }
