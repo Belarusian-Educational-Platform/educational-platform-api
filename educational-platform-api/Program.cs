@@ -4,7 +4,6 @@ using educational_platform_api.Services;
 using Microsoft.EntityFrameworkCore;
 using educational_platform_api.Queries;
 using educational_platform_api.Mutations;
-using educational_platform_api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,27 +22,36 @@ builder.Services.AddSwaggerGen();
 // GraphQL setup
 builder.Services
     .AddGraphQLServer()
-    .AddErrorFilter<GlobalErrorFilter>()
+    .AddFiltering()
+    .AddSorting()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
+    // Queries
     .AddTypeExtension<UserQuery>()
-    .AddTypeExtension<UserMutation>();
-    
-
-// Repositories
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IGroupRepository, GroupRepository>();
-builder.Services.AddScoped<ISubgroupRepository, SubgroupRepository>();
-builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+    .AddTypeExtension<GroupQuery>()
+    .AddTypeExtension<SubgroupQuery>()
+    .AddTypeExtension<OrganizationQuery>()
+    // Mutations
+    .AddTypeExtension<UserMutation>()
+    .AddTypeExtension<GroupMutation>()
+    .AddTypeExtension<SubgroupMutation>()
+    .AddTypeExtension<OrganizationMutation>();
 
 // Services
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IOrganizationService, OrganizationService>();
-builder.Services.AddScoped<IGroupService, GroupService>();
-builder.Services.AddScoped<ISubgroupService, SubgroupService>();
+builder.Services
+    .AddScoped<IUserService, UserService>()
+    .AddScoped<IGroupService, GroupService>()
+    .AddScoped<ISubgroupService, SubgroupService>()
+    .AddScoped<IOrganizationService, OrganizationService>();
+
+// Repositories
+builder.Services
+    .AddScoped<IUserRepository, UserRepository>()
+    .AddScoped<IGroupRepository, GroupRepository>()
+    .AddScoped<ISubgroupRepository, SubgroupRepository>()
+    .AddScoped<IOrganizationRepository, OrganizationRepository>();
 
 // Validators
-
 
 // CORS Policy
 builder.Services.AddCors(p => p.AddPolicy(AllowOrigins, builder =>
@@ -56,7 +64,6 @@ builder.Services.AddCors(p => p.AddPolicy(AllowOrigins, builder =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

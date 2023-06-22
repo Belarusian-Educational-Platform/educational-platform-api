@@ -1,54 +1,24 @@
 ﻿using educational_platform_api.Models;
 using educational_platform_api.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace educational_platform_api.Queries
 {
-    [ApiController]
-    [Route("/group")]
-    public class GroupQuery : ControllerBase
+    [ExtendObjectType(typeof(Query))]
+    public class GroupQuery
     {
-        private readonly IGroupService groupService;
-
-        public GroupQuery (IGroupService groupService)
-        {
-            this.groupService = groupService;
-        }
-
-        [HttpGet("get-page")]
-        public List<Group> GetGroupsPage(int page, int size)
+        [GraphQLName("groups")]
+        [UseOffsetPaging]
+        [UseFiltering]
+        [UseSorting]
+        public List<Group> GetGroups([Service] IGroupService groupService)
         {
             return new List<Group>();
         }
 
-        [HttpGet("get-all")]
-        public List<Group> GetAllGroups()
-        {
-            return new List<Group>();
-        }
-
-        [HttpGet("get-by-id")]
-        public Group GetGroup(int groupId)
+        [GraphQLName("groupById")]
+        public Group GetGroup([Service] IGroupService groupService, int id)
         {
             return new Group();
-        }
-
-        [HttpPost("post")]
-        public ActionResult PostGroup([FromBody] Group group)
-        {
-            return Ok(group);
-        }
-
-        [HttpPut("put")]
-        public ActionResult PutGroup([FromBody] Group group)
-        {
-            return Ok(group);
-        }
-
-        [HttpDelete("delete")]
-        public ActionResult DeleteGroup(int groupId)
-        {
-            return Ok(groupId);
         }
     }
 }
