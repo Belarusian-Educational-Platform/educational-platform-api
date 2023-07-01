@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="13.2.1" />
+    <PackageReference Include="HotChocolate.Data" Version="13.2.1" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.2.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.7">
@@ -27,6 +28,8 @@
 
   <ItemGroup>
     <Folder Include="Dtos\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Filters\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 
