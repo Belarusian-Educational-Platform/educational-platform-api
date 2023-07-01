@@ -7,7 +7,7 @@ namespace educational_platform_api.Filters
     {
         public IError OnError(IError error)
         {
-            if (error.Exception is not null && typeof(BaseUserException).IsAssignableFrom(error.Exception.GetType()))
+            if ( typeof(BaseUserException).IsAssignableFrom(error.Exception.GetType()))
             {
                 return error.WithMessage("Exception inhearts BaseUserException");
             }
