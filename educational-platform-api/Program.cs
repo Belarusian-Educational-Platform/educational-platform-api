@@ -4,6 +4,7 @@ using educational_platform_api.Services;
 using Microsoft.EntityFrameworkCore;
 using educational_platform_api.Queries;
 using educational_platform_api.Mutations;
+using educational_platform_api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,11 @@ builder.Services
     .RegisterDbContext<MySQLContext>()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
+    //Error Filters
+    .AddErrorFilter<BaseUserErrorFilter>()
+    .AddErrorFilter<BaseGroupErrorFilter>()
+    .AddErrorFilter<BaseOrganizationErrorFilter>()
+    .AddErrorFilter<BaseSubgroupErrorFilter>()
     // Queries
     .AddTypeExtension<UserQuery>()
     .AddTypeExtension<GroupQuery>()
