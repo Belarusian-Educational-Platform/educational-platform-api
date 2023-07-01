@@ -1,6 +1,6 @@
 ﻿namespace educational_platform_api.Exceptions
 {
-    public class BaseException
+    public class BaseException : Exception
     {
     }
 }

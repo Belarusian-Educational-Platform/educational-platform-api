@@ -7,7 +7,7 @@ namespace educational_platform_api.Filters
     {
         public IError OnError(IError error)
         {
-            if (typeof(BaseSubgroupException).IsAssignableFrom(error.Exception.GetType()))
+            if (error.Exception is not null && typeof(BaseSubgroupException).IsAssignableFrom(error.Exception.GetType()))
             {
                 return error.WithMessage("Exception inhearts BaseSubgroupException");
             }
