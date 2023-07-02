@@ -7,6 +7,7 @@ using educational_platform_api.Mutations;
 using educational_platform_api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationManager configuration = builder.Configuration;
 
 var AllowOrigins = "_allowOrigins";
 

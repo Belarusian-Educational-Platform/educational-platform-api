@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.Models;
+using educational_platform_api.TestData;
 using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Contexts
@@ -17,6 +18,15 @@ namespace educational_platform_api.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.ApplyConfiguration(new UserContextConfiguration());
+            modelBuilder.ApplyConfiguration(new OrganizationContextConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupContextConfiguration());
+            modelBuilder.ApplyConfiguration(new SubgroupContextConfiguration());
+            modelBuilder.ApplyConfiguration(new UserGroupRelationContextConfiguration());
+            modelBuilder.ApplyConfiguration(new UserSubgroupRelationContextConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupOrganizationRelationContextConfiguration());
+
             modelBuilder.Entity<User>()
                 .HasKey(c => new { c.Id });
             modelBuilder.Entity<Group>()
@@ -32,6 +42,7 @@ namespace educational_platform_api.Contexts
                .HasKey(c => new { c.GroupId, c.OrganizationId });
             modelBuilder.Entity<UserSubgroupRelation>()
                .HasKey(c => new { c.UserId, c.SubgroupId });
+
 
         }
     }
