@@ -7,12 +7,12 @@ namespace educational_platform_api.Queries
     public class UserQuery
     {
         [GraphQLName("users")]
-        [UseOffsetPaging]
+        /*[UseOffsetPaging]
         [UseFiltering]
-        [UseSorting]
+        [UseSorting]*/
         public IEnumerable<User> GetUsers([Service] IUserService userService)
         {
-            return new List<User>();
+            return userService.GetUsers();
         }
 
         [GraphQLName("userById")]
