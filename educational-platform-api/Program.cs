@@ -12,7 +12,7 @@ ConfigurationManager configuration = builder.Configuration;
 var AllowOrigins = "_allowOrigins";
 
 // DB context setup
-builder.Services.AddDbContext<MySQLContext>(options => {
+builder.Services.AddPooledDbContextFactory<MySQLContext>(options => {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
@@ -54,10 +54,10 @@ builder.Services
 
 // Repositories
 builder.Services
-    .AddScoped<IUserRepository, UserRepository>()
-    .AddScoped<IGroupRepository, GroupRepository>()
-    .AddScoped<ISubgroupRepository, SubgroupRepository>()
-    .AddScoped<IOrganizationRepository, OrganizationRepository>();
+    .AddTransient<IUserRepository, UserRepository>()
+    .AddTransient<IGroupRepository, GroupRepository>()
+    .AddTransient<ISubgroupRepository, SubgroupRepository>()
+    .AddTransient<IOrganizationRepository, OrganizationRepository>();
 
 // Validators
 

@@ -12,7 +12,7 @@ namespace educational_platform_api.Queries
         [UseSorting]
         public IEnumerable<User> GetUsers([Service] IUserService userService)
         {
-            return new List<User>();
+            return userService.GetUsers();
         }
 
         [GraphQLName("userById")]
