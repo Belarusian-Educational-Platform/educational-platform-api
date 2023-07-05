@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/VSWorkspaceState.json
+/.vs/educational-platform-api/config/applicationhost.config
+/.vs/educational-platform-api/FileContentIndex/read.lock
+/.vs/educational-platform-api/FileContentIndex/b6acb4f4-c252-4508-907d-280a8d5117b7.vsidx
+/.vs/educational-platform-api/v16/.suo
+/.vs/slnx.sqlite
+/.vs/educational-platform-api/v17/.wsuo
