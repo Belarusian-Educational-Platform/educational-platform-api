@@ -8,24 +8,7 @@ namespace educational_platform_api.TestData
     {
         public void Configure(EntityTypeBuilder<GroupOrganizationRelation> builder)
         {
-            builder
-                .HasData(
-                new GroupOrganizationRelation
-                {
-                    GroupId = 1,
-                    OrganizationId = 1
-                },
-                new GroupOrganizationRelation
-                {
-                    GroupId = 2,
-                    OrganizationId = 2
-                },
-                new GroupOrganizationRelation
-                {
-                    GroupId = 3,
-                    OrganizationId = 3
-                }
-                );
+            
         }
     }
 }

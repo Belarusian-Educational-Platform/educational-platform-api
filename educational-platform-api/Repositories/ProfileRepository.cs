@@ -4,18 +4,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
 {
-    public class UserRepository : IUserRepository, IAsyncDisposable
+    public class ProfileRepository : IProfileRepository, IAsyncDisposable
     {
         private readonly MySQLContext dbContext;
 
-        public UserRepository(IDbContextFactory<MySQLContext> dbContextFactory)
+        public ProfileRepository(IDbContextFactory<MySQLContext> dbContextFactory)
         {
             dbContext = dbContextFactory.CreateDbContext();
         }
 
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<Profile> GetProfiles()
         {
-            return dbContext.Users.ToList();
+            return dbContext.Profile.ToList();
         }
 
         public ValueTask DisposeAsync()

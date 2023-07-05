@@ -30,31 +30,31 @@ builder.Services
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
     //Error Filters
-    .AddErrorFilter<BaseUserErrorFilter>()
+    .AddErrorFilter<BaseProfileErrorFilter>()
     .AddErrorFilter<BaseGroupErrorFilter>()
     .AddErrorFilter<BaseOrganizationErrorFilter>()
     .AddErrorFilter<BaseSubgroupErrorFilter>()
     // Queries
-    .AddTypeExtension<UserQuery>()
+    .AddTypeExtension<ProfileQuery>()
     .AddTypeExtension<GroupQuery>()
     .AddTypeExtension<SubgroupQuery>()
     .AddTypeExtension<OrganizationQuery>()
     // Mutations
-    .AddTypeExtension<UserMutation>()
+    .AddTypeExtension<ProfileMutation>()
     .AddTypeExtension<GroupMutation>()
     .AddTypeExtension<SubgroupMutation>()
     .AddTypeExtension<OrganizationMutation>();
 
 // Services
 builder.Services
-    .AddScoped<IUserService, UserService>()
+    .AddScoped<IProfileService, ProfileService>()
     .AddScoped<IGroupService, GroupService>()
     .AddScoped<ISubgroupService, SubgroupService>()
     .AddScoped<IOrganizationService, OrganizationService>();
 
 // Repositories
 builder.Services
-    .AddTransient<IUserRepository, UserRepository>()
+    .AddTransient<IProfileRepository, ProfileRepository>()
     .AddTransient<IGroupRepository, GroupRepository>()
     .AddTransient<ISubgroupRepository, SubgroupRepository>()
     .AddTransient<IOrganizationRepository, OrganizationRepository>();
