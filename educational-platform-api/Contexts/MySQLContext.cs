@@ -6,7 +6,8 @@ namespace educational_platform_api.Contexts
 {
     public class MySQLContext : DbContext
     {
-        public DbSet<Profile>? Profile { get; set; }
+        public DbSet<Account>? Accounts { get; set; }
+        public DbSet<Profile>? Profiles { get; set; }
         public DbSet<Organization>? Organizations { get; set; }
         public DbSet<Group>? Groups { get; set; }
         public DbSet<Subgroup>? Subgroups { get; set; }
@@ -35,6 +36,9 @@ namespace educational_platform_api.Contexts
                .HasKey(c => new { c.Id });
             modelBuilder.Entity<Organization>()
                .HasKey(c => new { c.Id });
+            modelBuilder.Entity<Account>()
+                .HasKey(c => new { c.Id });
+
 
             modelBuilder.Entity<ProfileGroupRelation>()
                .HasKey(c => new { c.ProfileId, c.GroupId });
