@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace educational_platform_api.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -103,6 +103,21 @@ namespace educational_platform_api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProfileGroupRelations", x => new { x.ProfileId, x.GroupId });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ProfileOrganizationRelations",
+                columns: table => new
+                {
+                    ProfileId = table.Column<int>(type: "int", nullable: false),
+                    OrganizationId = table.Column<int>(type: "int", nullable: false),
+                    Permissions = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProfileOrganizationRelations", x => new { x.ProfileId, x.OrganizationId });
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -218,6 +233,20 @@ namespace educational_platform_api.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "ProfileOrganizationRelations",
+                columns: new[] { "OrganizationId", "ProfileId", "Permissions" },
+                values: new object[,]
+                {
+                    { 1, 1, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
+                    { 1, 2, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
+                    { 1, 3, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
+                    { 2, 4, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
+                    { 2, 5, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
+                    { 3, 6, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
+                    { 3, 7, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "ProfileSubgroupRelations",
                 columns: new[] { "ProfileId", "SubgroupId", "Permissions", "ProfileRole" },
                 values: new object[,]
@@ -273,6 +302,9 @@ namespace educational_platform_api.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProfileGroupRelations");
+
+            migrationBuilder.DropTable(
+                name: "ProfileOrganizationRelations");
 
             migrationBuilder.DropTable(
                 name: "Profiles");

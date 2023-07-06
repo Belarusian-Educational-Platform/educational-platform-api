@@ -1,7 +1,6 @@
 ﻿using educational_platform_api.Models;
 using educational_platform_api.TestData;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace educational_platform_api.Contexts
 {
@@ -21,16 +20,7 @@ namespace educational_platform_api.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            modelBuilder.ApplyConfiguration(new ProfileContextConfiguration());
-            modelBuilder.ApplyConfiguration(new OrganizationContextConfiguration());
-            modelBuilder.ApplyConfiguration(new GroupContextConfiguration());
-            modelBuilder.ApplyConfiguration(new SubgroupContextConfiguration());
-            modelBuilder.ApplyConfiguration(new ProfileGroupRelationContextConfiguration());
-            modelBuilder.ApplyConfiguration(new ProfileSubgroupRelationContextConfiguration());
-            modelBuilder.ApplyConfiguration(new GroupOrganizationRelationContextConfiguration());
-            modelBuilder.ApplyConfiguration(new AccountContextConfiguration());
-            modelBuilder.ApplyConfiguration(new ProfileOrganizationRelationContextConfiguration());
+            modelBuilder.ApplyContextConfiguration();
 
             modelBuilder.Entity<Profile>()
                 .HasKey(c => new { c.Id });
@@ -52,8 +42,6 @@ namespace educational_platform_api.Contexts
                .HasKey(c => new { c.ProfileId, c.SubgroupId });
             modelBuilder.Entity<ProfileOrganizationRelation>()
                 .HasKey(c => new { c.ProfileId, c.OrganizationId });
-
-
         }
     }
 }

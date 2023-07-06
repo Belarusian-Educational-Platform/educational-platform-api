@@ -414,6 +414,67 @@ namespace educational_platform_api.Migrations
                         });
                 });
 
+            modelBuilder.Entity("educational_platform_api.Models.ProfileOrganizationRelation", b =>
+                {
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Permissions")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ProfileId", "OrganizationId");
+
+                    b.ToTable("ProfileOrganizationRelations");
+
+                    b.HasData(
+                        new
+                        {
+                            ProfileId = 1,
+                            OrganizationId = 1,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 2,
+                            OrganizationId = 1,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 3,
+                            OrganizationId = 1,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 4,
+                            OrganizationId = 2,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 5,
+                            OrganizationId = 2,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 6,
+                            OrganizationId = 3,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 7,
+                            OrganizationId = 3,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        });
+                });
+
             modelBuilder.Entity("educational_platform_api.Models.ProfileSubgroupRelation", b =>
                 {
                     b.Property<int>("ProfileId")

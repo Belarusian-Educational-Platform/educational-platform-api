@@ -1,17 +1,13 @@
 using educational_platform_api.Contexts;
-using educational_platform_api.Repositories;
-using educational_platform_api.Services;
 using Microsoft.EntityFrameworkCore;
-using educational_platform_api.Queries;
-using educational_platform_api.Mutations;
-using educational_platform_api.Filters;
+using educational_platform_api.Extensions.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
 var AllowOrigins = "_allowOrigins";
 
-// DB context setup
+// Context
 builder.Services.AddPooledDbContextFactory<MySQLContext>(options => {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
@@ -23,41 +19,15 @@ builder.Services.AddSwaggerGen();
 
 // GraphQL setup
 builder.Services
-    .AddGraphQLServer()
-    .AddFiltering()
-    .AddSorting()
-    .RegisterDbContext<MySQLContext>()
-    .AddQueryType<Query>()
-    .AddMutationType<Mutation>()
-    //Error Filters
-    .AddErrorFilter<BaseProfileErrorFilter>()
-    .AddErrorFilter<BaseGroupErrorFilter>()
-    .AddErrorFilter<BaseOrganizationErrorFilter>()
-    .AddErrorFilter<BaseSubgroupErrorFilter>()
-    // Queries
-    .AddTypeExtension<ProfileQuery>()
-    .AddTypeExtension<GroupQuery>()
-    .AddTypeExtension<SubgroupQuery>()
-    .AddTypeExtension<OrganizationQuery>()
-    // Mutations
-    .AddTypeExtension<ProfileMutation>()
-    .AddTypeExtension<GroupMutation>()
-    .AddTypeExtension<SubgroupMutation>()
-    .AddTypeExtension<OrganizationMutation>();
-
-// Services
+    .SetupGraphQLServer()
+    .AddErrorFilters()
+    .AddQueryTypeExtensions()
+    .AddMutationTypeExtensions();
+    
+// Services & Repositories
 builder.Services
-    .AddScoped<IProfileService, ProfileService>()
-    .AddScoped<IGroupService, GroupService>()
-    .AddScoped<ISubgroupService, SubgroupService>()
-    .AddScoped<IOrganizationService, OrganizationService>();
-
-// Repositories
-builder.Services
-    .AddTransient<IProfileRepository, ProfileRepository>()
-    .AddTransient<IGroupRepository, GroupRepository>()
-    .AddTransient<ISubgroupRepository, SubgroupRepository>()
-    .AddTransient<IOrganizationRepository, OrganizationRepository>();
+    .AddServices()
+    .AddRepositories();
 
 // Validators
 

@@ -11,8 +11,8 @@ using educational_platform_api.Contexts;
 namespace educational_platform_api.Migrations
 {
     [DbContext(typeof(MySQLContext))]
-    [Migration("20230706005711_Initial")]
-    partial class Initial
+    [Migration("20230706130544_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -414,6 +414,67 @@ namespace educational_platform_api.Migrations
                             GroupId = 3,
                             Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
                             ProfileRole = 0
+                        });
+                });
+
+            modelBuilder.Entity("educational_platform_api.Models.ProfileOrganizationRelation", b =>
+                {
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Permissions")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ProfileId", "OrganizationId");
+
+                    b.ToTable("ProfileOrganizationRelations");
+
+                    b.HasData(
+                        new
+                        {
+                            ProfileId = 1,
+                            OrganizationId = 1,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 2,
+                            OrganizationId = 1,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 3,
+                            OrganizationId = 1,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 4,
+                            OrganizationId = 2,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 5,
+                            OrganizationId = 2,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 6,
+                            OrganizationId = 3,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
+                        },
+                        new
+                        {
+                            ProfileId = 7,
+                            OrganizationId = 3,
+                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}"
                         });
                 });
 
