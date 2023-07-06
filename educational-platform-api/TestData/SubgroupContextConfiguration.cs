@@ -8,7 +8,25 @@ namespace educational_platform_api.TestData
     {
         public void Configure(EntityTypeBuilder<Subgroup> builder)
         {
-            
+            builder
+                .HasData
+                (
+                    new Subgroup
+                    {
+                        Id = 1,
+                        Name = "11B1",
+                    },
+                    new Subgroup
+                    {
+                        Id = 2,
+                        Name = "9F1"
+                    },
+                    new Subgroup
+                    {
+                        Id = 3,
+                        Name = "8Th1"
+                    }
+                );
         }
     }
 }

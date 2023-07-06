@@ -13,11 +13,6 @@ namespace educational_platform_api.Repositories
             dbContext = dbContextFactory.CreateDbContext();
         }
 
-        public IEnumerable<Profile> GetProfiles()
-        {
-            return dbContext.Profile.ToList();
-        }
-
         public ValueTask DisposeAsync()
         {
             return dbContext.DisposeAsync();

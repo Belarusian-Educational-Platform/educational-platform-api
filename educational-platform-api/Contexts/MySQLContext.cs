@@ -27,6 +27,7 @@ namespace educational_platform_api.Contexts
             modelBuilder.ApplyConfiguration(new ProfileGroupRelationContextConfiguration());
             modelBuilder.ApplyConfiguration(new ProfileSubgroupRelationContextConfiguration());
             modelBuilder.ApplyConfiguration(new GroupOrganizationRelationContextConfiguration());
+            modelBuilder.ApplyConfiguration(new AccountContextConfiguration());
 
             modelBuilder.Entity<Profile>()
                 .HasKey(c => new { c.Id });
