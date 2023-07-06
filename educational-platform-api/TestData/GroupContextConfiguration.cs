@@ -14,17 +14,17 @@ namespace educational_platform_api.TestData
                     new Group
                     {
                         Id = 1,
-                        Name = "Blueberries"
+                        Name = "11B"
                     },
                     new Group
                     {
                         Id = 2,
-                        Name = "Fireflies"
+                        Name = "9F"
                     },
                     new Group
                     {
                         Id = 3,
-                        Name = "Thunderbolts"
+                        Name = "8Th"
                     }
                 );
         }

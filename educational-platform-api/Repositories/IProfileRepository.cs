@@ -2,8 +2,8 @@
 
 namespace educational_platform_api.Repositories
 {
-    public interface IUserRepository
+    public interface IProfileRepository
     {
-        public IEnumerable<User> GetUsers();
+        public IEnumerable<Profile> GetProfiles();
     }
 }

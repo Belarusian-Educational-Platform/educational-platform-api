@@ -3,8 +3,8 @@ using educational_platform_api.Repositories;
 
 namespace educational_platform_api.Services
 {
-    public interface IUserService
+    public interface IProfileService
     {
-        public IEnumerable<User> GetUsers();
+        public IEnumerable<Profile> GetProfiles();
     }
 }
