@@ -1,6 +1,7 @@
 ﻿using educational_platform_api.Models;
 using educational_platform_api.TestData;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace educational_platform_api.Contexts
 {
@@ -14,6 +15,7 @@ namespace educational_platform_api.Contexts
         public DbSet<ProfileGroupRelation>? ProfileGroupRelations { get; set; }
         public DbSet<ProfileSubgroupRelation>? ProfileSubgroupRelations { get; set; }
         public DbSet<GroupOrganizationRelation>? GroupOrganizationRelations { get; set; }
+        public DbSet<ProfileOrganizationRelation>? ProfileOrganizationRelations { get; set; }
 
         public MySQLContext(DbContextOptions<MySQLContext> options) : base(options) { }
 
@@ -28,6 +30,7 @@ namespace educational_platform_api.Contexts
             modelBuilder.ApplyConfiguration(new ProfileSubgroupRelationContextConfiguration());
             modelBuilder.ApplyConfiguration(new GroupOrganizationRelationContextConfiguration());
             modelBuilder.ApplyConfiguration(new AccountContextConfiguration());
+            modelBuilder.ApplyConfiguration(new ProfileOrganizationRelationContextConfiguration());
 
             modelBuilder.Entity<Profile>()
                 .HasKey(c => new { c.Id });
@@ -47,6 +50,8 @@ namespace educational_platform_api.Contexts
                .HasKey(c => new { c.GroupId, c.OrganizationId });
             modelBuilder.Entity<ProfileSubgroupRelation>()
                .HasKey(c => new { c.ProfileId, c.SubgroupId });
+            modelBuilder.Entity<ProfileOrganizationRelation>()
+                .HasKey(c => new { c.ProfileId, c.OrganizationId });
 
 
         }

@@ -6,7 +6,7 @@ namespace educational_platform_api.Queries
     [ExtendObjectType(typeof(Query))]
     public class AccountQuery
     {
-        [GraphQLName("account")]
+        [GraphQLName("accounts")]
         [UseOffsetPaging]
         [UseFiltering]
         [UseSorting]
