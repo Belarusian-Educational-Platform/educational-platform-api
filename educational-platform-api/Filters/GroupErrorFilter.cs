@@ -3,13 +3,13 @@ using HotChocolate;
 
 namespace educational_platform_api.Filters
 {
-    public class BaseSubgroupErrorFilter : IErrorFilter
+    public class GroupErrorFilter : IErrorFilter
     {
         public IError OnError(IError error)
         {
-            if (typeof(BaseSubgroupException).IsAssignableFrom(error.Exception.GetType()))
+            if (typeof(BaseGroupException).IsAssignableFrom(error.Exception.GetType()))
             {
-                return error.WithMessage("Exception inhearts BaseSubgroupException");
+                return error.WithMessage("Exception inhearts BaseGroupException");
             }
             else
             {

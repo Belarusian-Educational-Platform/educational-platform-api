@@ -3,7 +3,7 @@ using HotChocolate;
 
 namespace educational_platform_api.Filters
 {
-    public class BaseOrganizationErrorFilter : IErrorFilter
+    public class OrganizationErrorFilter : IErrorFilter
     {
         public IError OnError(IError error)
         {
