@@ -1,5 +1,5 @@
-﻿using educational_platform_api.Models;
-using educational_platform_api.TestData;
+﻿using educational_platform_api.Extensions.Contexts;
+using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Contexts
@@ -21,8 +21,8 @@ namespace educational_platform_api.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .ApplyContextConfiguration()
-                .AddModelPrimaryKeys();
+                .ApplyTestData()
+                .AddModelsPrimaryKeys();
         }
     }
 }
