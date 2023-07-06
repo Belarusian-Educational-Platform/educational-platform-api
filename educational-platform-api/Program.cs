@@ -30,10 +30,10 @@ builder.Services
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
     //Error Filters
-    .AddErrorFilter<BaseProfileErrorFilter>()
-    .AddErrorFilter<BaseGroupErrorFilter>()
-    .AddErrorFilter<BaseOrganizationErrorFilter>()
-    .AddErrorFilter<BaseSubgroupErrorFilter>()
+    .AddErrorFilter<ProfileErrorFilter>()
+    .AddErrorFilter<GroupErrorFilter>()
+    .AddErrorFilter<OrganizationErrorFilter>()
+    .AddErrorFilter<SubgroupErrorFilter>()
     // Queries
     .AddTypeExtension<ProfileQuery>()
     .AddTypeExtension<GroupQuery>()
