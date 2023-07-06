@@ -1,4 +1,5 @@
-﻿using educational_platform_api.Models;
+﻿using educational_platform_api.Middlewares.AuthorizeProfile;
+using educational_platform_api.Models;
 using educational_platform_api.Services;
 
 namespace educational_platform_api.Queries
@@ -16,6 +17,7 @@ namespace educational_platform_api.Queries
         }
 
         [GraphQLName("groupById")]
+        [AuthorizeProfile]
         public Group GetGroup([Service] IGroupService groupService, int id)
         {
             return new Group();
