@@ -12,7 +12,7 @@ namespace educational_platform_api.Queries
         [UseSorting]
         public IEnumerable<Profile> GetProfiles([Service] IProfileService profileService)
         {
-            return new List<Profile>();
+            return profileService.GetProfiles();
         }
 
         [GraphQLName("profileById")]
