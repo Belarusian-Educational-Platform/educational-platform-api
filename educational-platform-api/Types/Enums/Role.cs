@@ -1,4 +1,4 @@
-﻿namespace educational_platform_api.EnumTypes
+﻿namespace educational_platform_api.Types.Enums
 {
     public enum Role
     {

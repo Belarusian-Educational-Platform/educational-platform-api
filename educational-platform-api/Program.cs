@@ -1,7 +1,6 @@
 using educational_platform_api.Contexts;
 using Microsoft.EntityFrameworkCore;
 using educational_platform_api.Extensions.Services;
-using educational_platform_api.Middlewares.AuthorizeProfile;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -18,10 +17,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddProfileAuthorization(options =>
-{
-    options.AddPolicy("edit-group", new ProfilePolicy());
-});
+// Profile authorization
+builder.Services.SetupProfileAuthorization();
 
 // GraphQL setup
 builder.Services

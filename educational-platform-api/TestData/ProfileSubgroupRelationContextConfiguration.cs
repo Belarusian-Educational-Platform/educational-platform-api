@@ -1,5 +1,5 @@
-﻿using educational_platform_api.EnumTypes;
-using educational_platform_api.Models;
+﻿using educational_platform_api.Models;
+using educational_platform_api.Types.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

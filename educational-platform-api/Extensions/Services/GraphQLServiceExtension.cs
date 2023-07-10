@@ -23,10 +23,10 @@ namespace educational_platform_api.Extensions.Services
         public static IRequestExecutorBuilder AddErrorFilters(this IRequestExecutorBuilder requestExecutorBuilder)
         {
             requestExecutorBuilder
-                .AddErrorFilter<BaseProfileErrorFilter>()
-                .AddErrorFilter<BaseGroupErrorFilter>()
-                .AddErrorFilter<BaseOrganizationErrorFilter>()
-                .AddErrorFilter<BaseSubgroupErrorFilter>();
+                .AddErrorFilter<ProfileErrorFilter>()
+                .AddErrorFilter<GroupErrorFilter>()
+                .AddErrorFilter<OrganizationErrorFilter>()
+                .AddErrorFilter<SubgroupErrorFilter>();
 
             return requestExecutorBuilder;
         }

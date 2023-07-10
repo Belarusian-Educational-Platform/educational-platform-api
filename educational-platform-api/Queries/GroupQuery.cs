@@ -17,7 +17,7 @@ namespace educational_platform_api.Queries
         }
 
         [GraphQLName("groupById")]
-        [AuthorizeProfile]
+        [AuthorizeProfile("edit-group")]
         public Group GetGroup([Service] IGroupService groupService, int id)
         {
             return new Group();

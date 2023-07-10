@@ -20,7 +20,11 @@ namespace educational_platform_api.Extensions.Services
             services.AddTransient<IProfileRepository, ProfileRepository>()
                     .AddTransient<IGroupRepository, GroupRepository>()
                     .AddTransient<ISubgroupRepository, SubgroupRepository>()
-                    .AddTransient<IOrganizationRepository, OrganizationRepository>();
+                    .AddTransient<IOrganizationRepository, OrganizationRepository>()
+                    .AddTransient<IProfileOrganizationRelationRepository, ProfileOrganizationRelationRepository>()
+                    .AddTransient<IProfileGroupRelationRepository, ProfileGroupRelationRepository>()
+                    .AddTransient<IProfileSubgroupRelationRepository, ProfileSubgroupRelationRepository>()
+                    .AddTransient<IGroupOrganizationRelationRepository, GroupOrganizationRelationRepository>();
 
             return services;
         }

@@ -18,6 +18,6 @@ namespace educational_platform_api.Extensions.Contexts
             modelBuilder.ApplyConfiguration(new ProfileOrganizationRelationContextConfiguration());
 
             return modelBuilder;
-        }d
+        }
     }
 }
