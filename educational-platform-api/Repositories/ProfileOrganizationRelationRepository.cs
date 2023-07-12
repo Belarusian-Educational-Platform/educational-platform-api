@@ -16,5 +16,10 @@ namespace educational_platform_api.Repositories
         {
             return dbContext.DisposeAsync();
         }
+
+        public string GetPermissions(int profileId, int organizationId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

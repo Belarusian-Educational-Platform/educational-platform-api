@@ -15,26 +15,9 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile
         }
 
         public async Task InvokeAsync(IMiddlewareContext context, 
-            IProfileAuthorizationPolicyProvider policyProvider, 
-            IProfileAuthorizationPolicyVerifier policyVerifier)
+            IProfileAuthorizationService profileAuthorizationService)
         {
-            ProfileAuthorizationPolicy policy = policyProvider.GetPolicy(_policyName);
-
-            foreach (var requirement in policy._requierements)
-            {
-                if(!policyVerifier.VerifyRequirement(requirement))
-                {
-                    throw new Exception("Requirement failed!");
-                }
-            }
-
-            foreach (var assertion in policy._assertions)
-            {
-                if(!assertion(policyVerifier.VerifyRequirement))
-                {
-                    throw new Exception("Assertion failed!");
-                }
-            }
+            profileAuthorizationService.AuthorizeProfile(_policyName);
 
             await _next(context);
         }

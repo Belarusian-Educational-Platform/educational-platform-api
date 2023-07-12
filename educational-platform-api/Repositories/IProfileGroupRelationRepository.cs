@@ -2,5 +2,6 @@
 {
     public interface IProfileGroupRelationRepository
     {
+        public string GetPermissions(int profileId, int groupId);
     }
 }
