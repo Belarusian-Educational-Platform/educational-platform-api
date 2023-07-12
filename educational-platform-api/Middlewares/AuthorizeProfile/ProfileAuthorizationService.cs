@@ -14,9 +14,12 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile
             _policyVerifier = policyVerifier;
         }
 
-        public void AuthorizeProfile(string policyName)
+        public void AuthorizeProfile(Action<ProfileAuthorizationCheckOptions> configure)
         {
-            ProfileAuthorizationPolicy policy = _policyProvider.GetPolicy(policyName);
+            var options = new ProfileAuthorizationCheckOptions();
+            configure(options);
+
+            ProfileAuthorizationPolicy policy = _policyProvider.GetPolicy(options.PolicyName);
 
             foreach (var requirement in policy._requierements)
             {

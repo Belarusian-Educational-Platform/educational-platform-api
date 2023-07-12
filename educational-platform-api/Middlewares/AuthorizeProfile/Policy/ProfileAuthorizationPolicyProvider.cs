@@ -12,11 +12,6 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
             _options = options.Value;
         }
 
-        public ProfileAuthorizationPolicy GetDefaultPolicy()
-        {
-            return _options.GetDefaultPolicy();
-        }
-
         public ProfileAuthorizationPolicy GetPolicy(string policyName)
         {
             return _options.GetPolicy(policyName);

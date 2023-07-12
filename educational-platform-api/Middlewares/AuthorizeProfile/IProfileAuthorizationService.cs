@@ -2,6 +2,6 @@
 {
     public interface IProfileAuthorizationService
     {
-        public void AuthorizeProfile(string policyName);
+        public void AuthorizeProfile(Action<ProfileAuthorizationCheckOptions> configure);
     }
 }

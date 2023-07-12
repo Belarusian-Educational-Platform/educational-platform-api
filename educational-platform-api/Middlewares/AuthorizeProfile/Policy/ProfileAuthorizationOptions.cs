@@ -17,10 +17,5 @@
         {
             return ProfilePolicyMap[policyName];
         }
-
-        public ProfileAuthorizationPolicy GetDefaultPolicy()
-        {
-            return new ProfileAuthorizationPolicy();
-        }
     }
 }

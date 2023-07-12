@@ -17,8 +17,6 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile
         public async Task InvokeAsync(IMiddlewareContext context, 
             IProfileAuthorizationService profileAuthorizationService)
         {
-            profileAuthorizationService.AuthorizeProfile(_policyName);
-
             await _next(context);
         }
     }
