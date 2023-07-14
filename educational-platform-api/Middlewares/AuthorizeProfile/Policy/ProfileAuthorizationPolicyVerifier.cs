@@ -17,6 +17,15 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
             _subgroupRelationRepository = subgroupRelationRepository;
         }
 
+        public void CheckPolicyCheckOptionsDependencies
+            (ProfileAuthorizationCheckOptions checkOptions, ProfileAuthorizationPolicy policy) //TODO rename
+        {
+            if (!checkOptions._providedInformation.SetEquals(policy._requiredInformation))
+            {
+                throw new Exception("Provided information is not enough to verify profile requirements");
+            }
+        }
+
         public void GetProfilePermissions()
         {
             throw new NotImplementedException();

@@ -17,9 +17,9 @@ namespace educational_platform_api.Extensions.Services
                         (ProfileAuthorizationRequirementType.PROFILE_GROUP, "edit-group").ToRequirement()
                     );
 
-                    policy.RequireAssertion(check =>
-                        check((ProfileAuthorizationRequirementType.PROFILE_GROUP, "edit-group").ToRequirement()) &&
-                        check((ProfileAuthorizationRequirementType.PROFILE_ORGANIZATION, "edit-group").ToRequirement())
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationRequirementType.PROFILE_GROUP, "edit-group").ToRequirement()) &&
+                        process((ProfileAuthorizationRequirementType.PROFILE_ORGANIZATION, "edit-group").ToRequirement())
                     );
                 });
             });
