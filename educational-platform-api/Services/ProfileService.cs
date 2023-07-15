@@ -12,6 +12,11 @@ namespace educational_platform_api.Services
             this.profileRepository = profileRepository;
         }
 
+        public Profile GetProfileById(int id)
+        {
+            return profileRepository.GetProfile(id);
+        }
+
         public IEnumerable<Profile> GetProfiles()
         {
             return profileRepository.GetProfiles();

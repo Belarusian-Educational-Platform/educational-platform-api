@@ -223,13 +223,13 @@ namespace educational_platform_api.Migrations
                 columns: new[] { "GroupId", "ProfileId", "Permissions", "ProfileRole" },
                 values: new object[,]
                 {
-                    { 1, 1, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 2 },
-                    { 1, 2, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 1 },
-                    { 1, 3, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 0 },
-                    { 2, 4, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 2 },
-                    { 2, 5, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 0 },
-                    { 3, 6, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 2 },
-                    { 3, 7, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 0 }
+                    { 1, 1, "{\"Permissions\":[\"view-group-private-information\"]}", 2 },
+                    { 1, 2, "{\"Permissions\":[\"view-group-private-information\"]}", 1 },
+                    { 1, 3, "{\"Permissions\":[\"edit-group\",\"view-group-private-information\"]}", 0 },
+                    { 2, 4, "{\"Permissions\":[\"view-group-private-information\"]}", 2 },
+                    { 2, 5, "{\"Permissions\":[\"edit-group\",\"view-group-private-information\"]}", 0 },
+                    { 3, 6, "{\"Permissions\":[\"view-group-private-information\"]}", 2 },
+                    { 3, 7, "{\"Permissions\":[\"edit-group\",\"view-group-private-information\"]}", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -237,13 +237,13 @@ namespace educational_platform_api.Migrations
                 columns: new[] { "OrganizationId", "ProfileId", "Permissions" },
                 values: new object[,]
                 {
-                    { 1, 1, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
-                    { 1, 2, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
-                    { 1, 3, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
-                    { 2, 4, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
-                    { 2, 5, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
-                    { 3, 6, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" },
-                    { 3, 7, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}" }
+                    { 1, 1, "{\"Permissions\":[\"view-organization-private-information\"]}" },
+                    { 1, 2, "{\"Permissions\":[\"view-organization-private-information\"]}" },
+                    { 1, 3, "{\"Permissions\":[\"edit-organization\",\"view-organization-private-information\"]}" },
+                    { 2, 4, "{\"Permissions\":[\"view-organization-private-information\"]}" },
+                    { 2, 5, "{\"Permissions\":[\"view-organization-private-information\"]}" },
+                    { 3, 6, "{\"Permissions\":[\"view-organization-private-information\"]}" },
+                    { 3, 7, "{\"Permissions\":[\"view-organization-private-information\"]}" }
                 });
 
             migrationBuilder.InsertData(
@@ -251,13 +251,13 @@ namespace educational_platform_api.Migrations
                 columns: new[] { "ProfileId", "SubgroupId", "Permissions", "ProfileRole" },
                 values: new object[,]
                 {
-                    { 1, 1, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 2 },
-                    { 2, 1, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 1 },
-                    { 3, 1, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 0 },
-                    { 4, 2, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 2 },
-                    { 5, 2, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 0 },
-                    { 6, 3, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 2 },
-                    { 7, 3, "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}", 0 }
+                    { 1, 1, "{\"Permissions\":[\"view-subgroup-private-information\"]}", 2 },
+                    { 2, 1, "{\"Permissions\":[\"view-subgroup-private-information\"]}", 1 },
+                    { 3, 1, "{\"Permissions\":[\"edit-subgroup\",\"view-subgroup-private-information\"]}", 0 },
+                    { 4, 2, "{\"Permissions\":[\"view-subgroup-private-information\"]}", 2 },
+                    { 5, 2, "{\"Permissions\":[\"edit-subgroup\",\"view-subgroup-private-information\"]}", 0 },
+                    { 6, 3, "{\"Permissions\":[\"view-subgroup-private-information\"]}", 2 },
+                    { 7, 3, "{\"Permissions\":[\"edit-subgroup\",\"view-subgroup-private-information\"]}", 0 }
                 });
 
             migrationBuilder.InsertData(
