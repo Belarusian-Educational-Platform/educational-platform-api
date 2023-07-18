@@ -2,6 +2,6 @@
 {
     public interface IProfileOrganizationRelationRepository
     {
-        public string GetPermissions(int profileId, int organizationId);
+        public string GetPermissions(int profileId);
     }
 }

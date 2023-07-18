@@ -38,7 +38,7 @@ namespace educational_platform_api.Services
 
 
             var verifier = new ProfileAuthorizationPolicyVerifier(profileOrganizationRelationRepository, profileGroupRelationRepository, profileSubgroupRelationRepository);
-            var permissions = verifier.GetProfilePermissions(profile, checkOptions);
+            var permissions = verifier.GetProfilePermissions(profile.Id, checkOptions)
 
             return permissions;
         }

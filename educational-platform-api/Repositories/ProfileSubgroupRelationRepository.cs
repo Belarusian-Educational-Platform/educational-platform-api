@@ -21,7 +21,7 @@ namespace educational_platform_api.Repositories
         public string GetPermissions(int profileId, int subgroupId)
         {
             ProfileSubgroupRelation relation = dbContext.ProfileSubgroupRelations
-                .FirstOrDefault(relation => relation.ProfileId == profileId && relation.SubgroupId == subgroupId);
+                .First(relation => relation.ProfileId == profileId && relation.SubgroupId == subgroupId);
 
             string permissions = relation.Permissions;
 

@@ -23,27 +23,27 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
             _subgroupRelationRepository = subgroupRelationRepository;
         }
 
-        private void CheckPolicyCheckOptionsDependencies
-            (ProfileAuthorizationCheckOptions checkOptions, ProfileAuthorizationPolicy policy) //TODO rename
+        private bool CheckPolicyCheckOptionsDependencies
+            (ProfileAuthorizationPolicy policy, ProfileAuthorizationCheckOptions checkOptions) //TODO rename
         {
             if (!checkOptions._providedInformation.SetEquals(policy._requiredInformation))
             {
-                throw new Exception("Provided information is not enough to verify profile requirements");
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
         public bool Verify(ProfileAuthorizationPolicy policy, ProfileAuthorizationCheckOptions checkOptions) 
         {
-            try
+            if(!CheckPolicyCheckOptionsDependencies(policy, checkOptions))
             {
-                CheckPolicyCheckOptionsDependencies(checkOptions, policy);
-            }catch(Exception e)
-            {
-                return false;
+                throw new Exception("Provided information is not enough to verify profile requirements");
             }
-            Profile profile = _profileRepository.GetProfile(checkOptions.ProfileId);
-
-            var providedPermissions = new HashSet<ProfileAuthorizationPermission>(GetProfilePermissions(profile, checkOptions));
+   
+            var providedPermissions = new HashSet<ProfileAuthorizationPermission>(GetProfilePermissions(checkOptions));
             var requiredPermissions = new HashSet<ProfileAuthorizationPermission>(policy._requierements);
 
             if (!providedPermissions.SetEquals(requiredPermissions))
@@ -53,54 +53,48 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
 
             foreach(AssertionPredicate assertion in policy._assertions)
             {
-                continue;
+                assertion(VerifyRequirement);
             }
 
             return true;
         }
 
-        public List<ProfileAuthorizationPermission> GetProfilePermissions(Profile profile, ProfileAuthorizationCheckOptions checkOptions)
+        public List<ProfileAuthorizationPermission> GetProfilePermissions(ProfileAuthorizationCheckOptions checkOptions)
         {
             List<ProfileAuthorizationPermission> permissions= new();
 
             if (checkOptions._providedInformation.Contains(ProfileAuthorizationPermissionType.PROFILE_ORGANIZATION))
             {
-                string rawPermissions = _organizationRelationRepository.GetPermissions(profile.Id, profile.OrganizationId);
-                List<string> parsedPermissons = JsonSerializer.Deserialize<List<string>>(rawPermissions);
-                foreach(string parsedPermisson in parsedPermissons)
-                {
-                    var permission = new ProfileAuthorizationPermission(ProfileAuthorizationPermissionType.PROFILE_ORGANIZATION, parsedPermisson);
-                    permissions.Add(permission);
-                }
-
+                string rawPermissions = _organizationRelationRepository.GetPermissions(checkOptions.ProfileId);
+                AddPermission(permissions, ProfileAuthorizationPermissionType.PROFILE_ORGANIZATION, rawPermissions);
             }
             if (checkOptions._providedInformation.Contains(ProfileAuthorizationPermissionType.PROFILE_GROUP))
             {
-                string rawPermissions = _groupRelationRepository.GetPermissions(profile.Id, checkOptions.GroupId);
-                List<string> parsedPermissons = JsonSerializer.Deserialize<List<string>>(rawPermissions);
-                foreach (string parsedPermisson in parsedPermissons)
-                {
-                    var permission = new ProfileAuthorizationPermission(ProfileAuthorizationPermissionType.PROFILE_GROUP, parsedPermisson);
-                    permissions.Add(permission);
-                }
+                string rawPermissions = _groupRelationRepository.GetPermissions(checkOptions.ProfileId, checkOptions.GroupId);
+                AddPermission(permissions, ProfileAuthorizationPermissionType.PROFILE_GROUP, rawPermissions);
             }
             if (checkOptions._providedInformation.Contains(ProfileAuthorizationPermissionType.PROFILE_SUBGROUP))
             {
-                string rawPermissions = _subgroupRelationRepository.GetPermissions(profile.Id, checkOptions.SubgroupId);
-                List<string> parsedPermissons = JsonSerializer.Deserialize<List<string>>(rawPermissions);
-                foreach (string parsedPermisson in parsedPermissons)
-                {
-                    var permission = new ProfileAuthorizationPermission(ProfileAuthorizationPermissionType.PROFILE_SUBGROUP, parsedPermisson);
-                    permissions.Add(permission);
-                }
+                string rawPermissions = _subgroupRelationRepository.GetPermissions(checkOptions.ProfileId, checkOptions.SubgroupId);
+                AddPermission(permissions, ProfileAuthorizationPermissionType.PROFILE_GROUP, rawPermissions);
             }
 
             return permissions;
         }
 
-/*        public bool VerifyRequirement(ProfileAuthorizationPermission requirement)
+        private void AddPermission(List<ProfileAuthorizationPermission> permissions, ProfileAuthorizationPermissionType type, string rawPermissions)
         {
-            
-        }*/
+            List<string> parsedPermissons = JsonSerializer.Deserialize<List<string>>(rawPermissions);
+            foreach (string parsedPermisson in parsedPermissons)
+            {
+                var permission = new ProfileAuthorizationPermission(type, parsedPermisson);
+                permissions.Add(permission);
+            }
+        }
+
+        public bool VerifyRequirement(ProfileAuthorizationPermission requirement)
+        {
+            return true;
+        }
     }
 }

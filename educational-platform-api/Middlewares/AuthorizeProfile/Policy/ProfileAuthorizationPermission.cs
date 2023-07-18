@@ -12,6 +12,5 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
             Type = type;
             Content = content;
         }
-        public ProfileAuthorizationPermission(string json) { }
     }
 }

@@ -20,22 +20,8 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile
             configure(options);
 
             ProfileAuthorizationPolicy policy = _policyProvider.GetPolicy(options.PolicyName);
-
-/*            foreach (var requirement in policy._requierements)
-            {
-                if (!_policyVerifier.VerifyRequirement(requirement))
-                {
-                    throw new Exception("Requirement failed!");
-                }
-            }
-
-            foreach (var assertion in policy._assertions)
-            {
-                if (!assertion(_policyVerifier.VerifyRequirement))
-                {
-                    throw new Exception("Assertion failed!");
-                }
-            }*/
+            _policyVerifier.Verify(policy, options);
         }
+
     }
 }

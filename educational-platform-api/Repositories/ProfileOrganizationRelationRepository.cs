@@ -18,10 +18,10 @@ namespace educational_platform_api.Repositories
             return dbContext.DisposeAsync();
         }
 
-        public string GetPermissions(int profileId, int organizationId)
+        public string GetPermissions(int profileId)
         {
             ProfileSubgroupRelation relation = dbContext.ProfileSubgroupRelations
-                .FirstOrDefault(predicate: relation => relation.ProfileId == profileId && relation.SubgroupId == organizationId);
+                .First(predicate: relation => relation.ProfileId == profileId);
 
             string permissions = relation.Permissions;
 
