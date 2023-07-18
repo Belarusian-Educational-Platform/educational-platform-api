@@ -4,13 +4,13 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
 {
     public class ProfileAuthorizationPermission
     {
-        public ProfileAuthorizationPermissionType Type { get; set; }
-        public string Content { get; set; }
+        public ProfileAuthorizationPermissionLevel Level { get; set; }
+        public string ShortName { get; set; }
 
-        public ProfileAuthorizationPermission(ProfileAuthorizationPermissionType type, string content)
+        public ProfileAuthorizationPermission(ProfileAuthorizationPermissionLevel level, string shortName)
         {
-            Type = type;
-            Content = content;
+            Level = level;
+            ShortName = shortName;
         }
     }
 }

@@ -30,15 +30,15 @@ namespace educational_platform_api.Services
         public List<ProfileAuthorizationPermission> GetPermissions(int id)
         {
             Profile profile = GetProfileById(1);
-            ProfileAuthorizationCheckOptions checkOptions = new();
-            checkOptions.WithProfile(profile.Id);
-            checkOptions.WithSubgroup(1);
-            checkOptions.WithGroup(1);
-            checkOptions.WithOrganization();
+            ProfileAuthorizationVerificationOptions checkOptions = new();
+            checkOptions.AddProfile(profile.Id);
+            checkOptions.AddSubgroup(1);
+            checkOptions.AddGroup(1);
+            checkOptions.AddOrganization();
 
 
             var verifier = new ProfileAuthorizationPolicyVerifier(profileOrganizationRelationRepository, profileGroupRelationRepository, profileSubgroupRelationRepository);
-            var permissions = verifier.GetProfilePermissions(profile.Id, checkOptions)
+            var permissions = verifier.GetProfilePermissions(checkOptions);
 
             return permissions;
         }

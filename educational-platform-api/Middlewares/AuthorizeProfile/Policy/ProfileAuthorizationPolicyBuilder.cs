@@ -5,35 +5,35 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
 {
     public class ProfileAuthorizationPolicyBuilder
     {
-        List<ProfileAuthorizationPermission> _requierements = new();
+        List<ProfileAuthorizationPermission> Requirements = new();
 
-        List<AssertionPredicate> _assertions = new();
+        List<AssertionPredicate> Assertions = new();
 
-        HashSet<ProfileAuthorizationPermissionType> _providedInformation = new();
+        HashSet<ProfileAuthorizationPermissionLevel> VerificationLevels = new();
+
+        private bool SaveRequiredInformation(ProfileAuthorizationPermission requirement)
+        {
+            VerificationLevels.Add(requirement.Level);
+            return true;
+        }
 
         public void AddRequirements(params ProfileAuthorizationPermission[] requirements)
         {
             foreach(var requirement in requirements)
             {
-                _requierements.Add(requirement);
+                Requirements.Add(requirement);
             }
-        }
-        
-        private bool SaveRequiredInformation(ProfileAuthorizationPermission requirement)
-        {
-            _providedInformation.Add(requirement.Type);
-            return true;
         }
 
         public void RequireAssertion(AssertionPredicate assertion)
         {
             assertion(SaveRequiredInformation);
-            _assertions.Add(assertion);
+            Assertions.Add(assertion);
         }
 
         public ProfileAuthorizationPolicy Build()
         {
-            return new ProfileAuthorizationPolicy(_requierements, _assertions, _providedInformation);
+            return new ProfileAuthorizationPolicy(Requirements, Assertions, VerificationLevels);
         }
     }
 }

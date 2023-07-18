@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
+﻿namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
 {
     public interface IProfileAuthorizationPolicyProvider
     {

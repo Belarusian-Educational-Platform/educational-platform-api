@@ -19,7 +19,6 @@ namespace educational_platform_api.Queries
         }
 
         [GraphQLName("groupById")]
-        [UseServiceScope]
         [UseAccount]
         [UseProfile]
         public Group GetGroup([Service] IGroupService groupService, 
@@ -27,11 +26,11 @@ namespace educational_platform_api.Queries
             [Account] Account account, [Profile] Profile profile,
             int id)
         {
-            profileAuthService.AuthorizeProfile(authorization =>
+            profileAuthService.AuthorizeProfile(verificationOptions =>
             {
-                authorization.WithProfile(profile.Id);
-                authorization.WithPolicy("edit-group");
-                authorization.WithGroup(id);
+                verificationOptions.AddProfile(profile.Id);
+                verificationOptions.AddPolicy("edit-group");
+                verificationOptions.AddGroup(id);
             });
 
             return new Group();

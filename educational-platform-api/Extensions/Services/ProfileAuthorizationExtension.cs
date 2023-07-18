@@ -1,4 +1,4 @@
-﻿using educational_platform_api.Extensions.Helpers;
+﻿using educational_platform_api.Extensions.Types;
 using educational_platform_api.Middlewares.AuthorizeProfile;
 using educational_platform_api.Middlewares.AuthorizeProfile.Policy;
 using educational_platform_api.Types.Enums;
@@ -14,12 +14,16 @@ namespace educational_platform_api.Extensions.Services
                 options.AddPolicy("edit-group", policy =>
                 {
                     policy.AddRequirements(
-                        (ProfileAuthorizationPermissionType.PROFILE_GROUP, "edit-group").ToRequirement()
+                        (ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "view-private-information").ToPermission()
                     );
 
                     policy.RequireAssertion(process =>
-                        process((ProfileAuthorizationPermissionType.PROFILE_GROUP, "edit-group").ToRequirement()) &&
-                        process((ProfileAuthorizationPermissionType.PROFILE_ORGANIZATION, "edit-group").ToRequirement())
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "view-private-information").ToPermission())
+                    );
+
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "edit-group").ToPermission()) ||
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "edit-group").ToPermission())
                     );
                 });
             });

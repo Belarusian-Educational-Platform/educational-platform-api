@@ -14,13 +14,13 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile
             _policyVerifier = policyVerifier;
         }
 
-        public void AuthorizeProfile(Action<ProfileAuthorizationCheckOptions> configure)
+        public void AuthorizeProfile(Action<ProfileAuthorizationVerificationOptions> configure)
         {
-            var options = new ProfileAuthorizationCheckOptions();
-            configure(options);
+            var verificationOptions = new ProfileAuthorizationVerificationOptions();
+            configure(verificationOptions);
 
-            ProfileAuthorizationPolicy policy = _policyProvider.GetPolicy(options.PolicyName);
-            _policyVerifier.Verify(policy, options);
+            ProfileAuthorizationPolicy policy = _policyProvider.GetPolicy(verificationOptions.PolicyName);
+            _policyVerifier.Verify(policy, verificationOptions);
         }
 
     }
