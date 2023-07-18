@@ -367,49 +367,49 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 1,
                             GroupId = 1,
-                            Permissions = "{\"Permissions\":[\"view-group-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 2,
                             GroupId = 1,
-                            Permissions = "{\"Permissions\":[\"view-group-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 1
                         },
                         new
                         {
                             ProfileId = 3,
                             GroupId = 1,
-                            Permissions = "{\"Permissions\":[\"edit-group\",\"view-group-private-information\"]}",
+                            Permissions = "[\"update\",\"view-private-information\"]",
                             ProfileRole = 0
                         },
                         new
                         {
                             ProfileId = 4,
                             GroupId = 2,
-                            Permissions = "{\"Permissions\":[\"view-group-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 5,
                             GroupId = 2,
-                            Permissions = "{\"Permissions\":[\"edit-group\",\"view-group-private-information\"]}",
+                            Permissions = "[\"update\",\"view-private-information\"]",
                             ProfileRole = 0
                         },
                         new
                         {
                             ProfileId = 6,
                             GroupId = 3,
-                            Permissions = "{\"Permissions\":[\"view-group-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 7,
                             GroupId = 3,
-                            Permissions = "{\"Permissions\":[\"edit-group\",\"view-group-private-information\"]}",
+                            Permissions = "[\"update\",\"view-private-information\"]",
                             ProfileRole = 0
                         });
                 });
@@ -435,43 +435,43 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 1,
                             OrganizationId = 1,
-                            Permissions = "{\"Permissions\":[\"view-organization-private-information\"]}"
+                            Permissions = "[\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 2,
                             OrganizationId = 1,
-                            Permissions = "{\"Permissions\":[\"view-organization-private-information\"]}"
+                            Permissions = "[\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 3,
                             OrganizationId = 1,
-                            Permissions = "{\"Permissions\":[\"edit-organization\",\"view-organization-private-information\"]}"
+                            Permissions = "[\"update\",\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 4,
                             OrganizationId = 2,
-                            Permissions = "{\"Permissions\":[\"view-organization-private-information\"]}"
+                            Permissions = "[\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 5,
                             OrganizationId = 2,
-                            Permissions = "{\"Permissions\":[\"view-organization-private-information\"]}"
+                            Permissions = "[\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 6,
                             OrganizationId = 3,
-                            Permissions = "{\"Permissions\":[\"view-organization-private-information\"]}"
+                            Permissions = "[\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 7,
                             OrganizationId = 3,
-                            Permissions = "{\"Permissions\":[\"view-organization-private-information\"]}"
+                            Permissions = "[\"view-private-information\"]"
                         });
                 });
 
@@ -499,49 +499,49 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 1,
                             SubgroupId = 1,
-                            Permissions = "{\"Permissions\":[\"view-subgroup-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 2,
                             SubgroupId = 1,
-                            Permissions = "{\"Permissions\":[\"view-subgroup-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 1
                         },
                         new
                         {
                             ProfileId = 3,
                             SubgroupId = 1,
-                            Permissions = "{\"Permissions\":[\"edit-subgroup\",\"view-subgroup-private-information\"]}",
+                            Permissions = "{\"Permissions\":[\"view-private-information\"]}",
                             ProfileRole = 0
                         },
                         new
                         {
                             ProfileId = 4,
                             SubgroupId = 2,
-                            Permissions = "{\"Permissions\":[\"view-subgroup-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 5,
                             SubgroupId = 2,
-                            Permissions = "{\"Permissions\":[\"edit-subgroup\",\"view-subgroup-private-information\"]}",
+                            Permissions = "{\"Permissions\":[\"view-private-information\"]}",
                             ProfileRole = 0
                         },
                         new
                         {
                             ProfileId = 6,
                             SubgroupId = 3,
-                            Permissions = "{\"Permissions\":[\"view-subgroup-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 7,
                             SubgroupId = 3,
-                            Permissions = "{\"Permissions\":[\"edit-subgroup\",\"view-subgroup-private-information\"]}",
+                            Permissions = "{\"Permissions\":[\"view-private-information\"]}",
                             ProfileRole = 0
                         });
                 });

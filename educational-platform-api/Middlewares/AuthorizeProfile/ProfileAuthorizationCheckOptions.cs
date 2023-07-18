@@ -4,8 +4,8 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile
 {
     public class ProfileAuthorizationCheckOptions //TODO rename
     {
-        public HashSet<ProfileAuthorizationRequirementType> _providedInformation 
-            = new HashSet<ProfileAuthorizationRequirementType>();
+        public HashSet<ProfileAuthorizationPermissionType> _providedInformation 
+            = new HashSet<ProfileAuthorizationPermissionType>();
         public string PolicyName { get; set; }
 
         public int ProfileId { get; set; }
@@ -27,13 +27,17 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile
         public void WithGroup(int id)
         {
             GroupId = id;
-            _providedInformation.Add(ProfileAuthorizationRequirementType.PROFILE_GROUP);
+            _providedInformation.Add(ProfileAuthorizationPermissionType.PROFILE_GROUP);
         }
 
         public void WithSubgroup(int id)
         {
             SubgroupId = id;
-            _providedInformation.Add(ProfileAuthorizationRequirementType.PROFILE_SUBGROUP);
+            _providedInformation.Add(ProfileAuthorizationPermissionType.PROFILE_SUBGROUP);
+        }
+        public void WithOrganization() 
+        {
+            _providedInformation.Add(ProfileAuthorizationPermissionType.PROFILE_ORGANIZATION);
         }
     }
 }

@@ -5,19 +5,19 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
 {
     public class ProfileAuthorizationPolicy
     {
-        public List<ProfileAuthorizationRequirement> _requierements = 
-            new List<ProfileAuthorizationRequirement>();
+        public List<ProfileAuthorizationPermission> _requierements = 
+            new List<ProfileAuthorizationPermission>();
 
         public List<AssertionPredicate> _assertions =
             new List<AssertionPredicate>();
 
-        public HashSet<ProfileAuthorizationRequirementType> _requiredInformation =
-            new HashSet<ProfileAuthorizationRequirementType>();
+        public HashSet<ProfileAuthorizationPermissionType> _requiredInformation =
+            new HashSet<ProfileAuthorizationPermissionType>();
 
         public ProfileAuthorizationPolicy() { }
 
-        public ProfileAuthorizationPolicy(List<ProfileAuthorizationRequirement> requierements, 
-            List<AssertionPredicate> assertions, HashSet<ProfileAuthorizationRequirementType> requiredInformation)
+        public ProfileAuthorizationPolicy(List<ProfileAuthorizationPermission> requierements, 
+            List<AssertionPredicate> assertions, HashSet<ProfileAuthorizationPermissionType> requiredInformation)
         {
             _requierements = requierements;
             _assertions = assertions;

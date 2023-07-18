@@ -5,13 +5,13 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
 {
     public class ProfileAuthorizationPolicyBuilder
     {
-        List<ProfileAuthorizationRequirement> _requierements = new();
+        List<ProfileAuthorizationPermission> _requierements = new();
 
         List<AssertionPredicate> _assertions = new();
 
-        HashSet<ProfileAuthorizationRequirementType> _providedInformation = new();
+        HashSet<ProfileAuthorizationPermissionType> _providedInformation = new();
 
-        public void AddRequirements(params ProfileAuthorizationRequirement[] requirements)
+        public void AddRequirements(params ProfileAuthorizationPermission[] requirements)
         {
             foreach(var requirement in requirements)
             {
@@ -19,7 +19,7 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
             }
         }
         
-        private bool SaveRequiredInformation(ProfileAuthorizationRequirement requirement)
+        private bool SaveRequiredInformation(ProfileAuthorizationPermission requirement)
         {
             _providedInformation.Add(requirement.Type);
             return true;

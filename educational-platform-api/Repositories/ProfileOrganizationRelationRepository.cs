@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.Contexts;
+using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
@@ -19,7 +20,12 @@ namespace educational_platform_api.Repositories
 
         public string GetPermissions(int profileId, int organizationId)
         {
-            throw new NotImplementedException();
+            ProfileSubgroupRelation relation = dbContext.ProfileSubgroupRelations
+                .FirstOrDefault(predicate: relation => relation.ProfileId == profileId && relation.SubgroupId == organizationId);
+
+            string permissions = relation.Permissions;
+
+            return permissions;
         }
     }
 }

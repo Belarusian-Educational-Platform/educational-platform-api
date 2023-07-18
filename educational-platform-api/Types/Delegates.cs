@@ -2,5 +2,5 @@
 
 namespace educational_platform_api.Types
 {
-    public delegate bool AssertionPredicate(Predicate<ProfileAuthorizationRequirement> checkRequirement);
+    public delegate bool AssertionPredicate(Predicate<ProfileAuthorizationPermission> checkRequirement);
 }

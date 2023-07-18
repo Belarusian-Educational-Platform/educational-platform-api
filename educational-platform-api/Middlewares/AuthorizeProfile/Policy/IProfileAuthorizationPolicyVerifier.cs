@@ -2,7 +2,7 @@
 {
     public interface IProfileAuthorizationPolicyVerifier
     {
-        public bool VerifyRequirement(ProfileAuthorizationRequirement requirement);
-        public void GetProfilePermissions();
-    }
+/*        public bool VerifyRequirement(ProfileAuthorizationPermission requirement);
+*//*        public void GetProfilePermissions();
+*/    }
 }

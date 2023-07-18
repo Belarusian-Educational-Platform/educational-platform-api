@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace educational_platform_api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -223,13 +223,13 @@ namespace educational_platform_api.Migrations
                 columns: new[] { "GroupId", "ProfileId", "Permissions", "ProfileRole" },
                 values: new object[,]
                 {
-                    { 1, 1, "{\"Permissions\":[\"view-group-private-information\"]}", 2 },
-                    { 1, 2, "{\"Permissions\":[\"view-group-private-information\"]}", 1 },
-                    { 1, 3, "{\"Permissions\":[\"edit-group\",\"view-group-private-information\"]}", 0 },
-                    { 2, 4, "{\"Permissions\":[\"view-group-private-information\"]}", 2 },
-                    { 2, 5, "{\"Permissions\":[\"edit-group\",\"view-group-private-information\"]}", 0 },
-                    { 3, 6, "{\"Permissions\":[\"view-group-private-information\"]}", 2 },
-                    { 3, 7, "{\"Permissions\":[\"edit-group\",\"view-group-private-information\"]}", 0 }
+                    { 1, 1, "[\"view-private-information\"]", 2 },
+                    { 1, 2, "[\"view-private-information\"]", 1 },
+                    { 1, 3, "[\"update\",\"view-private-information\"]", 0 },
+                    { 2, 4, "[\"view-private-information\"]", 2 },
+                    { 2, 5, "[\"update\",\"view-private-information\"]", 0 },
+                    { 3, 6, "[\"view-private-information\"]", 2 },
+                    { 3, 7, "[\"update\",\"view-private-information\"]", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -237,13 +237,13 @@ namespace educational_platform_api.Migrations
                 columns: new[] { "OrganizationId", "ProfileId", "Permissions" },
                 values: new object[,]
                 {
-                    { 1, 1, "{\"Permissions\":[\"view-organization-private-information\"]}" },
-                    { 1, 2, "{\"Permissions\":[\"view-organization-private-information\"]}" },
-                    { 1, 3, "{\"Permissions\":[\"edit-organization\",\"view-organization-private-information\"]}" },
-                    { 2, 4, "{\"Permissions\":[\"view-organization-private-information\"]}" },
-                    { 2, 5, "{\"Permissions\":[\"view-organization-private-information\"]}" },
-                    { 3, 6, "{\"Permissions\":[\"view-organization-private-information\"]}" },
-                    { 3, 7, "{\"Permissions\":[\"view-organization-private-information\"]}" }
+                    { 1, 1, "[\"view-private-information\"]" },
+                    { 1, 2, "[\"view-private-information\"]" },
+                    { 1, 3, "[\"update\",\"view-private-information\"]" },
+                    { 2, 4, "[\"view-private-information\"]" },
+                    { 2, 5, "[\"view-private-information\"]" },
+                    { 3, 6, "[\"view-private-information\"]" },
+                    { 3, 7, "[\"view-private-information\"]" }
                 });
 
             migrationBuilder.InsertData(
@@ -251,13 +251,13 @@ namespace educational_platform_api.Migrations
                 columns: new[] { "ProfileId", "SubgroupId", "Permissions", "ProfileRole" },
                 values: new object[,]
                 {
-                    { 1, 1, "{\"Permissions\":[\"view-subgroup-private-information\"]}", 2 },
-                    { 2, 1, "{\"Permissions\":[\"view-subgroup-private-information\"]}", 1 },
-                    { 3, 1, "{\"Permissions\":[\"edit-subgroup\",\"view-subgroup-private-information\"]}", 0 },
-                    { 4, 2, "{\"Permissions\":[\"view-subgroup-private-information\"]}", 2 },
-                    { 5, 2, "{\"Permissions\":[\"edit-subgroup\",\"view-subgroup-private-information\"]}", 0 },
-                    { 6, 3, "{\"Permissions\":[\"view-subgroup-private-information\"]}", 2 },
-                    { 7, 3, "{\"Permissions\":[\"edit-subgroup\",\"view-subgroup-private-information\"]}", 0 }
+                    { 1, 1, "[\"view-private-information\"]", 2 },
+                    { 2, 1, "[\"view-private-information\"]", 1 },
+                    { 3, 1, "{\"Permissions\":[\"view-private-information\"]}", 0 },
+                    { 4, 2, "[\"view-private-information\"]", 2 },
+                    { 5, 2, "{\"Permissions\":[\"view-private-information\"]}", 0 },
+                    { 6, 3, "[\"view-private-information\"]", 2 },
+                    { 7, 3, "{\"Permissions\":[\"view-private-information\"]}", 0 }
                 });
 
             migrationBuilder.InsertData(

@@ -14,43 +14,43 @@ namespace educational_platform_api.TestData
                 {
                     OrganizationId = 1,
                     ProfileId = 1,
-                    Permissions= "{\"Permissions\":[\"view-private-information\"]}"
+                    Permissions= "[\"view-private-information\"]"
                 },
                 new ProfileOrganizationRelation
                 {
                     OrganizationId = 1,
                     ProfileId = 2,
-                    Permissions= "{\"Permissions\":[\"view-private-information\"]}"
+                    Permissions= "[\"view-private-information\"]"
                 },
                 new ProfileOrganizationRelation
                 {
                     OrganizationId = 1,
                     ProfileId = 3,
-                    Permissions= "{\"Permissions\":[\"update\",\"view-private-information\"]}"
+                    Permissions= "[\"update\",\"view-private-information\"]"
                 },
                 new ProfileOrganizationRelation
                 {
                     OrganizationId = 2,
                     ProfileId = 4,
-                    Permissions= "{\"Permissions\":[\"view-private-information\"]}"
+                    Permissions= "[\"view-private-information\"]"
                 },
                 new ProfileOrganizationRelation
                 {
                     OrganizationId = 2,
                     ProfileId = 5,
-                    Permissions= "{\"Permissions\":[\"view-private-information\"]}"
+                    Permissions= "[\"view-private-information\"]"
                 },
                 new ProfileOrganizationRelation
                 {
                     OrganizationId = 3,
                     ProfileId = 6,
-                    Permissions= "{\"Permissions\":[\"view-private-information\"]}"
+                    Permissions= "[\"view-private-information\"]"
                 },
                 new ProfileOrganizationRelation
                 {
                     OrganizationId = 3,
                     ProfileId = 7,
-                    Permissions= "{\"Permissions\":[\"view-private-information\"]}"
+                    Permissions= "[\"view-private-information\"]"
                 }
                 );
         }

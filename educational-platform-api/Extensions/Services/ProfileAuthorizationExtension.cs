@@ -14,12 +14,12 @@ namespace educational_platform_api.Extensions.Services
                 options.AddPolicy("edit-group", policy =>
                 {
                     policy.AddRequirements(
-                        (ProfileAuthorizationRequirementType.PROFILE_GROUP, "edit-group").ToRequirement()
+                        (ProfileAuthorizationPermissionType.PROFILE_GROUP, "edit-group").ToRequirement()
                     );
 
                     policy.RequireAssertion(process =>
-                        process((ProfileAuthorizationRequirementType.PROFILE_GROUP, "edit-group").ToRequirement()) &&
-                        process((ProfileAuthorizationRequirementType.PROFILE_ORGANIZATION, "edit-group").ToRequirement())
+                        process((ProfileAuthorizationPermissionType.PROFILE_GROUP, "edit-group").ToRequirement()) &&
+                        process((ProfileAuthorizationPermissionType.PROFILE_ORGANIZATION, "edit-group").ToRequirement())
                     );
                 });
             });

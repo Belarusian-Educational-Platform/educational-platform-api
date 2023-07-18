@@ -5,11 +5,11 @@ namespace educational_platform_api.Extensions.Helpers
 {
     public static class ProfileAuthorizationHelpersExtension
     {
-        public static ProfileAuthorizationRequirement ToRequirement(
-            this (ProfileAuthorizationRequirementType type, string content) requirementRaw)
+        public static ProfileAuthorizationPermission ToRequirement(
+            this (ProfileAuthorizationPermissionType type, string content) requirementRaw)
         {
-            ProfileAuthorizationRequirement requirement = 
-                new ProfileAuthorizationRequirement(requirementRaw.type, requirementRaw.content);
+            ProfileAuthorizationPermission requirement = 
+                new ProfileAuthorizationPermission(requirementRaw.type, requirementRaw.content);
 
             return requirement;
         }

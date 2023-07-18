@@ -37,7 +37,8 @@ namespace educational_platform_api.Extensions.Services
                 .AddTypeExtension<ProfileQuery>()
                 .AddTypeExtension<GroupQuery>()
                 .AddTypeExtension<SubgroupQuery>()
-                .AddTypeExtension<OrganizationQuery>();
+                .AddTypeExtension<OrganizationQuery>()
+                .AddTypeExtension<TemporaryTestQuery>();
 
             return requestExecutorBuilder;
         }
