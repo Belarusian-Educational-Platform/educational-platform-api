@@ -9,38 +9,9 @@ namespace educational_platform_api.Services
     {
         private readonly IProfileRepository profileRepository;
 
-        //temp
-        private readonly IProfileOrganizationRelationRepository profileOrganizationRelationRepository;
-        private readonly IProfileGroupRelationRepository profileGroupRelationRepository;
-        private readonly IProfileSubgroupRelationRepository profileSubgroupRelationRepository;
-
-        public ProfileService(IProfileRepository profileRepository,
-            IProfileOrganizationRelationRepository profileOrganizationRelationRepository,
-            IProfileGroupRelationRepository profileGroupRelationRepository,
-            IProfileSubgroupRelationRepository profileSubgroupRelationRepository)
+        public ProfileService(IProfileRepository profileRepository)
         {
             this.profileRepository = profileRepository;
-
-            //temp
-            this.profileOrganizationRelationRepository = profileOrganizationRelationRepository;
-            this.profileGroupRelationRepository = profileGroupRelationRepository;
-            this.profileSubgroupRelationRepository = profileSubgroupRelationRepository;
-        }
-
-        public List<ProfileAuthorizationPermission> GetPermissions(int id)
-        {
-            Profile profile = GetProfileById(1);
-            ProfileAuthorizationVerificationOptions checkOptions = new();
-            checkOptions.AddProfile(profile.Id);
-            checkOptions.AddSubgroup(1);
-            checkOptions.AddGroup(1);
-            checkOptions.AddOrganization();
-
-
-            var verifier = new ProfileAuthorizationPolicyVerifier(profileOrganizationRelationRepository, profileGroupRelationRepository, profileSubgroupRelationRepository);
-            var permissions = verifier.GetProfilePermissions(checkOptions);
-
-            return permissions;
         }
 
         public Profile GetProfileById(int id)
