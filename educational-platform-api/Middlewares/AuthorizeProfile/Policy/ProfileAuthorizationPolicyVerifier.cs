@@ -62,7 +62,7 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
             {
                 string rawPermissions = _subgroupRelationRepository
                     .GetPermissions(checkOptions.ProfileId, checkOptions.SubgroupId);
-                ProcessAndAddPermission(permissions, ProfileAuthorizationPermissionLevel.PROFILE_GROUP, rawPermissions);
+                ProcessAndAddPermission(permissions, ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, rawPermissions);
             }
 
             return permissions;
