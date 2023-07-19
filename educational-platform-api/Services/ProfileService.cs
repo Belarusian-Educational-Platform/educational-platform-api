@@ -1,27 +1,25 @@
-﻿using educational_platform_api.Authorization.ProfileAuthorization;
-using educational_platform_api.Authorization.ProfileAuthorization.Policy;
-using educational_platform_api.Models;
+﻿using educational_platform_api.Models;
 using educational_platform_api.Repositories;
 
 namespace educational_platform_api.Services
 {
     public class ProfileService : IProfileService
     {
-        private readonly IProfileRepository profileRepository;
+        private readonly IProfileRepository _profileRepository;
 
         public ProfileService(IProfileRepository profileRepository)
         {
-            this.profileRepository = profileRepository;
+            _profileRepository = profileRepository;
         }
 
         public Profile GetProfileById(int id)
         {
-            return profileRepository.GetProfile(id);
+            return _profileRepository.GetProfile(id);
         }
 
         public IEnumerable<Profile> GetProfiles()
         {
-            return profileRepository.GetProfiles();
+            return _profileRepository.GetProfiles();
         }
     }
 }

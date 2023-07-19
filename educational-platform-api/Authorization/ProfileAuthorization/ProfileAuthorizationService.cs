@@ -22,6 +22,5 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
             ProfileAuthorizationPolicy policy = _policyProvider.GetPolicy(verificationOptions.PolicyName);
             _policyVerifier.Verify(policy, verificationOptions);
         }
-
     }
 }
