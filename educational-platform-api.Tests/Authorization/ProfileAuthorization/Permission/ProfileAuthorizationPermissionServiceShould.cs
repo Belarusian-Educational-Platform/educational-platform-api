@@ -1,16 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using educational_platform_api.Authorization.ProfileAuthorization.Permission;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using educational_platform_api.Authorization.ProfileAuthorization.Policy;
-using educational_platform_api.Models;
+﻿using educational_platform_api.Models;
 using educational_platform_api.Repositories;
-using Moq;
 using educational_platform_api.Types.Enums;
 using FluentAssertions;
+using Moq;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization.Permission.Tests
 {
@@ -32,7 +24,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
                 _groupRelationRepositoryMock.Object, 
                 _subgroupRelationRepositoryMock.Object);
         }
-
 
         [TestMethod()]
         public void Return_permissionSet_As_Expected()
@@ -71,7 +62,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
                 .Setup(repo => repo.GetRelation(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(profileSubroupRelation);
 
-            Action<ProfileAuthorizationPermissionSet> configurePrmissionSet = (permissionSet) =>
+            Action<ProfileAuthorizationPermissionSet> configurePermissionSet = (permissionSet) =>
             {
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, 
                     "[\"view-private-information\"]");
@@ -82,13 +73,13 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             };
 
             var expected = new ProfileAuthorizationPermissionSet();
-            configurePrmissionSet(expected);
+            configurePermissionSet(expected);
 
             // Act
             var actual = _permissionService.GetProfilePermissions(verificationOptions);
 
             // Assert
-            actual.Should().BeEquivalentTo(expected);
+            actual.GetPermissions().Should().BeEquivalentTo(expected.GetPermissions());
         }
     }
 }

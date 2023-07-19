@@ -1,16 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using educational_platform_api.Authorization.ProfileAuthorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using educational_platform_api.Authorization.ProfileAuthorization.Policy;
-using Moq;
-using educational_platform_api.Authorization.ProfileAuthorization.Permission;
-using educational_platform_api.Types;
-using educational_platform_api.Types.Enums;
+﻿using educational_platform_api.Authorization.ProfileAuthorization.Policy;
 using educational_platform_api.Extensions.Types;
+using educational_platform_api.Types.Enums;
+using FluentAssertions;
+using Moq;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization.Tests
 {
@@ -59,14 +51,10 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Tests
                 .Returns(false);
 
             // Act
-            try
-            {
-                _profileAuthorizationService.AuthorizeProfile(configureVerificationOptions);
-            } catch (Exception ex)
-            {
-                // Assert
-                Assert.IsTrue(typeof(Exception).IsAssignableFrom(ex.GetType()));
-            }
+            Action actual = () => _profileAuthorizationService.AuthorizeProfile(configureVerificationOptions);
+
+            // Assert
+            actual.Should().Throw<Exception>();
         }
     }
 }
