@@ -21,9 +21,9 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
         }
 
         public bool Verify(ProfileAuthorizationPolicy policy, 
-            ProfileAuthorizationVerificationOptions checkOptions) 
+            ProfileAuthorizationVerificationOptions verificationOptions) 
         {
-            if(!checkOptions.VerificationLevels.SetEquals(policy.VerificationLevels))
+            if(!verificationOptions.VerificationLevels.SetEquals(policy.VerificationLevels))
             {
                 throw new Exception("Provided information is not enough to verify profile requirements");
             }
@@ -42,26 +42,26 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
         }
 
         public List<ProfileAuthorizationPermission> GetProfilePermissions(
-            ProfileAuthorizationVerificationOptions checkOptions)
+            ProfileAuthorizationVerificationOptions verificationOptions)
         {
             List<ProfileAuthorizationPermission> permissions = new();
 
-            if (checkOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION))
+            if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION))
             {
                 string rawPermissions = _organizationRelationRepository
-                    .GetPermissions(checkOptions.ProfileId);
+                    .GetPermissions(verificationOptions.ProfileId);
                 ProcessAndAddPermission(permissions, ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, rawPermissions);
             }
-            if (checkOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_GROUP))
+            if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_GROUP))
             {
                 string rawPermissions = _groupRelationRepository
-                    .GetPermissions(checkOptions.ProfileId, checkOptions.GroupId);
+                    .GetPermissions(verificationOptions.ProfileId, verificationOptions.GroupId);
                 ProcessAndAddPermission(permissions, ProfileAuthorizationPermissionLevel.PROFILE_GROUP, rawPermissions);
             }
-            if (checkOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP))
+            if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP))
             {
                 string rawPermissions = _subgroupRelationRepository
-                    .GetPermissions(checkOptions.ProfileId, checkOptions.SubgroupId);
+                    .GetPermissions(verificationOptions.ProfileId, verificationOptions.SubgroupId);
                 ProcessAndAddPermission(permissions, ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, rawPermissions);
             }
 
