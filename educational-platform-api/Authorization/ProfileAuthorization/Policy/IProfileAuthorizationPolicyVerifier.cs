@@ -4,7 +4,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
 {
     public interface IProfileAuthorizationPolicyVerifier
     {
-        public bool VerifyRequirement(ProfileAuthorizationPermission requirement);
         public bool Verify(ProfileAuthorizationPolicy policy, ProfileAuthorizationVerificationOptions verificationOptions);
 
     }

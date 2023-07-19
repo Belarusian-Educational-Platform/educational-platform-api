@@ -36,14 +36,14 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
                 var relation = _groupRelationRepository.GetRelation(verificationOptions.ProfileId, verificationOptions.GroupId); ;
                 string rawPermissions = relation.Permissions;
 
-                permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, rawPermissions);
+                permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_GROUP, rawPermissions);
             }
             if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP))
             {
                 var relation = _subgroupRelationRepository.GetRelation(verificationOptions.ProfileId, verificationOptions.SubgroupId);
                 string rawPermissions = relation.Permissions;
 
-                permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, rawPermissions);
+                permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, rawPermissions);
             }
 
             return permissionSet;

@@ -17,11 +17,13 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
         public bool Verify(ProfileAuthorizationPolicy policy,
             ProfileAuthorizationVerificationOptions verificationOptions)
         {
-            var profilePermissions = _permissionService.GetProfilePermissions(verificationOptions);
             if (!verificationOptions.VerificationLevels.SetEquals(policy.VerificationLevels))
             {
                 throw new Exception("Provided information is not enough to verify profile requirements");
             }
+
+            var profilePermissions = _permissionService.GetProfilePermissions(verificationOptions);
+
 
             foreach (ProfileAuthorizationPermission requirement in policy.Requierements)
             {
@@ -39,11 +41,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
                 }
             }
 
-            return true;
-        }
-
-        public bool VerifyRequirement(ProfileAuthorizationPermission requirement)
-        {
             return true;
         }
     }
