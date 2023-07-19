@@ -1,7 +1,9 @@
-﻿namespace educational_platform_api.Repositories
+﻿using educational_platform_api.Models;
+
+namespace educational_platform_api.Repositories
 {
     public interface IProfileOrganizationRelationRepository
     {
-        public string GetPermissions(int profileId);
+        public ProfileOrganizationRelation GetRelation(int profileId);
     }
 }

@@ -1,6 +1,7 @@
-﻿using educational_platform_api.Extensions.Types;
-using educational_platform_api.Middlewares.AuthorizeProfile;
-using educational_platform_api.Middlewares.AuthorizeProfile.Policy;
+﻿using educational_platform_api.Authorization.ProfileAuthorization;
+using educational_platform_api.Authorization.ProfileAuthorization.Permission;
+using educational_platform_api.Authorization.ProfileAuthorization.Policy;
+using educational_platform_api.Extensions.Types;
 using educational_platform_api.Types.Enums;
 
 namespace educational_platform_api.Extensions.Services
@@ -36,6 +37,7 @@ namespace educational_platform_api.Extensions.Services
         {
             services.Configure(configure);
             services.AddScoped<IProfileAuthorizationPolicyProvider, ProfileAuthorizationPolicyProvider>();
+            services.AddScoped<IProfileAuthorizationPermissionService, ProfileAuthorizationPermissionService>();
             services.AddScoped<IProfileAuthorizationPolicyVerifier, ProfileAuthorizationPolicyVerifier>();
             services.AddScoped<IProfileAuthorizationService, ProfileAuthorizationService>();
 

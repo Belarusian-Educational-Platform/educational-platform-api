@@ -1,7 +1,8 @@
-﻿using educational_platform_api.Types;
+﻿using educational_platform_api.Authorization.ProfileAuthorization.Permission;
+using educational_platform_api.Types;
 using educational_platform_api.Types.Enums;
 
-namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
+namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
 {
     public class ProfileAuthorizationPolicyBuilder
     {
@@ -19,7 +20,7 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
 
         public void AddRequirements(params ProfileAuthorizationPermission[] requirements)
         {
-            foreach(var requirement in requirements)
+            foreach (var requirement in requirements)
             {
                 Requirements.Add(requirement);
             }

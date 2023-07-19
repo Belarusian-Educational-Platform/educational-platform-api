@@ -1,4 +1,4 @@
-﻿using educational_platform_api.Middlewares.AuthorizeProfile;
+﻿using educational_platform_api.Authorization.ProfileAuthorization;
 using educational_platform_api.Middlewares.UseAccount;
 using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;

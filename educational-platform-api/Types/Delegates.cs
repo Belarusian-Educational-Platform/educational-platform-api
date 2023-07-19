@@ -1,4 +1,4 @@
-﻿using educational_platform_api.Middlewares.AuthorizeProfile.Policy;
+﻿using educational_platform_api.Authorization.ProfileAuthorization.Permission;
 
 namespace educational_platform_api.Types
 {

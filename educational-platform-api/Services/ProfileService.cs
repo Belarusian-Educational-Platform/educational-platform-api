@@ -1,5 +1,5 @@
-﻿using educational_platform_api.Middlewares.AuthorizeProfile;
-using educational_platform_api.Middlewares.AuthorizeProfile.Policy;
+﻿using educational_platform_api.Authorization.ProfileAuthorization;
+using educational_platform_api.Authorization.ProfileAuthorization.Policy;
 using educational_platform_api.Models;
 using educational_platform_api.Repositories;
 

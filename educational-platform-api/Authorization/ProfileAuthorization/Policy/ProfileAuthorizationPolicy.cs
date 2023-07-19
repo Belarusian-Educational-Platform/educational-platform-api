@@ -1,11 +1,12 @@
-﻿using educational_platform_api.Types;
+﻿using educational_platform_api.Authorization.ProfileAuthorization.Permission;
+using educational_platform_api.Types;
 using educational_platform_api.Types.Enums;
 
-namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
+namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
 {
     public class ProfileAuthorizationPolicy
     {
-        public List<ProfileAuthorizationPermission> Requierements = 
+        public List<ProfileAuthorizationPermission> Requierements =
             new List<ProfileAuthorizationPermission>();
 
         public List<AssertionPredicate> Assertions =
@@ -14,7 +15,7 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
         public HashSet<ProfileAuthorizationPermissionLevel> VerificationLevels =
             new HashSet<ProfileAuthorizationPermissionLevel>();
 
-        public ProfileAuthorizationPolicy(List<ProfileAuthorizationPermission> requierements, 
+        public ProfileAuthorizationPolicy(List<ProfileAuthorizationPermission> requierements,
             List<AssertionPredicate> assertions, HashSet<ProfileAuthorizationPermissionLevel> verificationLevels)
         {
             Requierements = requierements;

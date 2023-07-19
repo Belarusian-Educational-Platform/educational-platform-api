@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
+namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
 {
     public class ProfileAuthorizationPolicyProvider : IProfileAuthorizationPolicyProvider
     {

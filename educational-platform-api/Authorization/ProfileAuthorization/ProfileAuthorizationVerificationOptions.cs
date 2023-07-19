@@ -1,6 +1,6 @@
 ﻿using educational_platform_api.Types.Enums;
 
-namespace educational_platform_api.Middlewares.AuthorizeProfile
+namespace educational_platform_api.Authorization.ProfileAuthorization
 {
     public class ProfileAuthorizationVerificationOptions
     {
@@ -23,7 +23,7 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile
         {
             ProfileId = id;
         }
-        
+
         public void AddGroup(int id)
         {
             GroupId = id;
@@ -35,7 +35,7 @@ namespace educational_platform_api.Middlewares.AuthorizeProfile
             SubgroupId = id;
             VerificationLevels.Add(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP);
         }
-        public void AddOrganization() 
+        public void AddOrganization()
         {
             VerificationLevels.Add(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION);
         }

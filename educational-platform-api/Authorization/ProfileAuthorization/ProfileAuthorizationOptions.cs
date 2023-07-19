@@ -1,4 +1,6 @@
-﻿namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
+﻿using educational_platform_api.Authorization.ProfileAuthorization.Policy;
+
+namespace educational_platform_api.Authorization.ProfileAuthorization
 {
     public class ProfileAuthorizationOptions
     {

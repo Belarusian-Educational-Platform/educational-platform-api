@@ -1,4 +1,4 @@
-﻿using educational_platform_api.Middlewares.AuthorizeProfile.Policy;
+﻿using educational_platform_api.Authorization.ProfileAuthorization.Permission;
 using educational_platform_api.Types.Enums;
 
 namespace educational_platform_api.Extensions.Types

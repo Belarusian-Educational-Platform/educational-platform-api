@@ -1,6 +1,6 @@
 ﻿using educational_platform_api.Types.Enums;
 
-namespace educational_platform_api.Middlewares.AuthorizeProfile.Policy
+namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
 {
     public class ProfileAuthorizationPermission
     {

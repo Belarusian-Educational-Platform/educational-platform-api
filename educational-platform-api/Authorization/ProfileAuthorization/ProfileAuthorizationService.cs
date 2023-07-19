@@ -1,13 +1,13 @@
-﻿using educational_platform_api.Middlewares.AuthorizeProfile.Policy;
+﻿using educational_platform_api.Authorization.ProfileAuthorization.Policy;
 
-namespace educational_platform_api.Middlewares.AuthorizeProfile
+namespace educational_platform_api.Authorization.ProfileAuthorization
 {
     public class ProfileAuthorizationService : IProfileAuthorizationService
     {
         private readonly IProfileAuthorizationPolicyProvider _policyProvider;
         private readonly IProfileAuthorizationPolicyVerifier _policyVerifier;
 
-        public ProfileAuthorizationService(IProfileAuthorizationPolicyProvider policyProvider, 
+        public ProfileAuthorizationService(IProfileAuthorizationPolicyProvider policyProvider,
             IProfileAuthorizationPolicyVerifier policyVerifier)
         {
             _policyProvider = policyProvider;

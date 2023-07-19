@@ -18,14 +18,12 @@ namespace educational_platform_api.Repositories
             return dbContext.DisposeAsync();
         }
 
-        public string GetPermissions(int profileId, int subgroupId)
+        public ProfileSubgroupRelation GetRelation(int profileId, int subgroupId)
         {
             ProfileSubgroupRelation relation = dbContext.ProfileSubgroupRelations
                 .First(relation => relation.ProfileId == profileId && relation.SubgroupId == subgroupId);
 
-            string permissions = relation.Permissions;
-
-            return permissions;
+            return relation;
         }
     }
 }
