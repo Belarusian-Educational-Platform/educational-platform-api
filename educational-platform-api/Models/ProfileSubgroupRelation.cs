@@ -1,4 +1,4 @@
-﻿using educational_platform_api.EnumTypes;
+﻿using educational_platform_api.Types.Enums;
 
 namespace educational_platform_api.Models
 {

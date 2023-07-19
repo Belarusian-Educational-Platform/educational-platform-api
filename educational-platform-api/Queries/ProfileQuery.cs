@@ -18,7 +18,7 @@ namespace educational_platform_api.Queries
         [GraphQLName("profileById")]
         public Profile GetProfile([Service] IProfileService profileService, int id)
         {
-            return new Profile();
+            return profileService.GetProfileById(id);
         }
     }
 }

@@ -367,50 +367,111 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 1,
                             GroupId = 1,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 2,
                             GroupId = 1,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 1
                         },
                         new
                         {
                             ProfileId = 3,
                             GroupId = 1,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"update\",\"view-private-information\"]",
                             ProfileRole = 0
                         },
                         new
                         {
                             ProfileId = 4,
                             GroupId = 2,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 5,
                             GroupId = 2,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"update\",\"view-private-information\"]",
                             ProfileRole = 0
                         },
                         new
                         {
                             ProfileId = 6,
                             GroupId = 3,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 7,
                             GroupId = 3,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"update\",\"view-private-information\"]",
                             ProfileRole = 0
+                        });
+                });
+
+            modelBuilder.Entity("educational_platform_api.Models.ProfileOrganizationRelation", b =>
+                {
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Permissions")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ProfileId", "OrganizationId");
+
+                    b.ToTable("ProfileOrganizationRelations");
+
+                    b.HasData(
+                        new
+                        {
+                            ProfileId = 1,
+                            OrganizationId = 1,
+                            Permissions = "[\"view-private-information\"]"
+                        },
+                        new
+                        {
+                            ProfileId = 2,
+                            OrganizationId = 1,
+                            Permissions = "[\"view-private-information\"]"
+                        },
+                        new
+                        {
+                            ProfileId = 3,
+                            OrganizationId = 1,
+                            Permissions = "[\"update\",\"view-private-information\"]"
+                        },
+                        new
+                        {
+                            ProfileId = 4,
+                            OrganizationId = 2,
+                            Permissions = "[\"view-private-information\"]"
+                        },
+                        new
+                        {
+                            ProfileId = 5,
+                            OrganizationId = 2,
+                            Permissions = "[\"view-private-information\"]"
+                        },
+                        new
+                        {
+                            ProfileId = 6,
+                            OrganizationId = 3,
+                            Permissions = "[\"view-private-information\"]"
+                        },
+                        new
+                        {
+                            ProfileId = 7,
+                            OrganizationId = 3,
+                            Permissions = "[\"view-private-information\"]"
                         });
                 });
 
@@ -438,49 +499,49 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 1,
                             SubgroupId = 1,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 2,
                             SubgroupId = 1,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 1
                         },
                         new
                         {
                             ProfileId = 3,
                             SubgroupId = 1,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 0
                         },
                         new
                         {
                             ProfileId = 4,
                             SubgroupId = 2,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 5,
                             SubgroupId = 2,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 0
                         },
                         new
                         {
                             ProfileId = 6,
                             SubgroupId = 3,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
                         new
                         {
                             ProfileId = 7,
                             SubgroupId = 3,
-                            Permissions = "{\r\n  \"Permissions\": [\r\n    {\r\n      \"a\": \"true\"\r\n    },\r\n    {\r\n      \"b\": \"true\"\r\n    },\r\n    {\r\n      \"c\": \"false\"\r\n    }\r\n  ]\r\n}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 0
                         });
                 });
