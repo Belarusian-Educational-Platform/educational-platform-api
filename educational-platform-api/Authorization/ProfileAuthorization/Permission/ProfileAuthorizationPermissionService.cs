@@ -11,8 +11,10 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
         private readonly IProfileGroupRelationRepository _groupRelationRepository;
         private readonly IProfileSubgroupRelationRepository _subgroupRelationRepository;
 
-        public ProfileAuthorizationPermissionService(IProfileOrganizationRelationRepository organizationRelationRepository,
-            IProfileGroupRelationRepository groupRelationRepository, IProfileSubgroupRelationRepository subgroupRelationRepository)
+        public ProfileAuthorizationPermissionService(
+            IProfileOrganizationRelationRepository organizationRelationRepository,
+            IProfileGroupRelationRepository groupRelationRepository,
+            IProfileSubgroupRelationRepository subgroupRelationRepository)
         {
             _organizationRelationRepository = organizationRelationRepository;
             _groupRelationRepository = groupRelationRepository;
