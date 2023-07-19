@@ -30,7 +30,7 @@ namespace educational_platform_api.TestData
                     SubgroupId = 1,
                     ProfileRole = Role.owner,
                     ProfileId = 3,
-                    Permissions= "{\"Permissions\":[\"view-private-information\"]}"
+                    Permissions= "[\"view-private-information\"]"
                 },
                 new ProfileSubgroupRelation
                 {
@@ -44,7 +44,7 @@ namespace educational_platform_api.TestData
                     SubgroupId = 2,
                     ProfileRole = Role.owner,
                     ProfileId = 5,
-                    Permissions= "{\"Permissions\":[\"view-private-information\"]}"
+                    Permissions= "[\"view-private-information\"]"
                 },
                 new ProfileSubgroupRelation
                 {
@@ -58,7 +58,7 @@ namespace educational_platform_api.TestData
                     SubgroupId = 3,
                     ProfileRole = Role.owner,
                     ProfileId = 7,
-                    Permissions= "{\"Permissions\":[\"view-private-information\"]}"
+                    Permissions= "[\"view-private-information\"]"
                 }
                 );
         }

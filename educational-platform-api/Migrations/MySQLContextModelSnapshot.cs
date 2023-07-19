@@ -513,7 +513,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 3,
                             SubgroupId = 1,
-                            Permissions = "{\"Permissions\":[\"view-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 0
                         },
                         new
@@ -527,7 +527,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 5,
                             SubgroupId = 2,
-                            Permissions = "{\"Permissions\":[\"view-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 0
                         },
                         new
@@ -541,7 +541,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 7,
                             SubgroupId = 3,
-                            Permissions = "{\"Permissions\":[\"view-private-information\"]}",
+                            Permissions = "[\"view-private-information\"]",
                             ProfileRole = 0
                         });
                 });

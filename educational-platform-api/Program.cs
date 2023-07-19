@@ -20,17 +20,6 @@ builder.Services.AddSwaggerGen();
 // Profile authorization
 builder.Services.SetupProfileAuthorization();
 
-/*builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("BadgeEntry", policy => {
-
-        policy.RequireAssertion(context => context.User.HasClaim(c =>
-            (c.Type == "BadgeId" || c.Type == "TemporaryBadgeId")
-            && c.Issuer == "https://microsoftsecurity"));
-        policy.AddRequirements("vie", "");
-    });
-});*/
-
 // GraphQL setup
 builder.Services
     .SetupGraphQLServer()

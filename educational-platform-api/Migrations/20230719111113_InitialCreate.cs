@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace educational_platform_api.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -253,11 +253,11 @@ namespace educational_platform_api.Migrations
                 {
                     { 1, 1, "[\"view-private-information\"]", 2 },
                     { 2, 1, "[\"view-private-information\"]", 1 },
-                    { 3, 1, "{\"Permissions\":[\"view-private-information\"]}", 0 },
+                    { 3, 1, "[\"view-private-information\"]", 0 },
                     { 4, 2, "[\"view-private-information\"]", 2 },
-                    { 5, 2, "{\"Permissions\":[\"view-private-information\"]}", 0 },
+                    { 5, 2, "[\"view-private-information\"]", 0 },
                     { 6, 3, "[\"view-private-information\"]", 2 },
-                    { 7, 3, "{\"Permissions\":[\"view-private-information\"]}", 0 }
+                    { 7, 3, "[\"view-private-information\"]", 0 }
                 });
 
             migrationBuilder.InsertData(
