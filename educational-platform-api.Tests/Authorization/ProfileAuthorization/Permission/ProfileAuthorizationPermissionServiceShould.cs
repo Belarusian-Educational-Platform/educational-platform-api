@@ -26,7 +26,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
         }
 
         [TestMethod()]
-        public void Return_permissionSet_As_Expected()
+        public void Get_Profile_Permissions_As_Expected()
         {
             // Arrange
             var profileOrganizationRelation = new ProfileOrganizationRelation()
