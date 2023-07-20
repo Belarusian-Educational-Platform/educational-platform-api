@@ -11,8 +11,8 @@ using educational_platform_api.Contexts;
 namespace educational_platform_api.Migrations
 {
     [DbContext(typeof(MySQLContext))]
-    [Migration("20230719111113_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230720081613_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,9 +272,8 @@ namespace educational_platform_api.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProfileType")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -288,7 +287,7 @@ namespace educational_platform_api.Migrations
                             ContactEmail = "hotjames4u@quebecstart.com",
                             ContactPhone = "+375 29 403-72-60",
                             OrganizationId = 1,
-                            ProfileType = "student"
+                            Type = 0
                         },
                         new
                         {
@@ -297,7 +296,7 @@ namespace educational_platform_api.Migrations
                             ContactEmail = "reiianx@gasss.net",
                             ContactPhone = "+375 44 164-23-69",
                             OrganizationId = 1,
-                            ProfileType = "student"
+                            Type = 0
                         },
                         new
                         {
@@ -306,7 +305,7 @@ namespace educational_platform_api.Migrations
                             ContactEmail = "kxarmark@cbdnut.net",
                             ContactPhone = "+375 29 352-28-10",
                             OrganizationId = 1,
-                            ProfileType = "Teacher"
+                            Type = 1
                         },
                         new
                         {
@@ -315,7 +314,7 @@ namespace educational_platform_api.Migrations
                             ContactEmail = "imamikonyan@sannyfeina.art",
                             ContactPhone = "+375 33 938-46-86",
                             OrganizationId = 2,
-                            ProfileType = "student"
+                            Type = 0
                         },
                         new
                         {
@@ -324,7 +323,7 @@ namespace educational_platform_api.Migrations
                             ContactEmail = "franicomunication@gmisow.com",
                             ContactPhone = "+375 29 609-07-74",
                             OrganizationId = 2,
-                            ProfileType = "Teacher"
+                            Type = 1
                         },
                         new
                         {
@@ -333,7 +332,7 @@ namespace educational_platform_api.Migrations
                             ContactEmail = "psylio@yagatekimi.com",
                             ContactPhone = "+375 29 415-46-04",
                             OrganizationId = 3,
-                            ProfileType = "student"
+                            Type = 0
                         },
                         new
                         {
@@ -342,7 +341,7 @@ namespace educational_platform_api.Migrations
                             ContactEmail = "zulu54@pankasyno23.com",
                             ContactPhone = "+375 29 865-01-63",
                             OrganizationId = 3,
-                            ProfileType = "Teacher"
+                            Type = 1
                         });
                 });
 
