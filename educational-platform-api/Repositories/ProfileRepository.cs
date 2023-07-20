@@ -6,26 +6,26 @@ namespace educational_platform_api.Repositories
 {
     public class ProfileRepository : IProfileRepository, IAsyncDisposable
     {
-        private readonly MySQLContext dbContext;
+        private readonly MySQLContext _dbContext;
 
         public ProfileRepository(IDbContextFactory<MySQLContext> dbContextFactory)
         {
-            dbContext = dbContextFactory.CreateDbContext();
+            _dbContext = dbContextFactory.CreateDbContext();
         }
 
         public IEnumerable<Profile> GetProfiles()
         {
-            return dbContext.Profiles.ToList();
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return dbContext.DisposeAsync();
+            return _dbContext.Profiles.ToList();
         }
 
         public Profile GetProfile(int id)
         {
-            return dbContext.Find<Profile>(id);
+            return _dbContext.Find<Profile>(id);
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            return _dbContext.DisposeAsync();
         }
     }
 }

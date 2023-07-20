@@ -22,6 +22,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
         {
             foreach (var requirement in requirements)
             {
+                SaveRequiredInformation(requirement);
                 Requirements.Add(requirement);
             }
         }

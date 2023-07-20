@@ -4,11 +4,11 @@ namespace educational_platform_api.Services
 {
     public class GroupService : IGroupService
     {
-        private readonly IGroupRepository groupRepository;
+        private readonly IGroupRepository _groupRepository;
 
         public GroupService(IGroupRepository groupRepository)
         {
-            this.groupRepository = groupRepository;
+            _groupRepository = groupRepository;
         }
     }
 }

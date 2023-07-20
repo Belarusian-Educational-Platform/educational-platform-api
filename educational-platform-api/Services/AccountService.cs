@@ -4,11 +4,11 @@ namespace educational_platform_api.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly IAccountRepository accountRepository;
+        private readonly IAccountRepository _accountRepository;
 
         public AccountService(IAccountRepository accountRepository)
         {
-            this.accountRepository = accountRepository;
+            _accountRepository = accountRepository;
         }
     }
 }

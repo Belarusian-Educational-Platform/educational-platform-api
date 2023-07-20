@@ -6,22 +6,23 @@ namespace educational_platform_api.Repositories
 {
     public class ProfileGroupRelationRepository : IProfileGroupRelationRepository, IAsyncDisposable
     {
-        private readonly MySQLContext dbContext;
+        private readonly MySQLContext _dbContext;
 
         public ProfileGroupRelationRepository(IDbContextFactory<MySQLContext> dbContextFactory)
         {
-            dbContext = dbContextFactory.CreateDbContext();
+            _dbContext = dbContextFactory.CreateDbContext();
         }
 
         public ValueTask DisposeAsync()
         {
-            return dbContext.DisposeAsync();
+            return _dbContext.DisposeAsync();
         }
 
         public ProfileGroupRelation GetRelation(int profileId, int groupId)
         {
-            ProfileGroupRelation relation = dbContext.ProfileGroupRelations
-                .First(predicate: relation => relation.ProfileId == profileId && relation.GroupId == groupId);
+            ProfileGroupRelation relation = _dbContext.ProfileGroupRelations
+                .First(relation => relation.ProfileId == profileId && relation.GroupId == groupId);
+
             return relation;
         }
     }

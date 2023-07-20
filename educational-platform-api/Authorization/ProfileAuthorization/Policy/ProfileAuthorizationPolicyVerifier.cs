@@ -9,6 +9,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
     public class ProfileAuthorizationPolicyVerifier : IProfileAuthorizationPolicyVerifier
     {
         private readonly IProfileAuthorizationPermissionService _permissionService;
+
         public ProfileAuthorizationPolicyVerifier(IProfileAuthorizationPermissionService permissionService)
         {
             _permissionService = permissionService;
@@ -27,7 +28,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
 
             foreach (ProfileAuthorizationPermission requirement in policy.Requierements)
             {
-                if (!profilePermissions.HasPermissions(requirement))
+                if (!profilePermissions.HasPermission(requirement))
                 {
                     return false;
                 }
@@ -35,7 +36,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
 
             foreach (AssertionPredicate assertion in policy.Assertions)
             {
-                if (!assertion(profilePermissions.HasPermissions))
+                if (!assertion(profilePermissions.HasPermission))
                 {
                     return false;
                 }

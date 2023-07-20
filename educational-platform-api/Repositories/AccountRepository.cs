@@ -5,16 +5,16 @@ namespace educational_platform_api.Repositories
 {
     public class AccountRepository : IAccountRepository, IAsyncDisposable
     {
-        private readonly MySQLContext dbContext;
+        private readonly MySQLContext _dbContext;
 
         public AccountRepository(IDbContextFactory<MySQLContext> dbContextFactory)
         {
-            dbContext = dbContextFactory.CreateDbContext();
+            _dbContext = dbContextFactory.CreateDbContext();
         }
 
         public ValueTask DisposeAsync()
         {
-            return dbContext.DisposeAsync();
+            return _dbContext.DisposeAsync();
         }
     }
 }

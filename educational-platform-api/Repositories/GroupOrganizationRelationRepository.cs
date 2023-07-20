@@ -5,16 +5,16 @@ namespace educational_platform_api.Repositories
 {
     public class GroupOrganizationRelationRepository : IGroupOrganizationRelationRepository, IAsyncDisposable
     {
-        private readonly MySQLContext dbContext;
+        private readonly MySQLContext _dbContext;
 
         public GroupOrganizationRelationRepository(IDbContextFactory<MySQLContext> dbContextFactory)
         {
-            dbContext = dbContextFactory.CreateDbContext();
+            _dbContext = dbContextFactory.CreateDbContext();
         }
 
         public ValueTask DisposeAsync()
         {
-            return dbContext.DisposeAsync();
+            return _dbContext.DisposeAsync();
         }
     }
 }

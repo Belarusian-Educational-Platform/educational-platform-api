@@ -20,8 +20,12 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
             configure(verificationOptions);
 
             ProfileAuthorizationPolicy policy = _policyProvider.GetPolicy(verificationOptions.PolicyName);
-            _policyVerifier.Verify(policy, verificationOptions);
-        }
+            bool verificationResult = _policyVerifier.Verify(policy, verificationOptions);
 
+            if(!verificationResult)
+            {
+                throw new Exception("Profile authorization failed");
+            }
+        }
     }
 }

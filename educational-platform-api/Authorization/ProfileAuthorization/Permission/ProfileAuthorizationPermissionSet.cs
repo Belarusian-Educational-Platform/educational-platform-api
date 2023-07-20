@@ -1,5 +1,4 @@
-﻿using educational_platform_api.Repositories;
-using educational_platform_api.Types.Enums;
+﻿using educational_platform_api.Types.Enums;
 using System.Text.Json;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
@@ -23,9 +22,15 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
                 permissions.Add(permission);
             }
         }
-        public bool HasPermissions(ProfileAuthorizationPermission permission)
+
+        public bool HasPermission(ProfileAuthorizationPermission permission)
         {
             return permissions.Contains(permission);
+        }
+
+        public HashSet<ProfileAuthorizationPermission> GetPermissions() 
+        { 
+            return permissions; 
         }
     }
 }
