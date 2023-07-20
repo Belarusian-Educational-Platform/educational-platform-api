@@ -12,7 +12,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
         public void Add_Permissions_As_Expected()
         {
             // Arrange
-            var permissionSetMock = new Mock<ProfileAuthorizationPermissionSet>();
             var permissionLevel = ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION;
             string permissionsRaw = "[\"view-private-information\", \"create-profiles\"]";
 
@@ -22,7 +21,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
                 (permissionLevel, "create-profiles").ToPermission()
             };
 
-            var permissionSet = permissionSetMock.Object;
+            var permissionSet = new ProfileAuthorizationPermissionSet();
 
             // Act
             permissionSet.AddPermissions(permissionLevel, permissionsRaw);
@@ -35,12 +34,11 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
         public void Check_Permission_Existance_As_Expected()
         {
             // Arrange
-            var permissionSetMock = new Mock<ProfileAuthorizationPermissionSet>();
             var permissionLevel = ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION;
             string permissionsRaw = "[\"view-private-information\", \"create-profiles\"]";
             var permissionForCheck = (permissionLevel, "view-private-information").ToPermission();
 
-            var permissionSet = permissionSetMock.Object;
+            var permissionSet = new ProfileAuthorizationPermissionSet();
 
             permissionSet.AddPermissions(permissionLevel, permissionsRaw);
 

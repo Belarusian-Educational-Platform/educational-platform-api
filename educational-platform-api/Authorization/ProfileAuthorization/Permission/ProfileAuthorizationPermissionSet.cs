@@ -1,5 +1,4 @@
-﻿using educational_platform_api.Repositories;
-using educational_platform_api.Types.Enums;
+﻿using educational_platform_api.Types.Enums;
 using System.Text.Json;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
