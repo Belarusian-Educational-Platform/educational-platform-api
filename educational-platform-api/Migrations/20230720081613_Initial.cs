@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace educational_platform_api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -131,8 +131,7 @@ namespace educational_platform_api.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ContactPhone = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProfileType = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     OrganizationId = table.Column<int>(type: "int", nullable: false),
                     AccountId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -262,16 +261,16 @@ namespace educational_platform_api.Migrations
 
             migrationBuilder.InsertData(
                 table: "Profiles",
-                columns: new[] { "Id", "AccountId", "ContactEmail", "ContactPhone", "OrganizationId", "ProfileType" },
+                columns: new[] { "Id", "AccountId", "ContactEmail", "ContactPhone", "OrganizationId", "Type" },
                 values: new object[,]
                 {
-                    { 1, 1, "hotjames4u@quebecstart.com", "+375 29 403-72-60", 1, "student" },
-                    { 2, 2, "reiianx@gasss.net", "+375 44 164-23-69", 1, "student" },
-                    { 3, 3, "kxarmark@cbdnut.net", "+375 29 352-28-10", 1, "Teacher" },
-                    { 4, 4, "imamikonyan@sannyfeina.art", "+375 33 938-46-86", 2, "student" },
-                    { 5, 5, "franicomunication@gmisow.com", "+375 29 609-07-74", 2, "Teacher" },
-                    { 6, 6, "psylio@yagatekimi.com", "+375 29 415-46-04", 3, "student" },
-                    { 7, 7, "zulu54@pankasyno23.com", "+375 29 865-01-63", 3, "Teacher" }
+                    { 1, 1, "hotjames4u@quebecstart.com", "+375 29 403-72-60", 1, 0 },
+                    { 2, 2, "reiianx@gasss.net", "+375 44 164-23-69", 1, 0 },
+                    { 3, 3, "kxarmark@cbdnut.net", "+375 29 352-28-10", 1, 1 },
+                    { 4, 4, "imamikonyan@sannyfeina.art", "+375 33 938-46-86", 2, 0 },
+                    { 5, 5, "franicomunication@gmisow.com", "+375 29 609-07-74", 2, 1 },
+                    { 6, 6, "psylio@yagatekimi.com", "+375 29 415-46-04", 3, 0 },
+                    { 7, 7, "zulu54@pankasyno23.com", "+375 29 865-01-63", 3, 1 }
                 });
 
             migrationBuilder.InsertData(
