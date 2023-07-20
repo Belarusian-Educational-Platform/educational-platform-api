@@ -9,7 +9,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
     [TestClass()]
     public class ProfileAuthorizationPermissionServiceShould
     {
-        private readonly ProfileAuthorizationPermissionService _permissionService;
+        private readonly IProfileAuthorizationPermissionService _permissionService;
         private readonly Mock<IProfileOrganizationRelationRepository> _organizationRelationRepositoryMock;
         private readonly Mock<IProfileGroupRelationRepository> _groupRelationRepositoryMock;
         private readonly Mock<IProfileSubgroupRelationRepository> _subgroupRelationRepositoryMock;
