@@ -9,7 +9,7 @@ namespace educational_platform_api.Filters
         {
             if ( typeof(BaseOrganizationException).IsAssignableFrom(error.Exception.GetType()))
             {
-                return error.WithMessage("Exception inhearts BaseOrganizationException");
+                return error.WithMessage("Exception inherits BaseOrganizationException");
             }
             else
             {
