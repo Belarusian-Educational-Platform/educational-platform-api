@@ -3,7 +3,7 @@
     [TestClass()]
     public class ProfileAuthorizationPolicyBuilderShould
     {
-        [TestMethod()]
+        /*[TestMethod()]
         public void AddRequirementsTest()
         {
             Assert.Fail();
@@ -19,6 +19,6 @@
         public void BuildTest()
         {
             Assert.Fail();
-        }
+        }*/
     }
 }

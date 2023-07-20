@@ -6,7 +6,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
 {
     public class ProfileAuthorizationPermissionSet
     {
-        public HashSet<ProfileAuthorizationPermission> permissions = new();
+        private HashSet<ProfileAuthorizationPermission> permissions = new();
 
         private List<string> ParsePermissions(string rawPermissions)
         {
@@ -24,7 +24,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             }
         }
 
-        public bool HasPermissions(ProfileAuthorizationPermission permission)
+        public bool HasPermission(ProfileAuthorizationPermission permission)
         {
             return permissions.Contains(permission);
         }
