@@ -23,7 +23,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Tests
         }
 
         [TestMethod()]
-        public void Authorize_As_Expected()
+        public void Throw_Exception_When_Verification_Failed_While_Authorizing()
         {
             // Arrange
             Action<ProfileAuthorizationPolicyBuilder> configurePolicyBuilder = (policy) =>
