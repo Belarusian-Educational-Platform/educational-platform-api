@@ -9,7 +9,7 @@ namespace educational_platform_api.Filters
         {
             if ( typeof(BaseProfileException).IsAssignableFrom(error.Exception.GetType()))
             {
-                return error.WithMessage("Exception inhearts BaseUserException");
+                return error.WithMessage("Exception inherits BaseUserException");
             }
             else
             {
