@@ -8,7 +8,6 @@ namespace educational_platform_api.Filters
         {
             if (error.Exception is null)
             {
-                //Add exception to error? Throw new error with null exception?Process all errors with null exceptions there?
                 return error.WithException(new Exception());
             }
             else
@@ -18,7 +17,3 @@ namespace educational_platform_api.Filters
         }
     }
 }
-
-/*
- How to better separate different exteptions types onto folders with their base exceptions
- */
