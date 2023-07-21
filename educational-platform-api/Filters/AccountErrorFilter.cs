@@ -1,5 +1,5 @@
 ﻿using HotChocolate;
-using educational_platform_api.Exceptions;
+using educational_platform_api.Exceptions.BusinessLogicExceptions;
 
 namespace educational_platform_api.Filters
 {

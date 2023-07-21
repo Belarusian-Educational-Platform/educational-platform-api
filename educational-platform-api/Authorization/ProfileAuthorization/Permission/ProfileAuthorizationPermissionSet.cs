@@ -1,7 +1,5 @@
-﻿using educational_platform_api.Exceptions;
-using educational_platform_api.Repositories;
+﻿using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 using educational_platform_api.Types.Enums;
-using System.Data;
 using System.Text.Json;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
