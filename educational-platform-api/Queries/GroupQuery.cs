@@ -3,6 +3,7 @@ using educational_platform_api.Middlewares.UseAccount;
 using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;
 using educational_platform_api.Services;
+using HotChocolate.Authorization;
 
 namespace educational_platform_api.Queries
 {
@@ -19,6 +20,7 @@ namespace educational_platform_api.Queries
         }
 
         [GraphQLName("groupById")]
+        [Authorize]
         [UseAccount]
         [UseProfile]
         public Group GetGroup([Service] IGroupService groupService, 
@@ -26,12 +28,12 @@ namespace educational_platform_api.Queries
             [Account] Account account, [Profile] Profile profile,
             int id)
         {
-            profileAuthService.AuthorizeProfile(verificationOptions =>
+            /*profileAuthService.AuthorizeProfile(verificationOptions =>
             {
                 verificationOptions.AddProfile(profile.Id);
                 verificationOptions.AddPolicy("edit-group");
                 verificationOptions.AddGroup(id);
-            });
+            });*/
 
             return new Group();
         }

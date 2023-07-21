@@ -50,23 +50,25 @@
             },
             "MSTest.TestAdapter": {
               "target": "Package",
-              "version": "[2.2.10, )"
+              "version": "[3.1.1, )"
             },
             "MSTest.TestFramework": {
               "target": "Package",
-              "version": "[2.2.10, )"
+              "version": "[3.1.1, )"
             },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[17.5.0, )"
+              "version": "[17.6.3, )"
             },
             "Moq": {
               "target": "Package",
               "version": "[4.18.4, )"
             },
             "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[6.0.0, )"
             }
           },
           "imports": [
@@ -132,7 +134,7 @@
             },
             "HotChocolate.AspNetCore": {
               "target": "Package",
-              "version": "[13.2.1, )"
+              "version": "[13.3.3, )"
             },
             "HotChocolate.AspNetCore.Authorization": {
               "target": "Package",
@@ -140,11 +142,11 @@
             },
             "HotChocolate.Data": {
               "target": "Package",
-              "version": "[13.2.1, )"
+              "version": "[13.3.3, )"
             },
             "HotChocolate.Data.EntityFramework": {
               "target": "Package",
-              "version": "[13.2.1, )"
+              "version": "[13.3.3, )"
             },
             "Keycloak.AuthServices.Authentication": {
               "target": "Package",
@@ -156,23 +158,23 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.7, )"
+              "version": "[7.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.7, )"
+              "version": "[7.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[7.0.7, )"
+              "version": "[7.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.7, )"
+              "version": "[7.0.9, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
