@@ -1,21 +1,26 @@
-using educational_platform_api.Contexts;
 using Microsoft.EntityFrameworkCore;
 using educational_platform_api.Extensions.Services;
+using Keycloak.AuthServices.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigurationManager configuration = builder.Configuration;
 
 var AllowOrigins = "_allowOrigins";
 
-// Context
-builder.Services.AddPooledDbContextFactory<MySQLContext>(options => {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-});
+var dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
+
+var authenticationOptions = builder.Configuration
+    .GetSection(KeycloakAuthenticationOptions.Section)
+    .Get<KeycloakAuthenticationOptions>()!;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Context
+builder.Services.AddDbContext(dbConnectionString);
+
+// Keycloak
+builder.Services.SetupKeycloak(authenticationOptions);
 
 // Profile authorization
 builder.Services.SetupProfileAuthorization();
@@ -54,6 +59,8 @@ if (app.Environment.IsDevelopment())
 app.MapGraphQL();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

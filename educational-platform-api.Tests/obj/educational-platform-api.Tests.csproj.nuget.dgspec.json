@@ -134,6 +134,10 @@
               "target": "Package",
               "version": "[13.2.1, )"
             },
+            "HotChocolate.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[13.3.3, )"
+            },
             "HotChocolate.Data": {
               "target": "Package",
               "version": "[13.2.1, )"
@@ -141,6 +145,14 @@
             "HotChocolate.Data.EntityFramework": {
               "target": "Package",
               "version": "[13.2.1, )"
+            },
+            "Keycloak.AuthServices.Authentication": {
+              "target": "Package",
+              "version": "[1.5.2, )"
+            },
+            "Keycloak.AuthServices.Authorization": {
+              "target": "Package",
+              "version": "[1.5.2, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
