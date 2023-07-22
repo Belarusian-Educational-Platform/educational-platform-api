@@ -10,7 +10,7 @@ using educational_platform_api.Contexts;
 namespace educational_platform_api.Migrations
 {
     [DbContext(typeof(MySQLContext))]
-    [Migration("20230722090955_InitialCreate")]
+    [Migration("20230722104215_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -140,14 +140,18 @@ namespace educational_platform_api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ContactEmail")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ContactPhone")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("KeycloakId")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -165,63 +169,70 @@ namespace educational_platform_api.Migrations
                         new
                         {
                             Id = 1,
-                            AccountId = 1,
                             ContactEmail = "hotjames4u@quebecstart.com",
                             ContactPhone = "+375 29 403-72-60",
+                            IsActive = true,
+                            KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7f",
                             OrganizationId = 1,
                             Type = 0
                         },
                         new
                         {
                             Id = 2,
-                            AccountId = 2,
                             ContactEmail = "reiianx@gasss.net",
                             ContactPhone = "+375 44 164-23-69",
+                            IsActive = false,
+                            KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7f",
                             OrganizationId = 1,
                             Type = 0
                         },
                         new
                         {
                             Id = 3,
-                            AccountId = 3,
                             ContactEmail = "kxarmark@cbdnut.net",
                             ContactPhone = "+375 29 352-28-10",
+                            IsActive = true,
+                            KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7g",
                             OrganizationId = 1,
                             Type = 1
                         },
                         new
                         {
                             Id = 4,
-                            AccountId = 4,
                             ContactEmail = "imamikonyan@sannyfeina.art",
                             ContactPhone = "+375 33 938-46-86",
+                            IsActive = false,
+                            KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7g",
                             OrganizationId = 2,
                             Type = 0
                         },
                         new
                         {
                             Id = 5,
-                            AccountId = 5,
                             ContactEmail = "franicomunication@gmisow.com",
                             ContactPhone = "+375 29 609-07-74",
+                            IsActive = false,
+                            KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7g",
                             OrganizationId = 2,
                             Type = 1
                         },
                         new
                         {
                             Id = 6,
-                            AccountId = 6,
                             ContactEmail = "psylio@yagatekimi.com",
                             ContactPhone = "+375 29 415-46-04",
+                            IsActive = true,
+                            KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7c",
                             OrganizationId = 3,
                             Type = 0
                         },
                         new
                         {
                             Id = 7,
-                            AccountId = 7,
                             ContactEmail = "zulu54@pankasyno23.com",
                             ContactPhone = "+375 29 865-01-63",
+                            IsActive = true,
+                            KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7c",
                             OrganizationId = 3,
                             Type = 1
                         });

@@ -18,8 +18,7 @@ namespace educational_platform_api.Middlewares.UseAccount
             IObjectFieldDescriptor descriptor,
             MemberInfo member)
         {
-            descriptor.Use((provider, next) => 
-                new AccountMiddleware(next, provider.GetRequiredService<IValidator<Account>>()));
+            descriptor.Use<AccountMiddleware>();
         }
     }
 }

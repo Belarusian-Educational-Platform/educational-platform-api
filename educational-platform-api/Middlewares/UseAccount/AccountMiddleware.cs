@@ -12,20 +12,19 @@ namespace educational_platform_api.Middlewares.UseAccount
         public const string ACCOUNT_CONTEXT_DATA_KEY = "Account";
 
         private readonly FieldDelegate _next;
-        private readonly IValidator<Account> _accountValidator;
 
-        public AccountMiddleware(FieldDelegate next, IValidator<Account> accountValidator)
+        public AccountMiddleware(FieldDelegate next)
         {
             _next = next;
-            _accountValidator = accountValidator;
         }
 
-        public async Task InvokeAsync(IMiddlewareContext context)
+        public async Task InvokeAsync(IMiddlewareContext context, 
+            [Service] IValidator<Account> accountValidator)
         {   
-            if(context.ContextData.TryGetValue("ClaimsPrincipal", out object rawClaimsPrincipal) 
+            if(context.ContextData.TryGetValue("ClaimsPrincipal", out object? rawClaimsPrincipal) 
                 && rawClaimsPrincipal is ClaimsPrincipal claimsPrincipal)
             {
-                string rawBirthday = claimsPrincipal.FindFirstValue(KeycloakAccountClaimType.Birthday);
+                string? rawBirthday = claimsPrincipal.FindFirstValue(KeycloakAccountClaimType.Birthday);
                 bool birthdayParseResult = DateOnly.TryParseExact(rawBirthday, "dd/MM/yyyy", out DateOnly birthday);
 
                 Account account = new Account()
@@ -39,13 +38,16 @@ namespace educational_platform_api.Middlewares.UseAccount
                     Email = claimsPrincipal.FindFirstValue(KeycloakAccountClaimType.Email)
                 };
 
-                ValidationResult validationResult = _accountValidator.Validate(account);
+                ValidationResult validationResult = accountValidator.Validate(account);
                 if(!validationResult.IsValid)
                 {
                     throw new Exception("Account validation failed!");
                 }
 
                 context.ContextData.Add(ACCOUNT_CONTEXT_DATA_KEY, account);
+            } else
+            {
+                throw new Exception("Something went wrong while accessing token data!");
             }
 
             await _next(context);

@@ -18,7 +18,8 @@ namespace educational_platform_api.TestData
                     ContactPhone = "+375 29 403-72-60",
                     Type = ProfileType.student, 
                     OrganizationId = 1,
-                    AccountId= 1,
+                    KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7f",
+                    IsActive = true,
                 },
                 new Profile
                 {
@@ -27,7 +28,8 @@ namespace educational_platform_api.TestData
                     ContactPhone = "+375 44 164-23-69",
                     Type = ProfileType.student,
                     OrganizationId = 1,
-                    AccountId = 2,
+                    KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7f",
+                    IsActive = false,
                 },
                 new Profile
                 {
@@ -36,7 +38,8 @@ namespace educational_platform_api.TestData
                     ContactPhone = "+375 29 352-28-10",
                     Type = ProfileType.organizationEmployee,
                     OrganizationId = 1,
-                    AccountId = 3,
+                    KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7g",
+                    IsActive = true,
                 },
                 new Profile
                 {
@@ -45,7 +48,8 @@ namespace educational_platform_api.TestData
                     ContactPhone = "+375 33 938-46-86",
                     Type = ProfileType.student,
                     OrganizationId = 2,
-                    AccountId = 4,
+                    KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7g",
+                    IsActive = false,
                 },
                 new Profile
                 {
@@ -54,7 +58,8 @@ namespace educational_platform_api.TestData
                     ContactPhone = "+375 29 609-07-74",
                     Type = ProfileType.organizationEmployee,
                     OrganizationId = 2,
-                    AccountId = 5,
+                    KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7g",
+                    IsActive = false,
                 },
                 new Profile
                 {
@@ -63,7 +68,8 @@ namespace educational_platform_api.TestData
                     ContactPhone = "+375 29 415-46-04",
                     Type = ProfileType.student,
                     OrganizationId = 3,
-                    AccountId = 6,
+                    KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7c",
+                    IsActive = true,
                 },
                 new Profile
                 {
@@ -72,7 +78,8 @@ namespace educational_platform_api.TestData
                     ContactPhone = "+375 29 865-01-63",
                     Type = ProfileType.organizationEmployee,
                     OrganizationId = 3,
-                    AccountId = 7,
+                    KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7c",
+                    IsActive = true,
                 }
                 );
         }

@@ -6,5 +6,6 @@ namespace educational_platform_api.Services
     {
         public IEnumerable<Profile> GetProfiles();
         public Profile GetProfileById(int id);
+        public Profile GetActiveProfile(string keycloakId);
     }
 }

@@ -23,6 +23,12 @@ namespace educational_platform_api.Repositories
             return _dbContext.Find<Profile>(id);
         }
 
+        public Profile GetActiveProfile(string keycloakId)
+        {
+            return _dbContext.Profiles.FirstOrDefault(profile => 
+                profile.KeycloakId == keycloakId && profile.IsActive);
+        }
+
         public ValueTask DisposeAsync()
         {
             return _dbContext.DisposeAsync();
