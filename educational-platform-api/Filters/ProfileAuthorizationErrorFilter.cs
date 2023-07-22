@@ -1,6 +1,7 @@
 ﻿using educational_platform_api.Exceptions.BusinessLogicExceptions;
 using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 using educational_platform_api.Exceptions.RepositoryExceptions.EnityNotFoundExceptions;
+using System.Runtime.CompilerServices;
 
 namespace educational_platform_api.Filters
 {
@@ -12,11 +13,14 @@ namespace educational_platform_api.Filters
             {
                 if (typeof(JSONPermissionsParseException).IsAssignableFrom(error.Exception.GetType()))
                 {
-                    return processJSONPermissionsParseException(error);
+                    return ProcessJSONPermissionsParseException(error);
                 }
                 else if (typeof(ProvidedAndRequestedPermissionsMismatchException).IsAssignableFrom(error.Exception.GetType()))
                 {
-                    return processProvidedAndRequestedPermissionsMismatch(error);
+                    return ProcessProvidedAndRequestedPermissionsMismatch(error);
+                }else if(typeof(RequestedPolicyNotExistsException).IsAssignableFrom(error.Exception.GetType()))
+                {
+                    return ProcessRequestedPolicyDoesNotExistsException(error);
                 }
                 else
                 {
@@ -28,13 +32,17 @@ namespace educational_platform_api.Filters
                 return error;
             }
         }
-        private IError processJSONPermissionsParseException(IError error)
+        private IError ProcessJSONPermissionsParseException(IError error)
         {
                 return error.WithMessage("processJSONPermissionsParseException");
         }
-        private IError processProvidedAndRequestedPermissionsMismatch(IError error)
+        private IError ProcessProvidedAndRequestedPermissionsMismatch(IError error)
         {
                 return error.WithMessage("processProvidedAndRequestedPermissionsMismatch");
+        }
+        private IError ProcessRequestedPolicyDoesNotExistsException(IError error)
+        {
+            return error.WithMessage("processRequestedPolicyDoesNotExistsException");
         }
     }
 }

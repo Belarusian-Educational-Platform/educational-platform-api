@@ -11,7 +11,7 @@ namespace educational_platform_api.Filters
             {
                 if (typeof(BaseEntityNotFoundException).IsAssignableFrom(error.Exception.GetType()))
                 {
-                    return processEntityNotFoundException(error);
+                    return ProcessEntityNotFoundException(error);
                 }
                 else
                 {
@@ -24,7 +24,7 @@ namespace educational_platform_api.Filters
             }
         }
 
-        private IError processEntityNotFoundException(IError error)
+        private IError ProcessEntityNotFoundException(IError error)
         {
             if (typeof(ProfileByIdNotFoundException).IsAssignableFrom(error.Exception.GetType()))
             {

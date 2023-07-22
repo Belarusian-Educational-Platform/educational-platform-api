@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.Authorization.ProfileAuthorization.Policy;
+using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization
 {
@@ -17,7 +18,14 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
 
         public ProfileAuthorizationPolicy GetPolicy(string policyName)
         {
-            return ProfilePolicyMap[policyName];
+            if (!ProfilePolicyMap.ContainsKey(policyName))
+            {
+                throw new RequestedPolicyNotExistsException(); 
+            }
+            else
+            {
+                return ProfilePolicyMap[policyName];
+            }
         }
     }
 }
