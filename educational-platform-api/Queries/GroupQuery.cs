@@ -19,6 +19,7 @@ namespace educational_platform_api.Queries
             return new List<Group>();
         }
 
+        
         [GraphQLName("groupById")]
         [Authorize]
         [UseAccount]

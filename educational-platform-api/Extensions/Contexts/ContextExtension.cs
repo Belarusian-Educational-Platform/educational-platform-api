@@ -15,8 +15,6 @@ namespace educational_platform_api.Extensions.Contexts
                .HasKey(c => new { c.Id });
             modelBuilder.Entity<Organization>()
                .HasKey(c => new { c.Id });
-            modelBuilder.Entity<Account>()
-                .HasKey(c => new { c.Id });
 
             modelBuilder.Entity<ProfileGroupRelation>()
                .HasKey(c => new { c.ProfileId, c.GroupId });

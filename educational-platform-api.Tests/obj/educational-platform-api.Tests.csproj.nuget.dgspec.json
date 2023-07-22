@@ -132,6 +132,10 @@
               "target": "Package",
               "version": "[11.3.0, )"
             },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.6.0, )"
+            },
             "HotChocolate.AspNetCore": {
               "target": "Package",
               "version": "[13.3.3, )"

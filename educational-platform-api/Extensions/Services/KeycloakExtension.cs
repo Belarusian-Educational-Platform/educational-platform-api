@@ -7,7 +7,10 @@ namespace educational_platform_api.Extensions.Services
         public static IServiceCollection SetupKeycloak(this IServiceCollection services, 
             KeycloakAuthenticationOptions authenticationOptions)
         {
-            services.AddKeycloakAuthentication(authenticationOptions);
+            services.AddKeycloakAuthentication(authenticationOptions, options =>
+            {
+                options.RequireHttpsMetadata = false;
+            });
 
             return services;
         }

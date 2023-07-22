@@ -1,5 +1,9 @@
-﻿using educational_platform_api.Repositories;
+﻿using educational_platform_api.Models;
+using educational_platform_api.Repositories;
 using educational_platform_api.Services;
+using educational_platform_api.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace educational_platform_api.Extensions.Services
 {
@@ -25,6 +29,15 @@ namespace educational_platform_api.Extensions.Services
                     .AddTransient<IProfileGroupRelationRepository, ProfileGroupRelationRepository>()
                     .AddTransient<IProfileSubgroupRelationRepository, ProfileSubgroupRelationRepository>()
                     .AddTransient<IGroupOrganizationRelationRepository, GroupOrganizationRelationRepository>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services
+                .AddFluentValidation()
+                .AddScoped<IValidator<Account>, AccountValidator>();
 
             return services;
         }

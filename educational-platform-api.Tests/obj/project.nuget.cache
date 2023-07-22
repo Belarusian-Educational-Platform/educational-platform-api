@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "mtx0fT/skpook4fLSy2ey4tuoll3XhclGP8ECWRB7s/wvTU1DSuY46no9pKuHCa+oPPB6sOLMxKipq/43EX6rA==",
+  "dgSpecHash": "CyZQrY9Kb1FNOrzdx+UNp5FRbKDZDMDoy3MPV0YEwcQ7+kQiSuJSkE7fIyxnlf4GfhXgofMLv0+nrXMA+e12GQ==",
   "success": true,
   "projectFilePath": "D:\\Daniil\\Projects\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api.Tests\\educational-platform-api.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\neokv\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\neokv\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\neokv\\.nuget\\packages\\fluentassertions\\6.11.0\\fluentassertions.6.11.0.nupkg.sha512",
-    "C:\\Users\\neokv\\.nuget\\packages\\fluentvalidation\\11.5.1\\fluentvalidation.11.5.1.nupkg.sha512",
+    "C:\\Users\\neokv\\.nuget\\packages\\fluentvalidation\\11.6.0\\fluentvalidation.11.6.0.nupkg.sha512",
     "C:\\Users\\neokv\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
-    "C:\\Users\\neokv\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
+    "C:\\Users\\neokv\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.6.0\\fluentvalidation.dependencyinjectionextensions.11.6.0.nupkg.sha512",
     "C:\\Users\\neokv\\.nuget\\packages\\greendonut\\13.3.3\\greendonut.13.3.3.nupkg.sha512",
     "C:\\Users\\neokv\\.nuget\\packages\\hotchocolate\\13.3.3\\hotchocolate.13.3.3.nupkg.sha512",
     "C:\\Users\\neokv\\.nuget\\packages\\hotchocolate.abstractions\\13.3.3\\hotchocolate.abstractions.13.3.3.nupkg.sha512",

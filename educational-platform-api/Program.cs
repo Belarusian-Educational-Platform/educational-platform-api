@@ -38,6 +38,7 @@ builder.Services
     .AddRepositories();
 
 // Validators
+builder.Services.AddValidators();
 
 // CORS Policy
 builder.Services.AddCors(p => p.AddPolicy(AllowOrigins, builder =>

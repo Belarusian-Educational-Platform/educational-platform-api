@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -9,38 +8,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace educational_platform_api.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Accounts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    KeycloakId = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FirstName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Surname = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Birthday = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Email = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
-                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -174,20 +147,6 @@ namespace educational_platform_api.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.InsertData(
-                table: "Accounts",
-                columns: new[] { "Id", "Birthday", "Email", "FirstName", "KeycloakId", "LastName", "Surname", "Username" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2004, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "hotjames4u@quebecstart.com", "Ulyana", "5e977527 - d00d - 42d3 - 9a4d - b2163352f05a", "Novik", "Kanstantsin", "Acrodocon" },
-                    { 2, new DateTime(2010, 7, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "reiianx@gasss.net", "Karyna", "5e977527 - d00d - 42d3 - 9a4d - b2163352f05a", "Novik", "Tsimur", "DialFule" },
-                    { 3, new DateTime(1990, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), "kxarmark@cbdnut.net", "Tsimur", "5e977527 - d00d - 42d3 - 9a4d - b2163352f05a", "Kavalioŭ", "Henadz", "AGiseNTi" },
-                    { 4, new DateTime(2008, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "imamikonyan@sannyfeina.art", "Artur", "5e977527 - d00d - 42d3 - 9a4d - b2163352f05a", "Kazlow", " Iryna", "OnViTITr" },
-                    { 5, new DateTime(1975, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "franicomunication@gmisow.com", "Yan", "5e977527 - d00d - 42d3 - 9a4d - b2163352f05a", "Kavalioŭ", "Marta", "LaCoLite" },
-                    { 6, new DateTime(2011, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "psylio@yagatekimi.com", "Karyna", "5e977527 - d00d - 42d3 - 9a4d - b2163352f05a", "Ivanow", " Ilia", "LIEnuMiE" },
-                    { 7, new DateTime(1994, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "zulu54@pankasyno23.com", "Hleb", "5e977527 - d00d - 42d3 - 9a4d - b2163352f05a", "Ivanow", "Kira", "NEtrATEl" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "GroupOrganizationRelations",
                 columns: new[] { "GroupId", "OrganizationId" },
                 values: new object[,]
@@ -287,9 +246,6 @@ namespace educational_platform_api.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Accounts");
-
             migrationBuilder.DropTable(
                 name: "GroupOrganizationRelations");
 

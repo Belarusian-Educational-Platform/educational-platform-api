@@ -6,7 +6,6 @@ namespace educational_platform_api.Contexts
 {
     public class MySQLContext : DbContext
     {
-        public DbSet<Account> Accounts { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Group> Groups { get; set; }
