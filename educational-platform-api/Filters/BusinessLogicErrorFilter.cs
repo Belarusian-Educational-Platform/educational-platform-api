@@ -8,10 +8,7 @@ namespace educational_platform_api.Filters
         {
             if (typeof(BaseBusinessLogicException).IsAssignableFrom(error.Exception.GetType()))
             {
-                if (typeof(BaseAccountException).IsAssignableFrom(error.Exception.GetType()))
-                {
-                    return ProcessAccountException(error);
-                }else if (typeof(BaseProfileException).IsAssignableFrom(error.Exception.GetType()))
+                if (typeof(BaseProfileException).IsAssignableFrom(error.Exception.GetType()))
                 {
                     return ProcessProfileException(error);
                 }
@@ -40,10 +37,6 @@ namespace educational_platform_api.Filters
         private IError ProcessProfileException(IError error)
         {
             return error.WithMessage("ProcessProfileExceptions");
-        }
-        private IError ProcessAccountException(IError error)
-        {
-            return error.WithMessage("ProcessAccountException");
         }
         private IError ProcessOrganizationException(IError error)
         {
