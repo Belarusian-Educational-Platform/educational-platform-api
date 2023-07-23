@@ -1,8 +1,6 @@
 ﻿using educational_platform_api.Authorization.ProfileAuthorization.Permission;
-using educational_platform_api.Repositories;
+using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 using educational_platform_api.Types;
-using educational_platform_api.Types.Enums;
-using System.Text.Json;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
 {
@@ -20,7 +18,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
         {
             if (!verificationOptions.VerificationLevels.SetEquals(policy.VerificationLevels))
             {
-                throw new Exception("Provided information is not enough to verify profile requirements");
+                throw new ProvidedAndRequestedPermissionsMismatchException();
             }
 
             var profilePermissions = _permissionService.GetProfilePermissions(verificationOptions);

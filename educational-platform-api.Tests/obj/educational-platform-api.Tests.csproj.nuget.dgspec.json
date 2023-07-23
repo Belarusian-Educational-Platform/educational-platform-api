@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\Daniil\\Projects\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api.Tests\\educational-platform-api.Tests.csproj": {}
   },
   "projects": {
@@ -15,6 +16,22 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\neokv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+    "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api.Tests\\educational-platform-api.Tests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api.Tests\\educational-platform-api.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api.Tests\\educational-platform-api.Tests.csproj",
+        "projectName": "educational-platform-api.Tests",
+        "projectPath": "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api.Tests\\educational-platform-api.Tests.csproj",
+        "packagesPath": "C:\\Users\\fobyt\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\fobyt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> update-exceptions_and_filters
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +45,13 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
+<<<<<<< HEAD
               "D:\\Daniil\\Projects\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api\\educational-platform-api.csproj": {
                 "projectPath": "D:\\Daniil\\Projects\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api\\educational-platform-api.csproj"
+=======
+              "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api\\educational-platform-api.csproj": {
+                "projectPath": "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api\\educational-platform-api.csproj"
+>>>>>>> update-exceptions_and_filters
               }
             }
           }
@@ -85,6 +107,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
@@ -100,6 +123,23 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\neokv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api\\educational-platform-api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api\\educational-platform-api.csproj",
+        "projectName": "educational-platform-api",
+        "projectPath": "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api\\educational-platform-api.csproj",
+        "packagesPath": "C:\\Users\\fobyt\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fobyt\\source\\repos\\Belarusian-Educational-Platform\\educational-platform-api\\educational-platform-api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\fobyt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> update-exceptions_and_filters
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -107,7 +147,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+<<<<<<< HEAD
           "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+=======
+>>>>>>> update-exceptions_and_filters
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -132,6 +175,7 @@
             },
             "HotChocolate.AspNetCore": {
               "target": "Package",
+<<<<<<< HEAD
               "version": "[13.2.1, )"
             },
             "HotChocolate.Data": {
@@ -145,22 +189,49 @@
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.7, )"
+=======
+              "version": "[13.3.3, )"
+            },
+            "HotChocolate.Data": {
+              "target": "Package",
+              "version": "[13.3.3, )"
+            },
+            "HotChocolate.Data.EntityFramework": {
+              "target": "Package",
+              "version": "[13.3.3, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+>>>>>>> update-exceptions_and_filters
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
+<<<<<<< HEAD
               "version": "[7.0.7, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
               "version": "[7.0.7, )"
+=======
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+>>>>>>> update-exceptions_and_filters
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
+<<<<<<< HEAD
               "version": "[7.0.7, )"
+=======
+              "version": "[7.0.9, )"
+>>>>>>> update-exceptions_and_filters
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
@@ -190,7 +261,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+>>>>>>> update-exceptions_and_filters
         }
       }
     }
