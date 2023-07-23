@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿using educational_platform_api.Types.Enums;
+=======
+﻿using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
+using educational_platform_api.Types.Enums;
+>>>>>>> update-exceptions_and_filters
 using System.Text.Json;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
@@ -9,8 +14,15 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
 
         private List<string> ParsePermissions(string rawPermissions)
         {
-            List<string> parsedPermissions = JsonSerializer.Deserialize<List<string>>(rawPermissions);//Exception???
-            return parsedPermissions;
+            try
+            {
+                List<string> parsedPermissions = JsonSerializer.Deserialize<List<string>>(rawPermissions);
+                return parsedPermissions;
+            }
+            catch (Exception e)
+            {
+                throw new JSONPermissionsParseException();
+            }
         }
 
         public void AddPermissions(ProfileAuthorizationPermissionLevel permissionLevel, string jsonPermissions) 
