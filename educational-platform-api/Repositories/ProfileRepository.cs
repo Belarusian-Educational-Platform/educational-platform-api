@@ -14,9 +14,16 @@ namespace educational_platform_api.Repositories
             _dbContext = dbContextFactory.CreateDbContext();
         }
 
+        public ValueTask DisposeAsync()
+        {
+            return _dbContext.DisposeAsync();
+        }
+
         public IEnumerable<Profile> GetProfiles()
         {
-            return _dbContext.Profiles.ToList();
+            List<Profile> profiles = _dbContext.Profiles.ToList();
+
+            return profiles;
         }
 
         public Profile GetProfile(int id)
@@ -24,12 +31,13 @@ namespace educational_platform_api.Repositories
             Profile profile;
             try
             {
-                profile = _dbContext.Find<Profile>(id);
+                profile = _dbContext.Profiles.First(profile => profile.Id == id);
             }
             catch (Exception ex)
             {
                 throw new ProfileByIdNotFoundException();
             }
+
             return profile;
         }
 
@@ -45,12 +53,17 @@ namespace educational_platform_api.Repositories
             {
                 throw new ProfileByIdNotFoundException();
             }
+
             return profile;
         }
 
-        public ValueTask DisposeAsync()
+        public IEnumerable<Profile> GetAccountProfiles(string keycloakId)
         {
-            return _dbContext.DisposeAsync();
+            List<Profile> accountProfiles = _dbContext.Profiles
+                .Where(profile => profile.KeycloakId == keycloakId)
+                .ToList();
+
+            return accountProfiles;
         }
     }
 }
