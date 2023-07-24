@@ -38,7 +38,7 @@ namespace educational_platform_api.Repositories
             Profile profile;
             try
             {
-                profile = _dbContext.Profiles.FirstOrDefault(profile =>
+                profile = _dbContext.Profiles.First(profile =>
                     profile.KeycloakId == keycloakId && profile.IsActive);
             }
             catch (Exception ex)
