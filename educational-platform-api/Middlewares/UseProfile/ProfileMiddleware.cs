@@ -1,7 +1,9 @@
 ﻿using educational_platform_api.Contexts;
 using educational_platform_api.Models;
 using educational_platform_api.Services;
+using educational_platform_api.Types;
 using HotChocolate.Resolvers;
+using System.Security.Claims;
 
 namespace educational_platform_api.Middlewares.UseProfile
 {
@@ -18,9 +20,19 @@ namespace educational_platform_api.Middlewares.UseProfile
 
         public async Task InvokeAsync(IMiddlewareContext context, [Service] IProfileService profileService)
         {
-            Profile profile = profileService.GetProfileById(1);
+            if (context.ContextData.TryGetValue("ClaimsPrincipal", out object rawClaimsPrincipal)
+                && rawClaimsPrincipal is ClaimsPrincipal claimsPrincipal)
+            {
+                string? keycloakId = claimsPrincipal.FindFirstValue(KeycloakAccountClaimType.Id);
+                if (keycloakId is null || keycloakId.Length == 0)
+                {
+                    throw new Exception("Keycloak Id wasn`t found!");
+                }
 
-            context.ContextData.Add(PROFILE_CONTEXT_DATA_KEY, profile);
+                Profile profile = profileService.GetActiveProfile(keycloakId);
+
+                context.ContextData.Add(PROFILE_CONTEXT_DATA_KEY, profile);
+            }
 
             await _next(context);
         }

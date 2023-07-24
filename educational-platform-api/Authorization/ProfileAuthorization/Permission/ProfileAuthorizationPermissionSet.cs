@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-﻿using educational_platform_api.Types.Enums;
-=======
-﻿using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
+using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 using educational_platform_api.Types.Enums;
->>>>>>> update-exceptions_and_filters
 using System.Text.Json;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization.Permission

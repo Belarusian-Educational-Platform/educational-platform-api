@@ -11,6 +11,7 @@ namespace educational_platform_api.Extensions.Services
         public static IRequestExecutorBuilder SetupGraphQLServer(this IServiceCollection services)
         {
             var requestExecutorBuilder = services.AddGraphQLServer()
+                    .AddAuthorization()
                     .AddFiltering()
                     .AddSorting()
                     .RegisterDbContext<MySQLContext>()

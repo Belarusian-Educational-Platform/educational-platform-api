@@ -9,6 +9,7 @@ namespace educational_platform_api.Models
         public string ContactPhone { get; set; }
         public ProfileType Type { get; set; }
         public int OrganizationId { get; set; }
-        public int AccountId { get; set; }
+        public string KeycloakId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

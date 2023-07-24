@@ -21,25 +21,36 @@ namespace educational_platform_api.Repositories
 
         public Profile GetProfile(int id)
         {
-<<<<<<< HEAD
-            return _dbContext.Find<Profile>(id);
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return _dbContext.DisposeAsync();
-=======
             Profile profile;
-            try 
+            try
             {
-                profile = dbContext.Find<Profile>(id);
+                profile = _dbContext.Find<Profile>(id);
             }
             catch (Exception ex)
             {
                 throw new ProfileByIdNotFoundException();
             }
             return profile;
->>>>>>> update-exceptions_and_filters
+        }
+
+        public Profile GetActiveProfile(string keycloakId)
+        {
+            Profile profile;
+            try
+            {
+                profile = _dbContext.Profiles.First(profile =>
+                    profile.KeycloakId == keycloakId && profile.IsActive);
+            }
+            catch (Exception ex)
+            {
+                throw new ProfileByIdNotFoundException();
+            }
+            return profile;
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            return _dbContext.DisposeAsync();
         }
     }
 }

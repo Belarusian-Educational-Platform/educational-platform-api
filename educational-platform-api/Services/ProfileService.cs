@@ -17,6 +17,11 @@ namespace educational_platform_api.Services
             return _profileRepository.GetProfile(id);
         }
 
+        public Profile GetActiveProfile(string keycloakId)
+        {
+            return _profileRepository.GetActiveProfile(keycloakId);
+        }
+
         public IEnumerable<Profile> GetProfiles()
         {
             return _profileRepository.GetProfiles();
