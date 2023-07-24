@@ -12,7 +12,7 @@ appsetting.json
     }
   },
   "ConnectionStrings": {
-    "DefaultConnection": "server=localhost; port=3306; database=educational-platform; user=root; password=daniil;"
+    "DefaultConnection": "server=localhost; port=3306; database=educational-platform; user=root; password=[password];"
   },
   "AllowedHosts": "*",
   "Keycloak": {
