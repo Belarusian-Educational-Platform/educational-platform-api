@@ -40,6 +40,9 @@ builder.Services
 // Validators
 builder.Services.AddValidators();
 
+// Auto mapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 // CORS Policy
 builder.Services.AddCors(p => p.AddPolicy(AllowOrigins, builder =>
 {

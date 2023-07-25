@@ -1,4 +1,5 @@
-﻿using educational_platform_api.Models;
+﻿using educational_platform_api.DTOs;
+using educational_platform_api.Models;
 using educational_platform_api.Repositories;
 using educational_platform_api.Services;
 using educational_platform_api.Validators;
@@ -37,7 +38,9 @@ namespace educational_platform_api.Extensions.Services
         {
             services
                 .AddFluentValidation()
-                .AddScoped<IValidator<Account>, AccountValidator>();
+                .AddScoped<AccountValidator>()
+                .AddScoped<CreateProfileInputValidator>()
+                .AddScoped<UpdateProfileInputValidator>();
 
             return services;
         }

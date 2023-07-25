@@ -19,6 +19,11 @@ namespace educational_platform_api.Repositories
             return _dbContext.DisposeAsync();
         }
 
+        private void Save()
+        {
+            _dbContext.SaveChanges();
+        }
+
         public IEnumerable<Profile> GetProfiles()
         {
             List<Profile> profiles = _dbContext.Profiles.ToList();
@@ -64,6 +69,38 @@ namespace educational_platform_api.Repositories
                 .ToList();
 
             return accountProfiles;
+        }
+
+        public Profile CreateProfile(Profile profile)
+        {
+            Profile profileEntity = _dbContext.Profiles.Add(profile).Entity;
+            Save();
+
+            return profileEntity;
+        }
+
+        public Profile UpdateProfile(Profile profile)
+        {
+            _dbContext.Profiles.Attach(profile);
+            _dbContext.Entry(profile).State = EntityState.Modified;
+            try
+            {
+                Save();
+            } catch (Exception ex)
+            {
+                throw new ProfileByIdNotFoundException();
+            }
+
+            return profile;
+        }
+
+        public bool DeleteProfile(int id)
+        {
+            Profile profile = GetProfile(id);
+            _dbContext.Profiles.Remove(profile);
+            Save();
+
+            return true;
         }
     }
 }
