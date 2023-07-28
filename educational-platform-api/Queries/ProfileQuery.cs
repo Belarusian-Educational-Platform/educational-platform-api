@@ -38,7 +38,7 @@ namespace educational_platform_api.Queries
         [Authorize]
         [GraphQLName("myActiveProfile")]
         [UseProfile]
-        public Profile GetMyProfiles([Service] IProfileService profileService, 
+        public Profile GetMyProfile([Service] IProfileService profileService, 
             [Profile] Profile profile)
         {
             return profile;

@@ -2,6 +2,6 @@
 {
     public interface IProfileAuthorizationService
     {
-        public void AuthorizeProfile(Action<ProfileAuthorizationVerificationOptions> configure);
+        public void Authorize(Action<ProfileAuthorizationVerificationOptions> configure);
     }
 }

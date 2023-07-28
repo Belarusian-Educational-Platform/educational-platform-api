@@ -10,7 +10,7 @@ namespace educational_platform_api.Repositories
         public Profile GetActiveProfile(string keycloakId);
 
         public Profile CreateProfile(Profile profile);
-        public Profile UpdateProfile(Profile profile);
-        public bool DeleteProfile(int id);
+        public void UpdateProfile(Profile profile);
+        public void DeleteProfile(Profile profile);
     }
 }

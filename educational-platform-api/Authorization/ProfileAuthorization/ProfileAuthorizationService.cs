@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.Authorization.ProfileAuthorization.Policy;
+using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization
 {
@@ -14,7 +15,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
             _policyVerifier = policyVerifier;
         }
 
-        public void AuthorizeProfile(Action<ProfileAuthorizationVerificationOptions> configure)
+        public void Authorize(Action<ProfileAuthorizationVerificationOptions> configure)
         {
             var verificationOptions = new ProfileAuthorizationVerificationOptions();
             configure(verificationOptions);
@@ -24,7 +25,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
 
             if(!verificationResult)
             {
-                throw new Exception("Profile authorization failed");
+                throw new ProfileUnauthorizedException();
             }
         }
     }

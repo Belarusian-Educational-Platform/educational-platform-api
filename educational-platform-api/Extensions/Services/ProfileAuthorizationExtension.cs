@@ -12,19 +12,16 @@ namespace educational_platform_api.Extensions.Services
         {
             services.AddProfileAuthorization(options =>
             {
-                options.AddPolicy("edit-group", policy =>
+                options.AddPolicy("CreateProfile", policy =>
                 {
                     policy.AddRequirements(
-                        (ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "view-private-information").ToPermission()
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "create-profiles").ToPermission()
                     );
-
-                    policy.RequireAssertion(process =>
-                        process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "view-private-information").ToPermission())
-                    );
-
-                    policy.RequireAssertion(process =>
-                        process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "edit-group").ToPermission()) ||
-                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "edit-group").ToPermission())
+                });
+                options.AddPolicy("DeleteProfile", policy =>
+                {
+                    policy.AddRequirements(
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "delete-profiles").ToPermission()
                     );
                 });
             });

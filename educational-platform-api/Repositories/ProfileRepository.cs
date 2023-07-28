@@ -1,5 +1,8 @@
 ﻿using educational_platform_api.Contexts;
 using educational_platform_api.Exceptions.RepositoryExceptions.EnityNotFoundExceptions;
+using educational_platform_api.Exceptions.RepositoryExceptions.EntityCreateException;
+using educational_platform_api.Exceptions.RepositoryExceptions.EntityDeleteException;
+using educational_platform_api.Exceptions.RepositoryExceptions.EntityUpdateException;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,7 +43,7 @@ namespace educational_platform_api.Repositories
             }
             catch (Exception ex)
             {
-                throw new ProfileByIdNotFoundException();
+                throw new ProfileByIdNotFoundException(ex.Message, ex);
             }
 
             return profile;
@@ -56,7 +59,7 @@ namespace educational_platform_api.Repositories
             }
             catch (Exception ex)
             {
-                throw new ProfileByIdNotFoundException();
+                throw new ProfileByIdNotFoundException(ex.Message, ex);
             }
 
             return profile;
@@ -73,34 +76,42 @@ namespace educational_platform_api.Repositories
 
         public Profile CreateProfile(Profile profile)
         {
-            Profile profileEntity = _dbContext.Profiles.Add(profile).Entity;
-            Save();
+            Profile profileEntity;
+            try
+            {
+                profileEntity = _dbContext.Profiles.Add(profile).Entity;
+                Save();
+            } catch (Exception ex)
+            {
+                throw new ProfileCreateException(ex.Message, ex);
+            }
 
             return profileEntity;
         }
 
-        public Profile UpdateProfile(Profile profile)
+        public void UpdateProfile(Profile profile)
         {
-            _dbContext.Profiles.Attach(profile);
-            _dbContext.Entry(profile).State = EntityState.Modified;
             try
             {
+                _dbContext.Profiles.Attach(profile);
+                _dbContext.Entry(profile).State = EntityState.Modified;
                 Save();
             } catch (Exception ex)
             {
-                throw new ProfileByIdNotFoundException();
+                throw new ProfileUpdateException(ex.Message, ex);
             }
-
-            return profile;
         }
 
-        public bool DeleteProfile(int id)
+        public void DeleteProfile(Profile profile)
         {
-            Profile profile = GetProfile(id);
-            _dbContext.Profiles.Remove(profile);
-            Save();
-
-            return true;
+            try
+            {
+                _dbContext.Profiles.Remove(profile);
+                Save();
+            } catch (Exception ex) 
+            {
+                throw new ProfileDeleteException(ex.Message, ex);
+            }
         }
     }
 }

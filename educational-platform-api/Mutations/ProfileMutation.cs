@@ -1,5 +1,8 @@
 ﻿using AppAny.HotChocolate.FluentValidation;
+using educational_platform_api.Authorization.ProfileAuthorization;
 using educational_platform_api.DTOs;
+using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
+using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;
 using educational_platform_api.Services;
 using educational_platform_api.Validators;
@@ -12,9 +15,20 @@ namespace educational_platform_api.Mutations
     {
         [Authorize]
         [GraphQLName("createProfile")]
-        public Profile CreateProfile([Service] IProfileService profileService, 
-             [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput profileInput)
+        [UseProfile]
+        public Profile CreateProfile(
+            [Service] IProfileService profileService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Profile] Profile _profile_,
+            [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput profileInput)
         {
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("CreateProfile");
+                options.AddProfile(_profile_.Id);
+                options.AddOrganization();
+            });
+
             Profile profile = profileService.CreateProfile(profileInput);
 
             return profile;
@@ -22,19 +36,40 @@ namespace educational_platform_api.Mutations
 
         [Authorize]
         [GraphQLName("updateProfile")]
-        public Profile UpdateProfile([Service] IProfileService profileService, 
-            [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput profileInput)
+        [UseProfile]
+        public bool UpdateProfile([Service] IProfileService profileService, 
+            [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput profileInput,
+            [Profile] Profile _profile_)
         {
-            Profile profile = profileService.UpdateProfile(profileInput);
+            if (_profile_.Id != profileInput.Id)
+            {
+                throw new ProfileUnauthorizedException();
+            }
 
-            return profile;
+            profileService.UpdateProfile(profileInput);
+
+            return true;
         }
 
         [Authorize]
         [GraphQLName("deleteProfile")]
-        public bool DeleteProfile([Service] IProfileService profileService, int id)
+        [UseProfile]
+        public bool DeleteProfile(
+            [Service] IProfileService profileService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Profile] Profile _profile_,
+            int id)
         {
-            return profileService.DeleteProfile(id);
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("DeleteProfile");
+                options.AddProfile(_profile_.Id);
+                options.AddOrganization();
+            });
+
+            profileService.DeleteProfile(id);
+
+            return true;
         }
     }
 }

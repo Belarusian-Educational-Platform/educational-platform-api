@@ -11,7 +11,7 @@ namespace educational_platform_api.Services
         public Profile GetActiveProfile(string keycloakId);
 
         public Profile CreateProfile(CreateProfileInput profileInput);
-        public Profile UpdateProfile(UpdateProfileInput profileInput);
-        public bool DeleteProfile(int id);
+        public void UpdateProfile(UpdateProfileInput profileInput);
+        public void DeleteProfile(int id);
     }
 }

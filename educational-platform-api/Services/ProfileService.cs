@@ -43,17 +43,16 @@ namespace educational_platform_api.Services
             return profileEntity;
         }
 
-        public Profile UpdateProfile(UpdateProfileInput profileInput)
+        public void UpdateProfile(UpdateProfileInput profileInput)
         {
             Profile profile = _mapper.Map<Profile>(profileInput);
-            Profile profileEntity = _profileRepository.UpdateProfile(profile);
-
-            return profileEntity;
+            _profileRepository.UpdateProfile(profile);
         }
 
-        public bool DeleteProfile(int id)
+        public void DeleteProfile(int id)
         {
-            return _profileRepository.DeleteProfile(id);
+            Profile profile = _profileRepository.GetProfile(id);
+            _profileRepository.DeleteProfile(profile);
         }
     }
 }
