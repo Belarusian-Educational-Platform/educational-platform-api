@@ -23,15 +23,18 @@ namespace educational_platform_api.Middlewares.UseProfile
             if (context.ContextData.TryGetValue("ClaimsPrincipal", out object rawClaimsPrincipal)
                 && rawClaimsPrincipal is ClaimsPrincipal claimsPrincipal)
             {
-                string? keycloakId = claimsPrincipal.FindFirstValue(KeycloakAccountClaimType.Id);
-                if (keycloakId is null || keycloakId.Length == 0)
+                if (!context.ContextData.ContainsKey(PROFILE_CONTEXT_DATA_KEY))
                 {
-                    throw new Exception("Keycloak Id wasn`t found!");
+                    string? keycloakId = claimsPrincipal.FindFirstValue(KeycloakAccountClaimType.Id);
+                    if (keycloakId is null || keycloakId.Length == 0)
+                    {
+                        throw new Exception("Keycloak Id wasn`t found!");
+                    }
+
+                    Profile profile = profileService.GetActiveProfile(keycloakId);
+
+                    context.ContextData.TryAdd(PROFILE_CONTEXT_DATA_KEY, profile);
                 }
-
-                Profile profile = profileService.GetActiveProfile(keycloakId);
-
-                context.ContextData.Add(PROFILE_CONTEXT_DATA_KEY, profile);
             }
 
             await _next(context);
