@@ -1,9 +1,6 @@
-﻿using educational_platform_api.DTOs;
-using educational_platform_api.Models;
-using educational_platform_api.Repositories;
+﻿using educational_platform_api.Repositories;
 using educational_platform_api.Services;
 using educational_platform_api.Validators;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 
 namespace educational_platform_api.Extensions.Services

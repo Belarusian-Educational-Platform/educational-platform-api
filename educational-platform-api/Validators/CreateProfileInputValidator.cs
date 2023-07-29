@@ -1,5 +1,6 @@
 ﻿using educational_platform_api.DTOs;
 using educational_platform_api.ErrorMessages;
+using educational_platform_api.Extensions.Validators;
 using FluentValidation;
 
 namespace educational_platform_api.Validators
@@ -8,9 +9,35 @@ namespace educational_platform_api.Validators
     {
         public CreateProfileInputValidator()
         {
-            RuleFor(x => x.Type)
+            RuleFor(x => x.FirstName)
                 .NotNull()
-                .WithMessage(ProfileErrorMessages.TypeIsNull);
+                .WithMessage(ProfileErrorMessages.FirstNameIsNull)
+                .NotEmpty()
+                .WithMessage(ProfileErrorMessages.FirstNameIsEmpty)
+                .Length(3, 32)
+                .WithMessage(ProfileErrorMessages.FirstNameIncorrectLength);
+
+            RuleFor(x => x.LastName)
+                .NotNull()
+                .WithMessage(ProfileErrorMessages.LastNameIsNull)
+                .NotEmpty()
+                .WithMessage(ProfileErrorMessages.LastNameIsEmpty)
+                .Length(3, 32)
+                .WithMessage(ProfileErrorMessages.LastNameIncorrectLength);
+
+            RuleFor(x => x.Surname)
+                .NotNull()
+                .WithMessage(ProfileErrorMessages.SurnameIsNull)
+                .NotEmpty()
+                .WithMessage(ProfileErrorMessages.SurnameIsEmpty)
+                .Length(3, 32)
+                .WithMessage(ProfileErrorMessages.SurnameIncorrectLength);
+
+            RuleFor(x => x.Birthday)
+                .NotNull()
+                .WithMessage(ProfileErrorMessages.BirthdayIsNull)
+                .CanParseDateOnly()
+                .WithMessage(ProfileErrorMessages.BirthdayIncorrectDateFormat);
 
             RuleFor(x => x.ContactPhone)
                 .NotNull()
@@ -19,6 +46,10 @@ namespace educational_platform_api.Validators
             RuleFor(x => x.ContactEmail)
                 .NotNull()
                 .WithMessage(ProfileErrorMessages.ContactEmailIsNull);
+
+            RuleFor(x => x.Type)
+                .NotNull()
+                .WithMessage(ProfileErrorMessages.TypeIsNull);
         }
     }
 }

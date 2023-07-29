@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -100,14 +101,20 @@ namespace educational_platform_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    KeycloakId = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FirstName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Surname = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Birthday = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ContactEmail = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ContactPhone = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    OrganizationId = table.Column<int>(type: "int", nullable: false),
-                    KeycloakId = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -222,16 +229,16 @@ namespace educational_platform_api.Migrations
 
             migrationBuilder.InsertData(
                 table: "Profiles",
-                columns: new[] { "Id", "ContactEmail", "ContactPhone", "IsActive", "KeycloakId", "OrganizationId", "Type" },
+                columns: new[] { "Id", "Birthday", "ContactEmail", "ContactPhone", "FirstName", "IsActive", "KeycloakId", "LastName", "Surname", "Type" },
                 values: new object[,]
                 {
-                    { 1, "hotjames4u@quebecstart.com", "+375 29 403-72-60", true, "c9c5c403-280e-491a-9217-e60a04022b7f", 1, 0 },
-                    { 2, "reiianx@gasss.net", "+375 44 164-23-69", false, "c9c5c403-280e-491a-9217-e60a04022b7f", 1, 0 },
-                    { 3, "kxarmark@cbdnut.net", "+375 29 352-28-10", true, "c9c5c403-280e-491a-9217-e60a04022b7g", 1, 1 },
-                    { 4, "imamikonyan@sannyfeina.art", "+375 33 938-46-86", false, "c9c5c403-280e-491a-9217-e60a04022b7g", 2, 0 },
-                    { 5, "franicomunication@gmisow.com", "+375 29 609-07-74", false, "c9c5c403-280e-491a-9217-e60a04022b7g", 2, 1 },
-                    { 6, "psylio@yagatekimi.com", "+375 29 415-46-04", true, "c9c5c403-280e-491a-9217-e60a04022b7c", 3, 0 },
-                    { 7, "zulu54@pankasyno23.com", "+375 29 865-01-63", true, "c9c5c403-280e-491a-9217-e60a04022b7c", 3, 1 }
+                    { 1, new DateTime(2004, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "hotjames4u@quebecstart.com", "+375 29 403-72-60", "Daniil", true, "c9c5c403-280e-491a-9217-e60a04022b7f", "Kananenka", "Alexandrovich", 0 },
+                    { 2, new DateTime(2010, 7, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "reiianx@gasss.net", "+375 44 164-23-69", "Karyna", false, "c9c5c403-280e-491a-9217-e60a04022b7f", "Novik", "Tsimur", 0 },
+                    { 3, new DateTime(1990, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), "kxarmark@cbdnut.net", "+375 29 352-28-10", "Tsimur", true, "c9c5c403-280e-491a-9217-e60a04022b7g", "Kavalioŭ", "Henadz", 1 },
+                    { 4, new DateTime(2008, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "imamikonyan@sannyfeina.art", "+375 33 938-46-86", "Artur", false, "c9c5c403-280e-491a-9217-e60a04022b7g", "Kazlow", " Iryna", 0 },
+                    { 5, new DateTime(1975, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "franicomunication@gmisow.com", "+375 29 609-07-74", "Yan", false, "c9c5c403-280e-491a-9217-e60a04022b7g", "Kavalioŭ", "Marta", 1 },
+                    { 6, new DateTime(2011, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "psylio@yagatekimi.com", "+375 29 415-46-04", "Karyna", true, "c9c5c403-280e-491a-9217-e60a04022b7c", "Ivanow", " Ilia", 0 },
+                    { 7, new DateTime(1994, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "zulu54@pankasyno23.com", "+375 29 865-01-63", "Hleb", true, "c9c5c403-280e-491a-9217-e60a04022b7c", "Ivanow", "Kira", 1 }
                 });
 
             migrationBuilder.InsertData(

@@ -35,14 +35,6 @@ namespace educational_platform_api.Validators
                 .MaximumLength(32)
                 .WithMessage("Last name size must be less than 32 characters!");
 
-            RuleFor(x => x.Surname)
-                .NotEmpty()
-                .WithMessage("Surname is empty!")
-                .NotNull()
-                .WithMessage("Surname wasn`t provided!")
-                .MaximumLength(32)
-                .WithMessage("Surname size must be less than 32 characters!");
-
             RuleFor(x => x.Email)
                 .NotEmpty()
                 .WithMessage("Email is empty!")

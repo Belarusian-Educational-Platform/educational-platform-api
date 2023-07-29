@@ -1,5 +1,6 @@
 ﻿using educational_platform_api.DTOs;
 using educational_platform_api.Models;
+using System.Globalization;
 
 namespace educational_platform_api.Mappers
 {
@@ -8,11 +9,15 @@ namespace educational_platform_api.Mappers
         public ProfileMapper() 
         {
             CreateMap<CreateProfileInput, Profile>()
-                .ForMember(dest => dest.KeycloakId, opt => opt.MapFrom(src => ""));
-            CreateMap<Profile, CreateProfileInput>();
+                .ForMember(dest => dest.KeycloakId, opt => opt.MapFrom(src => ""))
+                .ForMember(dest => dest.Birthday, 
+                    opt => opt.MapFrom(src => 
+                        DateTime.ParseExact(src.Birthday, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
 
             CreateMap<UpdateProfileInput, Profile>()
-                .ReverseMap();
+                .ForMember(dest => dest.Birthday,
+                    opt => opt.MapFrom(src => 
+                        DateTime.ParseExact(src.Birthday, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
         }
     }
 }

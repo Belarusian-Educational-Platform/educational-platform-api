@@ -51,7 +51,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Tests
                 .Returns(false);
 
             // Act
-            Action actual = () => _profileAuthorizationService.AuthorizeProfile(configureVerificationOptions);
+            Action actual = () => _profileAuthorizationService.Authorize(configureVerificationOptions);
 
             // Assert
             actual.Should().Throw<Exception>();
