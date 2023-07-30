@@ -37,13 +37,13 @@ namespace educational_platform_api.Middlewares.UseAccount
                 ValidationResult validationResult = accountValidator.Validate(account);
                 if(!validationResult.IsValid)
                 {
-                    throw new Exception("Account validation failed!");
+                    throw new Exception("Account validation failed!"); // TODO: EXCEPTION NAME
                 }
 
                 context.ContextData.Add(ACCOUNT_CONTEXT_DATA_KEY, account);
             } else
             {
-                throw new Exception("Something went wrong while accessing token data!");
+                throw new Exception("Something went wrong while accessing token data!"); // TODO: EXCEPTION NAME
             }
 
             await _next(context);

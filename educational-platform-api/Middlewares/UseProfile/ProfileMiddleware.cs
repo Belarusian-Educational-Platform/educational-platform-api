@@ -20,7 +20,7 @@ namespace educational_platform_api.Middlewares.UseProfile
 
         public async Task InvokeAsync(IMiddlewareContext context, [Service] IProfileService profileService)
         {
-            if (context.ContextData.TryGetValue("ClaimsPrincipal", out object rawClaimsPrincipal)
+            if (context.ContextData.TryGetValue("ClaimsPrincipal", out object? rawClaimsPrincipal)
                 && rawClaimsPrincipal is ClaimsPrincipal claimsPrincipal)
             {
                 if (!context.ContextData.ContainsKey(PROFILE_CONTEXT_DATA_KEY))
@@ -28,7 +28,7 @@ namespace educational_platform_api.Middlewares.UseProfile
                     string? keycloakId = claimsPrincipal.FindFirstValue(KeycloakAccountClaimType.Id);
                     if (keycloakId is null || keycloakId.Length == 0)
                     {
-                        throw new Exception("Keycloak Id wasn`t found!");
+                        throw new Exception("Keycloak Id wasn`t found!"); // TODO: EXCEPTION NAME
                     }
 
                     Profile profile = profileService.GetActiveProfile(keycloakId);

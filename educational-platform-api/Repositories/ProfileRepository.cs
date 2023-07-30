@@ -1,8 +1,5 @@
 ﻿using educational_platform_api.Contexts;
-using educational_platform_api.Exceptions.RepositoryExceptions.EnityNotFoundExceptions;
-using educational_platform_api.Exceptions.RepositoryExceptions.EntityCreateException;
-using educational_platform_api.Exceptions.RepositoryExceptions.EntityDeleteException;
-using educational_platform_api.Exceptions.RepositoryExceptions.EntityUpdateException;
+using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,7 +40,7 @@ namespace educational_platform_api.Repositories
             }
             catch (Exception ex)
             {
-                throw new ProfileByIdNotFoundException(ex.Message, ex);
+                throw new EntityNotFoundException(nameof(Profile), ex.Message, ex);
             }
 
             return profile;
@@ -59,7 +56,7 @@ namespace educational_platform_api.Repositories
             }
             catch (Exception ex)
             {
-                throw new ProfileByIdNotFoundException(ex.Message, ex);
+                throw new EntityNotFoundException(nameof(Profile), ex.Message, ex);
             }
 
             return profile;
@@ -99,7 +96,7 @@ namespace educational_platform_api.Repositories
                 Save();
             } catch (Exception ex)
             {
-                throw new ProfileCreateException(ex.Message, ex);
+                throw new EntityCreateException(nameof(Profile), ex.Message, ex);
             }
 
             return profileEntity;
@@ -114,7 +111,7 @@ namespace educational_platform_api.Repositories
                 Save();
             } catch (Exception ex)
             {
-                throw new ProfileUpdateException(ex.Message, ex);
+                throw new EntityUpdateException(nameof(Profile), ex.Message, ex);
             }
         }
 
@@ -126,7 +123,7 @@ namespace educational_platform_api.Repositories
                 Save();
             } catch (Exception ex) 
             {
-                throw new ProfileDeleteException(ex.Message, ex);
+                throw new EntityDeleteException(nameof(Profile), ex.Message, ex);
             }
         }
     }

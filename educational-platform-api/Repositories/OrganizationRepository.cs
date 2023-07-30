@@ -1,5 +1,4 @@
 ﻿using educational_platform_api.Contexts;
-using educational_platform_api.Exceptions.RepositoryExceptions.EnityNotFoundExceptions;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
