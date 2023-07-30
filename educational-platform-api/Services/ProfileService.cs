@@ -47,17 +47,17 @@ namespace educational_platform_api.Services
             return organizationProfiles;
         }
 
-        public Profile CreateProfile(CreateProfileInput profileInput)
+        public Profile CreateProfile(CreateProfileInput input)
         {
-            Profile profile = _mapper.Map<Profile>(profileInput);
+            Profile profile = _mapper.Map<Profile>(input);
             Profile profileEntity = _profileRepository.CreateProfile(profile);
 
             return profileEntity;
         }
 
-        public void UpdateProfile(UpdateProfileInput profileInput)
+        public void UpdateProfile(UpdateProfileInput input)
         {
-            Profile profile = _mapper.Map<Profile>(profileInput);
+            Profile profile = _mapper.Map<Profile>(input);
             _profileRepository.UpdateProfile(profile);
         }
 

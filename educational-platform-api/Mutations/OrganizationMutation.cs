@@ -1,6 +1,11 @@
-﻿using educational_platform_api.DTOs;
+﻿using AppAny.HotChocolate.FluentValidation;
+using educational_platform_api.Authorization.ProfileAuthorization;
+using educational_platform_api.DTOs;
+using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
+using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;
 using educational_platform_api.Services;
+using educational_platform_api.Validators;
 using HotChocolate.Authorization;
 
 namespace educational_platform_api.Mutations
@@ -12,7 +17,8 @@ namespace educational_platform_api.Mutations
         [GraphQLName("createOrganization")]
         public Organization CreateOrganization(
             [Service] IOrganizationService organizationService, 
-            CreateOrganizationInput organizationInput)
+            [UseFluentValidation, UseValidator<CreateOrganizationInputValidator>] 
+                CreateOrganizationInput organizationInput)
         {
             Organization organizationEntity = organizationService.CreateOrganization(organizationInput);
 
@@ -21,9 +27,25 @@ namespace educational_platform_api.Mutations
 
         [Authorize]
         [GraphQLName("updateOrganization")]
-        public bool UpdateOrganization([Service] IOrganizationService organizationService,
-            UpdateOrganizationInput organizationInput)
+        [UseProfile]
+        public bool UpdateOrganization(
+            [Service] IOrganizationService organizationService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Profile] Profile profile,
+            [UseFluentValidation, UseValidator<UpdateOrganizationInputValidator>] 
+                UpdateOrganizationInput organizationInput)
         {
+            if (!organizationService.CheckProfileInOrganization(profile.Id, organizationInput.Id)) // TODO: OK?
+            {
+                throw new ProfileUnauthorizedException();
+            }
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("UpdateOrganization");
+                options.AddProfile(profile.Id);
+                options.AddOrganization();
+            });
+
             organizationService.UpdateOrganization(organizationInput);
 
             return true;

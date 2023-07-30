@@ -12,5 +12,7 @@ namespace educational_platform_api.Services
         public Organization CreateOrganization(CreateOrganizationInput input);
         public void UpdateOrganization(UpdateOrganizationInput input);
         public void DeleteOrganization(int id);
+
+        public bool CheckProfileInOrganization(int profileId, int organizationId);
     }
 }

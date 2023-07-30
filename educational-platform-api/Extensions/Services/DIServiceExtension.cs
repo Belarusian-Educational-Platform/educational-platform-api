@@ -37,7 +37,9 @@ namespace educational_platform_api.Extensions.Services
                 .AddFluentValidation()
                 .AddScoped<AccountValidator>()
                 .AddScoped<CreateProfileInputValidator>()
-                .AddScoped<UpdateProfileInputValidator>();
+                .AddScoped<UpdateProfileInputValidator>()
+                .AddScoped<CreateOrganizationInputValidator>()
+                .AddScoped<UpdateOrganizationInputValidator>();
 
             return services;
         }

@@ -6,5 +6,6 @@ namespace educational_platform_api.Repositories
     {
         public ProfileOrganizationRelation GetProfileRelation(int id);
         public IEnumerable<ProfileOrganizationRelation> GetOrganizationRelations(int id);
+        public bool CheckRelationExists(int profileId, int organizationId);
     }
 }

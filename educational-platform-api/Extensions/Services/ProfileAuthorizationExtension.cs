@@ -10,6 +10,7 @@ namespace educational_platform_api.Extensions.Services
     {
         public static IServiceCollection SetupProfileAuthorization(this IServiceCollection services)
         {
+            // TODO: CLASS FOR STORING ALL POLICIES?
             services.AddProfileAuthorization(options =>
             {
                 options.AddPolicy("CreateProfile", policy =>
@@ -28,6 +29,13 @@ namespace educational_platform_api.Extensions.Services
                 {
                     policy.AddRequirements(
                         (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "view-private-information")
+                            .ToPermission()
+                    );
+                });
+                options.AddPolicy("UpdateOrganization", policy =>
+                {
+                    policy.AddRequirements(
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "update")
                             .ToPermission()
                     );
                 });

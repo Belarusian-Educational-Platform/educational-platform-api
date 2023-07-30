@@ -2,6 +2,8 @@
 {
     public static class ProfileErrorMessages
     {
+        // TODO: DO WE NEED ERROR MESSAGES? FORMAT? AUTO FIELD FORMATING?
+
         // Id
 
         // KeycloakId

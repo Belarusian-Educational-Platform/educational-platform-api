@@ -41,7 +41,7 @@ namespace educational_platform_api.Mutations
             [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput profileInput,
             [Profile] Profile profile)
         {
-            if (profile.Id != profileInput.Id)
+            if (profile.Id != profileInput.Id) // TODO: OK?
             {
                 throw new ProfileUnauthorizedException();
             }

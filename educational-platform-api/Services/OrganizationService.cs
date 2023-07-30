@@ -7,12 +7,15 @@ namespace educational_platform_api.Services
     public class OrganizationService : IOrganizationService
     {
         private readonly IOrganizationRepository _organizationRepository;
+        private readonly IProfileOrganizationRelationRepository _profileRelationRepository; // TODO: RENAME?
         private readonly AutoMapper.IMapper _mapper;
 
         public OrganizationService(IOrganizationRepository organizationRepository, 
+            IProfileOrganizationRelationRepository profileRelationRepository,
             AutoMapper.IMapper mapper)
         {
             _organizationRepository = organizationRepository;
+            _profileRelationRepository = profileRelationRepository;
             _mapper = mapper;
         }
 
@@ -49,6 +52,11 @@ namespace educational_platform_api.Services
         {
             var organization = _organizationRepository.GetOrganization(id);
             _organizationRepository.DeleteOrganization(organization);
+        }
+
+        public bool CheckProfileInOrganization(int profileId, int organizationId)
+        {
+            return _profileRelationRepository.CheckRelationExists(profileId, organizationId);
         }
     }
 }

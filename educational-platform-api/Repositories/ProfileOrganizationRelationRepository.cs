@@ -40,5 +40,19 @@ namespace educational_platform_api.Repositories
 
             return relations;
         }
+
+        public bool CheckRelationExists(int profileId, int organizationId)
+        {
+            try
+            {
+                _dbContext.ProfileOrganizationRelations
+                    .First(x => x.ProfileId == profileId &&
+                        x.OrganizationId == organizationId);
+                return true;
+            } catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
