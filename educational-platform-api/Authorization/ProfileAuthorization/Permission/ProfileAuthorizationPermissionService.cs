@@ -28,7 +28,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
 
             if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION))
             {
-                var relation = _organizationRelationRepository.GetRelation(verificationOptions.ProfileId);
+                var relation = _organizationRelationRepository.GetProfileRelation(verificationOptions.ProfileId);
                 string rawPermissions = relation.Permissions;
 
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, rawPermissions);

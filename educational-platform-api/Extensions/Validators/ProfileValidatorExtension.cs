@@ -5,7 +5,7 @@ namespace educational_platform_api.Extensions.Validators
 {
     public static class ProfileValidatorExtension
     {
-        public static IRuleBuilderOptions<T, string> CanParseDateOnly<T>(this IRuleBuilder<T, string> ruleBuilder,
+        public static IRuleBuilderOptions<T, string> CanParseDateTime<T>(this IRuleBuilder<T, string> ruleBuilder,
             string format = "dd/MM/yyyy")
         {   
             return ruleBuilder.Must(x => 

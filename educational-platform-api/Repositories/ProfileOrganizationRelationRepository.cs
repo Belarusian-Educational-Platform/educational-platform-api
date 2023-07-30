@@ -18,12 +18,27 @@ namespace educational_platform_api.Repositories
             return _dbContext.DisposeAsync();
         }
 
-        public ProfileOrganizationRelation GetRelation(int profileId)
+        public ProfileOrganizationRelation GetProfileRelation(int id)
         {
-            ProfileOrganizationRelation relation = _dbContext.ProfileOrganizationRelations
-                .First(relation => relation.ProfileId == profileId);
-
+            ProfileOrganizationRelation relation;
+            try
+            {
+                relation = _dbContext.ProfileOrganizationRelations
+                    .First(relation => relation.ProfileId == id);
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+            
             return relation;
+        }
+
+        public IEnumerable<ProfileOrganizationRelation> GetOrganizationRelations(int id)
+        {
+            List<ProfileOrganizationRelation> relations = _dbContext.ProfileOrganizationRelations
+                .Where(relation => relation.OrganizationId == id).ToList();
+
+            return relations;
         }
     }
 }

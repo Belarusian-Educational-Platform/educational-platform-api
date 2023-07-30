@@ -1,4 +1,5 @@
-﻿using educational_platform_api.Middlewares.UseAccount;
+﻿using educational_platform_api.Authorization.ProfileAuthorization;
+using educational_platform_api.Middlewares.UseAccount;
 using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;
 using educational_platform_api.Services;
@@ -38,10 +39,29 @@ namespace educational_platform_api.Queries
         [Authorize]
         [GraphQLName("myActiveProfile")]
         [UseProfile]
-        public Profile GetMyProfile([Service] IProfileService profileService, 
+        public Profile GetMyProfile(
+            [Service] IProfileService profileService, 
             [Profile] Profile profile)
         {
             return profile;
+        }
+
+        [Authorize]
+        [GraphQLName("myOrganizationProfiles")]
+        [UseProfile]
+        public IEnumerable<Profile> GetMyOrganizationProfiles(
+            [Service] IProfileService profileService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Profile] Profile profile)
+        {
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("GetMyOrganizationProfiles");
+                options.AddProfile(profile.Id);
+                options.AddOrganization();
+            });
+
+            return profileService.GetMyOrganizationProfiles(profile.Id);
         }
     }
 }

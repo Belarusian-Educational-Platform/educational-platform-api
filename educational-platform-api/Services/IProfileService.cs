@@ -9,6 +9,7 @@ namespace educational_platform_api.Services
         public Profile GetProfileById(int id);
         public IEnumerable<Profile> GetAccountProfiles(string keycloakId);
         public Profile GetActiveProfile(string keycloakId);
+        public IEnumerable<Profile> GetMyOrganizationProfiles(int profileId);
 
         public Profile CreateProfile(CreateProfileInput profileInput);
         public void UpdateProfile(UpdateProfileInput profileInput);

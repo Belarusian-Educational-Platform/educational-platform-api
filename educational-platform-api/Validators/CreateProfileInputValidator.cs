@@ -36,7 +36,7 @@ namespace educational_platform_api.Validators
             RuleFor(x => x.Birthday)
                 .NotNull()
                 .WithMessage(ProfileErrorMessages.BirthdayIsNull)
-                .CanParseDateOnly()
+                .CanParseDateTime()
                 .WithMessage(ProfileErrorMessages.BirthdayIncorrectDateFormat);
 
             RuleFor(x => x.ContactPhone)

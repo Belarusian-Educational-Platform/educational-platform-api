@@ -24,6 +24,13 @@ namespace educational_platform_api.Extensions.Services
                         (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "delete-profiles").ToPermission()
                     );
                 });
+                options.AddPolicy("GetMyOrganizationProfiles", policy =>
+                {
+                    policy.AddRequirements(
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "view-private-information")
+                            .ToPermission()
+                    );
+                });
             });
 
             return services;

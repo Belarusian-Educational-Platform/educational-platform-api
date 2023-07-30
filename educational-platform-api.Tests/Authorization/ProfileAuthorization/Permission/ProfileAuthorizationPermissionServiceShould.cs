@@ -53,7 +53,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             configureVerificationOptions(verificationOptions);
 
             _organizationRelationRepositoryMock
-                .Setup(repo => repo.GetRelation(It.IsAny<int>()))
+                .Setup(repo => repo.GetProfileRelation(It.IsAny<int>()))
                 .Returns(profileOrganizationRelation);
             _groupRelationRepositoryMock
                 .Setup(repo => repo.GetRelation(It.IsAny<int>(), It.IsAny<int>()))

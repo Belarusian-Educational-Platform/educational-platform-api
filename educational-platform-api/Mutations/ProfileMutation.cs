@@ -19,19 +19,19 @@ namespace educational_platform_api.Mutations
         public Profile CreateProfile(
             [Service] IProfileService profileService,
             [Service] IProfileAuthorizationService profileAuthorizationService,
-            [Profile] Profile _profile_,
+            [Profile] Profile profile,
             [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput profileInput)
         {
             profileAuthorizationService.Authorize(options =>
             {
                 options.AddPolicy("CreateProfile");
-                options.AddProfile(_profile_.Id);
+                options.AddProfile(profile.Id);
                 options.AddOrganization();
             });
 
-            Profile profile = profileService.CreateProfile(profileInput);
+            Profile profileEntity = profileService.CreateProfile(profileInput);
 
-            return profile;
+            return profileEntity;
         }
 
         [Authorize]
@@ -39,9 +39,9 @@ namespace educational_platform_api.Mutations
         [UseProfile]
         public bool UpdateProfile([Service] IProfileService profileService, 
             [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput profileInput,
-            [Profile] Profile _profile_)
+            [Profile] Profile profile)
         {
-            if (_profile_.Id != profileInput.Id)
+            if (profile.Id != profileInput.Id)
             {
                 throw new ProfileUnauthorizedException();
             }
@@ -57,13 +57,13 @@ namespace educational_platform_api.Mutations
         public bool DeleteProfile(
             [Service] IProfileService profileService,
             [Service] IProfileAuthorizationService profileAuthorizationService,
-            [Profile] Profile _profile_,
+            [Profile] Profile profile,
             int id)
         {
             profileAuthorizationService.Authorize(options =>
             {
                 options.AddPolicy("DeleteProfile");
-                options.AddProfile(_profile_.Id);
+                options.AddProfile(profile.Id);
                 options.AddOrganization();
             });
 

@@ -39,7 +39,7 @@ namespace educational_platform_api.Repositories
             Profile profile;
             try
             {
-                profile = _dbContext.Profiles.First(profile => profile.Id == id);
+                profile = _dbContext.Profiles.First(x => x.Id == id);
             }
             catch (Exception ex)
             {
@@ -54,8 +54,8 @@ namespace educational_platform_api.Repositories
             Profile profile;
             try
             {
-                profile = _dbContext.Profiles.First(profile =>
-                    profile.KeycloakId == keycloakId && profile.IsActive);
+                profile = _dbContext.Profiles.First(x =>
+                    x.KeycloakId == keycloakId && x.IsActive);
             }
             catch (Exception ex)
             {
@@ -68,10 +68,26 @@ namespace educational_platform_api.Repositories
         public IEnumerable<Profile> GetAccountProfiles(string keycloakId)
         {
             List<Profile> accountProfiles = _dbContext.Profiles
-                .Where(profile => profile.KeycloakId == keycloakId)
+                .Where(x => x.KeycloakId == keycloakId)
                 .ToList();
 
             return accountProfiles;
+        }
+
+        public IEnumerable<Profile> GetOrganizationProfiles(int organizationId)
+        {
+            var profiles = _dbContext.Profiles
+                .Join(_dbContext.ProfileOrganizationRelations,
+                    p => p.Id,
+                    por => por.ProfileId,
+                    (p, por) => new { p, por })
+                .Join(_dbContext.Organizations.Where(o => o.Id == organizationId),
+                    pp => pp.por.OrganizationId,
+                    o => o.Id,
+                    (pp, o) => pp.p)
+                .ToList();
+
+            return profiles;
         }
 
         public Profile CreateProfile(Profile profile)
