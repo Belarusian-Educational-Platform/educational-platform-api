@@ -1,4 +1,4 @@
-﻿using educational_platform_api.DTOs;
+﻿using educational_platform_api.DTOs.Profile;
 using educational_platform_api.ErrorMessages;
 using educational_platform_api.Extensions.Validators;
 using FluentValidation;

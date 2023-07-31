@@ -1,6 +1,6 @@
 ﻿using educational_platform_api.Types.Enums;
 
-namespace educational_platform_api.DTOs
+namespace educational_platform_api.DTOs.Profile
 {
     public class UpdateProfileInput
     {

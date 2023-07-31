@@ -25,25 +25,47 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             ProfileAuthorizationVerificationOptions verificationOptions)
         {
             ProfileAuthorizationPermissionSet permissionSet = new();
-
+            string rawPermissions;
+            // TODO: OK? WHEN PROFILE IS IN ORGANIZATION AND WANTS TO UPDATE GROUP, BUT NOT THE PARTICIPANT - GROUP_RELATION THROWS AN EXCEPTION 
             if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION))
             {
-                var relation = _organizationRelationRepository.GetProfileRelation(verificationOptions.ProfileId);
-                string rawPermissions = relation.Permissions;
+                try
+                {
+                    var relation = _organizationRelationRepository
+                        .GetProfileRelation(verificationOptions.ProfileId);
+                    rawPermissions = relation.Permissions;
+                } catch (Exception ex)
+                {
+                    rawPermissions = "[]";
+                }
 
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, rawPermissions);
             }
             if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_GROUP))
             {
-                var relation = _groupRelationRepository.GetRelation(verificationOptions.ProfileId, verificationOptions.GroupId); ;
-                string rawPermissions = relation.Permissions;
+                try
+                {
+                    var relation = _groupRelationRepository
+                        .GetRelation(verificationOptions.ProfileId, verificationOptions.GroupId); ;
+                    rawPermissions = relation.Permissions;
+                } catch (Exception ex)
+                {
+                    rawPermissions = "[]";
+                }
 
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_GROUP, rawPermissions);
             }
             if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP))
             {
-                var relation = _subgroupRelationRepository.GetRelation(verificationOptions.ProfileId, verificationOptions.SubgroupId);
-                string rawPermissions = relation.Permissions;
+                try
+                {
+                    var relation = _subgroupRelationRepository
+                        .GetRelation(verificationOptions.ProfileId, verificationOptions.SubgroupId);
+                    rawPermissions = relation.Permissions;
+                } catch (Exception ex)
+                {
+                    rawPermissions = "[]";
+                }
 
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, rawPermissions);
             }

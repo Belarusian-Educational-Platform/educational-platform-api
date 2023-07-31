@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.Contexts;
+using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,7 +39,7 @@ namespace educational_platform_api.Repositories
                 organization = _dbContext.Organizations.First(x => x.Id == id);
             } catch(Exception ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new EntityNotFoundException(nameof(Organization), ex.Message, ex);
             }
 
             return organization;
@@ -61,7 +62,7 @@ namespace educational_platform_api.Repositories
                     .First();
             } catch (Exception ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new EntityNotFoundException(nameof(Organization), ex.Message, ex);
             }
             
 
@@ -77,7 +78,7 @@ namespace educational_platform_api.Repositories
                 Save();
             } catch(Exception ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new EntityCreateException(nameof(Organization), ex.Message, ex);
             }
 
             return organizationEntity;
@@ -93,7 +94,7 @@ namespace educational_platform_api.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new EntityUpdateException(nameof(Organization), ex.Message, ex);
             }
         }
 
@@ -106,7 +107,7 @@ namespace educational_platform_api.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new EntityDeleteException(nameof(Organization), ex.Message, ex);
             }
         }
     }

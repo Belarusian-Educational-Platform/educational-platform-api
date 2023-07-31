@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.Contexts;
+using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,8 +21,16 @@ namespace educational_platform_api.Repositories
 
         public ProfileGroupRelation GetRelation(int profileId, int groupId)
         {
-            ProfileGroupRelation relation = _dbContext.ProfileGroupRelations
-                .First(relation => relation.ProfileId == profileId && relation.GroupId == groupId);
+            ProfileGroupRelation relation;
+            
+            try
+            {
+                relation = _dbContext.ProfileGroupRelations
+                    .First(relation => relation.ProfileId == profileId && relation.GroupId == groupId);
+            } catch (Exception ex)
+            {
+                throw new EntityNotFoundException(nameof(ProfileGroupRelation), ex.Message, ex);
+            }
 
             return relation;
         }

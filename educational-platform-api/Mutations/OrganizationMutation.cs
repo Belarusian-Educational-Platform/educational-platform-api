@@ -1,6 +1,6 @@
 ﻿using AppAny.HotChocolate.FluentValidation;
 using educational_platform_api.Authorization.ProfileAuthorization;
-using educational_platform_api.DTOs;
+using educational_platform_api.DTOs.Organization;
 using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;

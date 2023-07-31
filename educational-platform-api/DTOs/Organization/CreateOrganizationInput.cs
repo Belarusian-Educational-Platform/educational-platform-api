@@ -1,4 +1,4 @@
-﻿namespace educational_platform_api.DTOs
+﻿namespace educational_platform_api.DTOs.Organization
 {
     public class CreateOrganizationInput
     {

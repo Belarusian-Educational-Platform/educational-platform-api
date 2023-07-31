@@ -10,33 +10,42 @@ namespace educational_platform_api.Queries
     [ExtendObjectType(typeof(Query))]
     public class GroupQuery
     {
+        [Authorize]
         [GraphQLName("groups")]
         [UseOffsetPaging]
         [UseFiltering]
         [UseSorting]
-        public List<Group> GetGroups([Service] IGroupService groupService)
+        public IEnumerable<Group> GetGroups([Service] IGroupService groupService)
         {
-            return new List<Group>();
+            return groupService.GetGroups();
         }
 
-        
-        [GraphQLName("groupById")]
         [Authorize]
+        [GraphQLName("groupById")]
         [UseAccount]
-        [UseProfile]
-        public Group GetGroup([Service] IGroupService groupService, 
-            [Service] IProfileAuthorizationService profileAuthService,
-            [Account] Account account, [Profile] Profile profile,
-            int id)
+        public Group GetGroup([Service] IGroupService groupService, int id)
         {
-            /*profileAuthService.AuthorizeProfile(verificationOptions =>
-            {
-                verificationOptions.AddProfile(profile.Id);
-                verificationOptions.AddPolicy("edit-group");
-                verificationOptions.AddGroup(id);
-            });*/
+            return groupService.GetGroupById(id);
+        }
 
-            return new Group();
+        [Authorize]
+        [GraphQLName("myGroups")]
+        [UseProfile]
+        public IEnumerable<Group> GetMyGroups(
+            [Service] IGroupService groupService, 
+            [Profile] Profile profile)
+        {
+            return groupService.GetProfileGroups(profile.Id);
+        }
+
+        [Authorize]
+        [GraphQLName("myOrganizationGroups")]
+        [UseProfile]
+        public IEnumerable<Group> GetMyOrganizationGroups(
+            [Service] IGroupService groupService, 
+            [Profile] Profile profile)
+        {
+            return groupService.GetMyOrganizationGroups(profile.Id);
         }
     }
 }

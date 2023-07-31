@@ -1,4 +1,4 @@
-﻿using educational_platform_api.DTOs;
+﻿using educational_platform_api.DTOs.Organization;
 using educational_platform_api.Models;
 using System.Globalization;
 

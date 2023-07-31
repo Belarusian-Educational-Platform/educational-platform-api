@@ -1,4 +1,4 @@
-﻿using educational_platform_api.DTOs;
+﻿using educational_platform_api.DTOs.Profile;
 using educational_platform_api.Models;
 using educational_platform_api.Repositories;
 

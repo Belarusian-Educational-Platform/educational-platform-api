@@ -39,6 +39,31 @@ namespace educational_platform_api.Extensions.Services
                             .ToPermission()
                     );
                 });
+                options.AddPolicy("CreateGroup", policy =>
+                {
+                    policy.AddRequirements(
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "create-groups")
+                            .ToPermission()
+                    );
+                });
+                options.AddPolicy("UpdateGroup", policy =>
+                {
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "update-groups")
+                            .ToPermission()) |
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "update")
+                            .ToPermission())
+                    );
+                });
+                options.AddPolicy("DeleteGroup", policy =>
+                {
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "delete-groups")
+                            .ToPermission()) |
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "delete")
+                            .ToPermission())
+                    );
+                });
             });
 
             return services;
