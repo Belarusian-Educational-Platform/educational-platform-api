@@ -7,18 +7,11 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
     public class ProfileAuthorizationPermissionService : IProfileAuthorizationPermissionService
     {
 
-        private readonly IProfileOrganizationRelationRepository _organizationRelationRepository;
-        private readonly IProfileGroupRelationRepository _groupRelationRepository;
-        private readonly IProfileSubgroupRelationRepository _subgroupRelationRepository;
+        private readonly UnitOfWork _unitOfWork;
 
-        public ProfileAuthorizationPermissionService(
-            IProfileOrganizationRelationRepository organizationRelationRepository,
-            IProfileGroupRelationRepository groupRelationRepository,
-            IProfileSubgroupRelationRepository subgroupRelationRepository)
+        public ProfileAuthorizationPermissionService(UnitOfWork unitOfWork)
         {
-            _organizationRelationRepository = organizationRelationRepository;
-            _groupRelationRepository = groupRelationRepository;
-            _subgroupRelationRepository = subgroupRelationRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public ProfileAuthorizationPermissionSet GetProfilePermissions(
@@ -31,7 +24,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             {
                 try
                 {
-                    var relation = _organizationRelationRepository
+                    var relation = _unitOfWork.ProfileOrganizationRelations
                         .GetProfileRelation(verificationOptions.ProfileId);
                     rawPermissions = relation.Permissions;
                 } catch (Exception ex)
@@ -45,7 +38,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             {
                 try
                 {
-                    var relation = _groupRelationRepository
+                    var relation = _unitOfWork.ProfileGroupRelations
                         .GetRelation(verificationOptions.ProfileId, verificationOptions.GroupId); ;
                     rawPermissions = relation.Permissions;
                 } catch (Exception ex)
@@ -59,7 +52,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             {
                 try
                 {
-                    var relation = _subgroupRelationRepository
+                    var relation = _unitOfWork.ProfileSubgroupRelations
                         .GetRelation(verificationOptions.ProfileId, verificationOptions.SubgroupId);
                     rawPermissions = relation.Permissions;
                 } catch (Exception ex)

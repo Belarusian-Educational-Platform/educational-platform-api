@@ -5,7 +5,7 @@ using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;
 using educational_platform_api.Services;
-using educational_platform_api.Validators;
+using educational_platform_api.Validators.Profile;
 using HotChocolate.Authorization;
 
 namespace educational_platform_api.Mutations

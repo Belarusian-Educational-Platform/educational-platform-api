@@ -5,23 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
 {
-    public class GroupOrganizationRelationRepository : IGroupOrganizationRelationRepository, IAsyncDisposable
+    public class GroupOrganizationRelationRepository : IGroupOrganizationRelationRepository
     {
         private readonly MySQLContext _dbContext;
 
-        public GroupOrganizationRelationRepository(IDbContextFactory<MySQLContext> dbContextFactory)
+        public GroupOrganizationRelationRepository(MySQLContext dbContext)
         {
-            _dbContext = dbContextFactory.CreateDbContext();
-        }
-
-        private void Save()
-        {
-            _dbContext.SaveChanges();
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return _dbContext.DisposeAsync();
+            _dbContext = dbContext;
         }
 
         public void CreateRelation(GroupOrganizationRelation relation)
@@ -29,7 +19,6 @@ namespace educational_platform_api.Repositories
             try
             {
                 _dbContext.GroupOrganizationRelations.Add(relation);
-                Save();
             } catch (Exception ex)
             {
                 throw new EntityCreateException(nameof(GroupOrganizationRelation), ex.Message, ex);

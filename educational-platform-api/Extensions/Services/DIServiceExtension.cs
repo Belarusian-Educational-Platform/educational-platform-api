@@ -1,6 +1,9 @@
 ﻿using educational_platform_api.Repositories;
 using educational_platform_api.Services;
 using educational_platform_api.Validators;
+using educational_platform_api.Validators.Group;
+using educational_platform_api.Validators.Organization;
+using educational_platform_api.Validators.Profile;
 using FluentValidation.AspNetCore;
 
 namespace educational_platform_api.Extensions.Services
@@ -19,14 +22,7 @@ namespace educational_platform_api.Extensions.Services
 
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IProfileRepository, ProfileRepository>()
-                    .AddTransient<IGroupRepository, GroupRepository>()
-                    .AddTransient<ISubgroupRepository, SubgroupRepository>()
-                    .AddTransient<IOrganizationRepository, OrganizationRepository>()
-                    .AddTransient<IProfileOrganizationRelationRepository, ProfileOrganizationRelationRepository>()
-                    .AddTransient<IProfileGroupRelationRepository, ProfileGroupRelationRepository>()
-                    .AddTransient<IProfileSubgroupRelationRepository, ProfileSubgroupRelationRepository>()
-                    .AddTransient<IGroupOrganizationRelationRepository, GroupOrganizationRelationRepository>();
+            services.AddTransient<UnitOfWork>();
 
             return services;
         }
@@ -39,7 +35,9 @@ namespace educational_platform_api.Extensions.Services
                 .AddScoped<CreateProfileInputValidator>()
                 .AddScoped<UpdateProfileInputValidator>()
                 .AddScoped<CreateOrganizationInputValidator>()
-                .AddScoped<UpdateOrganizationInputValidator>();
+                .AddScoped<UpdateOrganizationInputValidator>()
+                .AddScoped<CreateGroupInputValidator>()
+                .AddScoped<UpdateGroupInputValidator>();
 
             return services;
         }

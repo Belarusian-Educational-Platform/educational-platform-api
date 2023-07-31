@@ -1,13 +1,13 @@
 ﻿using educational_platform_api.DTOs.Organization;
 using FluentValidation;
 
-namespace educational_platform_api.Validators
+namespace educational_platform_api.Validators.Organization
 {
     public class UpdateOrganizationInputValidator : AbstractValidator<UpdateOrganizationInput>
     { // TODO: VALIDATORS TO MODEL FOLDER?
         public UpdateOrganizationInputValidator()
         {
-            
+
         }
     }
 }

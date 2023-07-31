@@ -5,23 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
 {
-    public class ProfileRepository : IProfileRepository, IAsyncDisposable
+    public class ProfileRepository : IProfileRepository
     {
         private readonly MySQLContext _dbContext;
 
-        public ProfileRepository(IDbContextFactory<MySQLContext> dbContextFactory)
+        public ProfileRepository(MySQLContext dbContext)
         {
-            _dbContext = dbContextFactory.CreateDbContext();
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return _dbContext.DisposeAsync();
-        }
-
-        private void Save()
-        {
-            _dbContext.SaveChanges();
+            _dbContext = dbContext;
         }
 
         public IEnumerable<Profile> GetProfiles()
@@ -93,7 +83,6 @@ namespace educational_platform_api.Repositories
             try
             {
                 profileEntity = _dbContext.Profiles.Add(profile).Entity;
-                Save();
             } catch (Exception ex)
             {
                 throw new EntityCreateException(nameof(Profile), ex.Message, ex);
@@ -108,7 +97,6 @@ namespace educational_platform_api.Repositories
             {
                 _dbContext.Profiles.Attach(profile);
                 _dbContext.Entry(profile).State = EntityState.Modified;
-                Save();
             } catch (Exception ex)
             {
                 throw new EntityUpdateException(nameof(Profile), ex.Message, ex);
@@ -120,7 +108,6 @@ namespace educational_platform_api.Repositories
             try
             {
                 _dbContext.Profiles.Remove(profile);
-                Save();
             } catch (Exception ex) 
             {
                 throw new EntityDeleteException(nameof(Profile), ex.Message, ex);

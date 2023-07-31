@@ -1,8 +1,10 @@
-﻿using educational_platform_api.Authorization.ProfileAuthorization;
+﻿using AppAny.HotChocolate.FluentValidation;
+using educational_platform_api.Authorization.ProfileAuthorization;
 using educational_platform_api.DTOs.Group;
 using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;
 using educational_platform_api.Services;
+using educational_platform_api.Validators.Group;
 using HotChocolate.Authorization;
 
 namespace educational_platform_api.Mutations
@@ -17,7 +19,7 @@ namespace educational_platform_api.Mutations
             [Service] IGroupService groupService,
             [Service] IProfileAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
-            CreateGroupInput input)
+            [UseFluentValidation, UseValidator<CreateGroupInputValidator>]  CreateGroupInput input)
         {
             profileAuthorizationService.Authorize(options =>
             {
@@ -38,7 +40,7 @@ namespace educational_platform_api.Mutations
             [Service] IGroupService groupService,
             [Service] IProfileAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
-            UpdateGroupInput input)
+            [UseFluentValidation, UseValidator<UpdateGroupInputValidator>] UpdateGroupInput input)
         {
             profileAuthorizationService.Authorize(options =>
             {

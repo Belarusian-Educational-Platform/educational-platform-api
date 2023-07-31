@@ -5,23 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
 {
-    public class OrganizationRepository : IOrganizationRepository, IAsyncDisposable
+    public class OrganizationRepository : IOrganizationRepository
     {
         private readonly MySQLContext _dbContext;
 
-        public OrganizationRepository(IDbContextFactory<MySQLContext> dbContextFactory)
+        public OrganizationRepository(MySQLContext dbContext)
         {
-            _dbContext = dbContextFactory.CreateDbContext();
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return _dbContext.DisposeAsync();
-        }
-
-        private void Save()
-        {
-            _dbContext.SaveChanges();
+            _dbContext = dbContext;
         }
 
         public IEnumerable<Organization> GetOrganizations()
@@ -75,7 +65,6 @@ namespace educational_platform_api.Repositories
             try
             {
                 organizationEntity = _dbContext.Organizations.Add(organization).Entity;
-                Save();
             } catch(Exception ex)
             {
                 throw new EntityCreateException(nameof(Organization), ex.Message, ex);
@@ -90,7 +79,6 @@ namespace educational_platform_api.Repositories
             {
                 _dbContext.Organizations.Attach(organization);
                 _dbContext.Entry(organization).State = EntityState.Modified;
-                Save();
             }
             catch (Exception ex)
             {
@@ -103,7 +91,6 @@ namespace educational_platform_api.Repositories
             try
             {
                 _dbContext.Organizations.Remove(organization);
-                Save();
             }
             catch (Exception ex)
             {

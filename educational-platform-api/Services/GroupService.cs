@@ -6,41 +6,35 @@ namespace educational_platform_api.Services
 {
     public class GroupService : IGroupService
     {
-        private readonly IGroupRepository _groupRepository;
-        private readonly IOrganizationRepository _organizationRepository;
-        private readonly IGroupOrganizationRelationRepository _organizationRelationRepository; // TODO: NAME?
+        private readonly UnitOfWork _unitOfWork;
         private readonly AutoMapper.IMapper _mapper;
 
-        public GroupService(IGroupRepository groupRepository, 
-            IOrganizationRepository organizationRepository, 
-            IGroupOrganizationRelationRepository organizationRelationRepository,
+        public GroupService(UnitOfWork unitOfWork,
             AutoMapper.IMapper mapper)
         {
-            _groupRepository = groupRepository;
-            _organizationRepository = organizationRepository;
-            _organizationRelationRepository = organizationRelationRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public IEnumerable<Group> GetGroups()
         {
-            return _groupRepository.GetGroups();
+            return _unitOfWork.Groups.GetGroups();
         }
 
         public Group GetGroupById(int id)
         {
-            return _groupRepository.GetGroupById(id);
+            return _unitOfWork.Groups.GetGroupById(id);
         }
 
         public IEnumerable<Group> GetProfileGroups(int profileId)
         {
-            return _groupRepository.GetProfileGroups(profileId);
+            return _unitOfWork.Groups.GetProfileGroups(profileId);
         }
 
         public IEnumerable<Group> GetMyOrganizationGroups(int profileId) // TODO: ?
         {
-            var organization = _organizationRepository.GetProfileOrganization(profileId);
-            var organizationGroups = _groupRepository.GetOrganizationGroups(organization.Id);
+            var organization = _unitOfWork.Organizations.GetProfileOrganization(profileId);
+            var organizationGroups =_unitOfWork.Groups.GetOrganizationGroups(organization.Id);
 
             return organizationGroups;
         }
@@ -48,13 +42,14 @@ namespace educational_platform_api.Services
         public Group CreateGroup(CreateGroupInput input) // TODO: SAFE WAY TO ADD RELATION? GROUP ADD - SUCCESS BUT RELATION ADD - ERROR
         {
             Group group = _mapper.Map<Group>(input);
-            Group groupEntity = _groupRepository.CreateGroup(group);
+            Group groupEntity = _unitOfWork.Groups.CreateGroup(group);
 
             GroupOrganizationRelation relation = new() { 
                 GroupId = groupEntity.Id, 
                 OrganizationId = input.OrganizationId 
             }; // TODO: ORGANIZATION EXISTS?
-            _organizationRelationRepository.CreateRelation(relation);
+            _unitOfWork.GroupOrganizationRelations.CreateRelation(relation);
+            _unitOfWork.Save();
 
             return groupEntity;
         }
@@ -62,13 +57,15 @@ namespace educational_platform_api.Services
         public void UpdateGroup(UpdateGroupInput input)
         {
             Group group = _mapper.Map<Group>(input);
-            _groupRepository.UpdateGroup(group);
+            _unitOfWork.Groups.UpdateGroup(group);
+            _unitOfWork.Save();
         }
 
         public void DeleteGroup(int id)
         {
-            Group group = _groupRepository.GetGroupById(id);
-            _groupRepository.DeleteGroup(group);
+            Group group = _unitOfWork.Groups.GetGroupById(id);
+            _unitOfWork.Groups.DeleteGroup(group);
+            _unitOfWork.Save();
         }
     }
 }

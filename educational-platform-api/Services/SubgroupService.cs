@@ -4,11 +4,11 @@ namespace educational_platform_api.Services
 {
     public class SubgroupService : ISubgroupService
     {
-        private readonly ISubgroupRepository _subgroupRepository;
+        private readonly UnitOfWork _unitOfWork;
 
-        public SubgroupService(ISubgroupRepository subgroupRepository)
+        public SubgroupService(UnitOfWork unitOfWork)
         {
-            _subgroupRepository = subgroupRepository;
+            _unitOfWork = unitOfWork;
         }
     }
 }

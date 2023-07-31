@@ -5,23 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
 {
-    public class GroupRepository : IGroupRepository, IAsyncDisposable
+    public class GroupRepository : IGroupRepository
     {
         private readonly MySQLContext _dbContext;
 
-        public GroupRepository(IDbContextFactory<MySQLContext> dbContextFactory)
+        public GroupRepository(MySQLContext dbContext)
         {
-            _dbContext = dbContextFactory.CreateDbContext();
-        }
-
-        private void Save()
-        {
-            _dbContext.SaveChanges();
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return _dbContext.DisposeAsync();
+            _dbContext = dbContext;
         }
 
         public Group GetGroupById(int id)
@@ -73,7 +63,6 @@ namespace educational_platform_api.Repositories
             try
             {
                 groupEntity = _dbContext.Groups.Add(group).Entity;
-                Save();
             }
             catch (Exception ex)
             {
@@ -89,7 +78,6 @@ namespace educational_platform_api.Repositories
             {
                 _dbContext.Groups.Attach(group);
                 _dbContext.Entry(group).State = EntityState.Modified;
-                Save();
             }
             catch (Exception ex)
             {
@@ -102,7 +90,6 @@ namespace educational_platform_api.Repositories
             try
             {
                 _dbContext.Groups.Remove(group);
-                Save();
             }
             catch (Exception ex)
             {

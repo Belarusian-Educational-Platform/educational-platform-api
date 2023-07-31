@@ -3,18 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
 {
-    public class SubgroupRepository : ISubgroupRepository, IAsyncDisposable
+    public class SubgroupRepository : ISubgroupRepository
     {
         private readonly MySQLContext _dbContext;
 
-        public SubgroupRepository(IDbContextFactory<MySQLContext> dbContextFactory)
+        public SubgroupRepository(MySQLContext dbContext)
         {
-            _dbContext = dbContextFactory.CreateDbContext();
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return _dbContext.DisposeAsync();
+            _dbContext = dbContext;
         }
     }
 }

@@ -3,12 +3,20 @@ using educational_platform_api.ErrorMessages;
 using educational_platform_api.Extensions.Validators;
 using FluentValidation;
 
-namespace educational_platform_api.Validators
+namespace educational_platform_api.Validators.Profile
 {
-    public class CreateProfileInputValidator : AbstractValidator<CreateProfileInput>
+    public class UpdateProfileInputValidator : AbstractValidator<UpdateProfileInput>
     {
-        public CreateProfileInputValidator()
+        public UpdateProfileInputValidator()
         {
+            RuleFor(x => x.KeycloakId)
+                .NotNull()
+                .WithMessage(ProfileErrorMessages.KeycloakIdIsNull)
+                .NotEmpty()
+                .WithMessage(ProfileErrorMessages.KeycloakIdIsEmpty)
+                .Length(0, 128) // TODO: Keycloak ID length spec.
+                .WithMessage(ProfileErrorMessages.KeycloakIdIncorrectLength);
+
             RuleFor(x => x.FirstName)
                 .NotNull()
                 .WithMessage(ProfileErrorMessages.FirstNameIsNull)

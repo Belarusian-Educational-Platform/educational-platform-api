@@ -4,18 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
 {
-    public class ProfileSubgroupRelationRepository : IProfileSubgroupRelationRepository, IAsyncDisposable
+    public class ProfileSubgroupRelationRepository : IProfileSubgroupRelationRepository
     {
         private readonly MySQLContext _dbContext;
 
-        public ProfileSubgroupRelationRepository(IDbContextFactory<MySQLContext> dbContextFactory)
+        public ProfileSubgroupRelationRepository(MySQLContext dbContext)
         {
-            _dbContext = dbContextFactory.CreateDbContext();
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return _dbContext.DisposeAsync();
+            _dbContext = dbContext;
         }
 
         public ProfileSubgroupRelation GetRelation(int profileId, int subgroupId)
