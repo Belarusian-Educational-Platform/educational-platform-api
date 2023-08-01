@@ -38,13 +38,13 @@ namespace educational_platform_api.Middlewares.UseAccount
                 ValidationResult validationResult = accountValidator.Validate(account);
                 if(!validationResult.IsValid)
                 {
-                    throw new EntityValidationException(nameof(Account)); // SOLVED: BUSINESS LOGIC - VALIDATION EXC.
+                    throw new EntityValidationException(nameof(Account));
                 }
 
                 context.ContextData.Add(ACCOUNT_CONTEXT_DATA_KEY, account);
             } else
             {
-                throw new UnauthorizedAccessException(); // SOLVED: UNAUTH. EXCEPTION GRAPHQL
+                throw new UnauthorizedAccessException();
             }
 
             await _next(context);
