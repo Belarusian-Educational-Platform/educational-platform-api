@@ -11,7 +11,7 @@ using educational_platform_api.Contexts;
 namespace educational_platform_api.Migrations
 {
     [DbContext(typeof(MySQLContext))]
-    [Migration("20230729101037_InitialCreate")]
+    [Migration("20230801092415_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

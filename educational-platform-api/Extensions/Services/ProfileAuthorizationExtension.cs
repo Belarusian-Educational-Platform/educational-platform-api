@@ -10,7 +10,6 @@ namespace educational_platform_api.Extensions.Services
     {
         public static IServiceCollection SetupProfileAuthorization(this IServiceCollection services)
         {
-            // TODO: CLASS FOR STORING ALL POLICIES?
             services.AddProfileAuthorization(options =>
             {
                 options.AddPolicy("CreateProfile", policy =>

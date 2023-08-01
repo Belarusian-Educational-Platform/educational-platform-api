@@ -14,14 +14,14 @@ namespace educational_platform_api.Repositories
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Profile> GetProfiles()
+        public IEnumerable<Profile> GetAll()
         {
             List<Profile> profiles = _dbContext.Profiles.ToList();
 
             return profiles;
         }
 
-        public Profile GetProfile(int id)
+        public Profile GetById(int id)
         {
             Profile profile;
             try
@@ -36,7 +36,7 @@ namespace educational_platform_api.Repositories
             return profile;
         }
 
-        public Profile GetActiveProfile(string keycloakId)
+        public Profile GetActiveByAccount(string keycloakId)
         {
             Profile profile;
             try
@@ -52,7 +52,7 @@ namespace educational_platform_api.Repositories
             return profile;
         }
 
-        public IEnumerable<Profile> GetAccountProfiles(string keycloakId)
+        public IEnumerable<Profile> GetByAccount(string keycloakId)
         {
             List<Profile> accountProfiles = _dbContext.Profiles
                 .Where(x => x.KeycloakId == keycloakId)
@@ -61,7 +61,7 @@ namespace educational_platform_api.Repositories
             return accountProfiles;
         }
 
-        public IEnumerable<Profile> GetOrganizationProfiles(int organizationId)
+        public IEnumerable<Profile> GetByOrganizationId(int organizationId)
         {
             var profiles = _dbContext.Profiles
                 .Join(_dbContext.ProfileOrganizationRelations,
@@ -77,7 +77,7 @@ namespace educational_platform_api.Repositories
             return profiles;
         }
 
-        public Profile CreateProfile(Profile profile)
+        public Profile Create(Profile profile)
         {
             Profile profileEntity;
             try
@@ -91,7 +91,7 @@ namespace educational_platform_api.Repositories
             return profileEntity;
         }
 
-        public void UpdateProfile(Profile profile)
+        public void Update(Profile profile)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace educational_platform_api.Repositories
             }
         }
 
-        public void DeleteProfile(Profile profile)
+        public void Delete(Profile profile)
         {
             try
             {

@@ -1,6 +1,6 @@
 ﻿using educational_platform_api.Contexts;
+using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Repositories
 {
@@ -13,12 +13,86 @@ namespace educational_platform_api.Repositories
             _dbContext = dbContext;
         }
 
-        public ProfileSubgroupRelation GetRelation(int profileId, int subgroupId)
+        public ProfileSubgroupRelation Create(ProfileSubgroupRelation relation)
         {
-            ProfileSubgroupRelation relation = _dbContext.ProfileSubgroupRelations
-                .First(relation => relation.ProfileId == profileId && relation.SubgroupId == subgroupId);
+            ProfileSubgroupRelation relationEntity;
+            try
+            {
+                relationEntity = _dbContext.ProfileSubgroupRelations.Add(relation).Entity;
+            } catch (Exception ex)
+            {
+                throw new EntityCreateException(nameof(ProfileSubgroupRelation), ex.Message, ex);
+            }
+
+            return relationEntity;
+        }
+
+        public void Delete(params ProfileSubgroupRelation[] relations)
+        {
+            try
+            {
+                _dbContext.ProfileSubgroupRelations.RemoveRange(relations);
+            } catch (Exception ex)
+            {
+                throw new EntityDeleteException(nameof(ProfileSubgroupRelation), ex.Message, ex);
+            }
+        }
+
+        public ProfileSubgroupRelation GetByEntityIds(int profileId, int subgroupId)
+        {
+            ProfileSubgroupRelation relation;
+            try
+            {
+                relation = _dbContext.ProfileSubgroupRelations
+                    .First(relation => relation.ProfileId == profileId && relation.SubgroupId == subgroupId);
+            } catch (Exception ex)
+            {
+                throw new EntityNotFoundException(nameof(ProfileSubgroupRelation), ex.Message, ex);
+            }
 
             return relation;
+        }
+
+        public IEnumerable<ProfileSubgroupRelation> GetByGroupId(int groupId)
+        {
+            List<ProfileSubgroupRelation> relations = _dbContext.Subgroups.Where(s => s.GroupId == groupId)
+                .Join(_dbContext.ProfileSubgroupRelations, s => s.Id, psr => psr.SubgroupId, (s, psr) => psr)
+                .ToList();
+
+            return relations;
+        }
+
+        public IEnumerable<ProfileSubgroupRelation> GetByProfileId(int profileId)
+        {
+            List<ProfileSubgroupRelation> relations = _dbContext.ProfileSubgroupRelations
+                .Where(x => x.ProfileId == profileId).ToList();
+
+            return relations;
+        }
+
+        public IEnumerable<ProfileSubgroupRelation> GetBySubgroupId(int subgroupId)
+        {
+            List<ProfileSubgroupRelation> relations = _dbContext.ProfileSubgroupRelations
+                .Where(x => x.SubgroupId == subgroupId).ToList();
+
+            return relations;
+        }
+
+        public bool TryGetByEntityIds(int profileId, int subgroupId, out ProfileSubgroupRelation relation)
+        {
+            try
+            {
+                relation = _dbContext.ProfileSubgroupRelations
+                    .First(relation => relation.ProfileId == profileId && relation.SubgroupId == subgroupId);
+                return true;
+            } catch (Exception ex)
+            {
+                relation = new()
+                {
+                    Permissions = "[]"
+                };
+                return false;
+            }
         }
     }
 }

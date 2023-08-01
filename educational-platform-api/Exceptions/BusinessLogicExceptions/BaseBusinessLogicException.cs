@@ -4,20 +4,26 @@ namespace educational_platform_api.Exceptions.BusinessLogicExceptions
 {
     public class BaseBusinessLogicException : BaseException
     {
-        public BaseBusinessLogicException()
+        public string Entity;
+
+        public BaseBusinessLogicException(string entity)
         {
+            Entity = entity;
         }
 
-        public BaseBusinessLogicException(string? message) : base(message)
+        public BaseBusinessLogicException(string entity, string? message) : base(message)
         {
+            Entity = entity;
         }
 
-        public BaseBusinessLogicException(string? message, Exception? innerException) : base(message, innerException)
+        public BaseBusinessLogicException(string entity, string? message, Exception? innerException) : base(message, innerException)
         {
+            Entity = entity;
         }
 
-        protected BaseBusinessLogicException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected BaseBusinessLogicException(string entity, SerializationInfo info, StreamingContext context) : base(info, context)
         {
+            Entity = entity;
         }
     }
 }

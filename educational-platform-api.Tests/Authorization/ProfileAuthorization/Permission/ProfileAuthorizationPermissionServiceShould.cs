@@ -10,19 +10,12 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
     public class ProfileAuthorizationPermissionServiceShould
     {
         private readonly IProfileAuthorizationPermissionService _permissionService;
-        private readonly Mock<IProfileOrganizationRelationRepository> _organizationRelationRepositoryMock;
-        private readonly Mock<IProfileGroupRelationRepository> _groupRelationRepositoryMock;
-        private readonly Mock<IProfileSubgroupRelationRepository> _subgroupRelationRepositoryMock;
+        private readonly Mock<UnitOfWork> _unitOfWork;
 
         public ProfileAuthorizationPermissionServiceShould()
         {
-            _organizationRelationRepositoryMock = new Mock<IProfileOrganizationRelationRepository>();
-            _groupRelationRepositoryMock = new Mock<IProfileGroupRelationRepository>();
-            _subgroupRelationRepositoryMock = new Mock<IProfileSubgroupRelationRepository>();
-
-            _permissionService = new ProfileAuthorizationPermissionService(_organizationRelationRepositoryMock.Object, 
-                _groupRelationRepositoryMock.Object, 
-                _subgroupRelationRepositoryMock.Object);
+            _unitOfWork = new Mock<UnitOfWork>();
+            _permissionService = new ProfileAuthorizationPermissionService(_unitOfWork.Object);
         }
 
         [TestMethod()]
@@ -52,14 +45,14 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             var verificationOptions = new ProfileAuthorizationVerificationOptions();
             configureVerificationOptions(verificationOptions);
 
-            _organizationRelationRepositoryMock
-                .Setup(repo => repo.GetProfileRelation(It.IsAny<int>()))
+            _unitOfWork
+                .Setup(repo => repo.ProfileOrganizationRelations.GetByProfileId(It.IsAny<int>()))
                 .Returns(profileOrganizationRelation);
-            _groupRelationRepositoryMock
-                .Setup(repo => repo.GetRelation(It.IsAny<int>(), It.IsAny<int>()))
+            _unitOfWork
+                .Setup(repo => repo.ProfileGroupRelations.GetByEntityIds(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(profileGroupRelation);
-            _subgroupRelationRepositoryMock
-                .Setup(repo => repo.GetRelation(It.IsAny<int>(), It.IsAny<int>()))
+            _unitOfWork
+                .Setup(repo => repo.ProfileSubgroupRelations.GetByEntityIds(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(profileSubroupRelation);
 
             Action<ProfileAuthorizationPermissionSet> configurePermissionSet = (permissionSet) =>

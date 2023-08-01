@@ -2,7 +2,7 @@
 {
     public static class ProfileErrorMessages
     {
-        // TODO: DO WE NEED ERROR MESSAGES? FORMAT? AUTO FIELD FORMATING?
+        // SOLVED: CREATE ERROR MESSAGE BUILDER
 
         // Id
 

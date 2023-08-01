@@ -1,4 +1,5 @@
 ﻿using educational_platform_api.DTOs.Profile;
+using educational_platform_api.DTOs.ProfileGroupRelation;
 using educational_platform_api.Models;
 
 namespace educational_platform_api.Services

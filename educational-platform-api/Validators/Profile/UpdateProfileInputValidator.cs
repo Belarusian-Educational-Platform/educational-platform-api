@@ -14,7 +14,7 @@ namespace educational_platform_api.Validators.Profile
                 .WithMessage(ProfileErrorMessages.KeycloakIdIsNull)
                 .NotEmpty()
                 .WithMessage(ProfileErrorMessages.KeycloakIdIsEmpty)
-                .Length(0, 128) // TODO: Keycloak ID length spec.
+                .Length(0, 128)
                 .WithMessage(ProfileErrorMessages.KeycloakIdIncorrectLength);
 
             RuleFor(x => x.FirstName)

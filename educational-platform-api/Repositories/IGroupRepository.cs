@@ -4,13 +4,13 @@ namespace educational_platform_api.Repositories
 {
     public interface IGroupRepository
     {
-        public IEnumerable<Group> GetGroups();
-        public Group GetGroupById(int id);
-        public IEnumerable<Group> GetProfileGroups(int profileId);
-        public IEnumerable<Group> GetOrganizationGroups(int organizationId);
+        public IEnumerable<Group> GetAll();
+        public Group GetById(int id);
+        public IEnumerable<Group> GetByProfileId(int profileId);
+        public IEnumerable<Group> GetByOrgnizationId(int organizationId);
 
-        public Group CreateGroup(Group group);
-        public void UpdateGroup(Group group);
-        public void DeleteGroup(Group group);
+        public Group Create(Group group);
+        public void Update(Group group);
+        public void Delete(Group group);
     }
 }

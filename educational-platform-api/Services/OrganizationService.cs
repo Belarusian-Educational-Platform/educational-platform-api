@@ -18,17 +18,17 @@ namespace educational_platform_api.Services
 
         public IEnumerable<Organization> GetOrganizations()
         {
-            return _unitOfWork.Organizations.GetOrganizations();
+            return _unitOfWork.Organizations.GetAll();
         }
 
         public Organization GetOrganization(int id)
         {
-            return _unitOfWork.Organizations.GetOrganization(id);
+            return _unitOfWork.Organizations.GetById(id);
         }
 
         public Organization GetProfileOrganization(int profileId)
         {
-            var organization = _unitOfWork.Organizations.GetProfileOrganization(profileId);
+            var organization = _unitOfWork.Organizations.GetByProfile(profileId);
 
             return organization;
         }
@@ -36,28 +36,29 @@ namespace educational_platform_api.Services
         public Organization CreateOrganization(CreateOrganizationInput input)
         {
             var organization = _mapper.Map<Organization>(input);
+            var organizationEntity = _unitOfWork.Organizations.Create(organization);
             _unitOfWork.Save();
-            return _unitOfWork.Organizations.CreateOrganization(organization);
+            return organizationEntity;
         }
 
         public void UpdateOrganization(UpdateOrganizationInput input)
         {
             var organization = _mapper.Map<Organization>(input);
-            _unitOfWork.Organizations.UpdateOrganization(organization);
+            _unitOfWork.Organizations.Update(organization);
             _unitOfWork.Save();
         }
 
-        public void DeleteOrganization(int id)
+        public void DeleteOrganization(int id) // TODO: DELETE ALL!!!!
         {
-            var organization = _unitOfWork.Organizations.GetOrganization(id);
-            _unitOfWork.Organizations.DeleteOrganization(organization);
+            var organization = _unitOfWork.Organizations.GetById(id);
+            _unitOfWork.Organizations.Delete(organization);
             _unitOfWork.Save();
         }
 
         public bool CheckProfileInOrganization(int profileId, int organizationId)
         {
             return _unitOfWork.ProfileOrganizationRelations
-                .CheckRelationExists(profileId, organizationId);
+                .TryGetByEntityIds(profileId, organizationId, out ProfileOrganizationRelation relation);
         }
     }
 }

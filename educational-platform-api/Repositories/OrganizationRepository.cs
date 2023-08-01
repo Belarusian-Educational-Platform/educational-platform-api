@@ -14,14 +14,14 @@ namespace educational_platform_api.Repositories
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Organization> GetOrganizations()
+        public IEnumerable<Organization> GetAll()
         {
             List<Organization> organizations = _dbContext.Organizations.ToList();
 
             return organizations;
         }
 
-        public Organization GetOrganization(int id)
+        public Organization GetById(int id)
         {
             Organization organization;
             try
@@ -35,7 +35,7 @@ namespace educational_platform_api.Repositories
             return organization;
         }
 
-        public Organization GetProfileOrganization(int profileId)
+        public Organization GetByProfile(int profileId)
         {
             Organization organization;
             try
@@ -59,7 +59,7 @@ namespace educational_platform_api.Repositories
             return organization;
         }
 
-        public Organization CreateOrganization(Organization organization)
+        public Organization Create(Organization organization)
         {
             Organization organizationEntity;
             try
@@ -73,7 +73,7 @@ namespace educational_platform_api.Repositories
             return organizationEntity;
         }
 
-        public void UpdateOrganization(Organization organization)
+        public void Update(Organization organization)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace educational_platform_api.Repositories
             }
         }
 
-        public void DeleteOrganization(Organization organization)
+        public void Delete(Organization organization)
         {
             try
             {

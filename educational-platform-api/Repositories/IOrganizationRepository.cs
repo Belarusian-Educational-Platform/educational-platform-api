@@ -5,12 +5,12 @@ namespace educational_platform_api.Repositories
 {
     public interface IOrganizationRepository
     {
-        public IEnumerable<Organization> GetOrganizations();
-        public Organization GetOrganization(int id);
-        public Organization GetProfileOrganization(int profileId);
+        public IEnumerable<Organization> GetAll();
+        public Organization GetById(int id);
+        public Organization GetByProfile(int profileId);
 
-        public Organization CreateOrganization(Organization organization);
-        public void UpdateOrganization(Organization organization);
-        public void DeleteOrganization(Organization organization);
+        public Organization Create(Organization organization);
+        public void Update(Organization organization);
+        public void Delete(Organization organization);
     }
 }

@@ -1,12 +1,12 @@
 ﻿using educational_platform_api.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace educational_platform_api.Repositories
 {
     public class UnitOfWork : IAsyncDisposable
     {
         private readonly MySQLContext _dbContext;
-        // TODO: RENAME BASIC METHODS IN REPOS? GetEntities -> GetAll, GetEnityById -> GetById
         private IProfileRepository profileRepository;
         private IOrganizationRepository organizationRepository;
         private IGroupRepository groupRepository;
@@ -120,6 +120,11 @@ namespace educational_platform_api.Repositories
         public void Save()
         {
             _dbContext.SaveChanges();
+        }
+
+        public IDbContextTransaction BeginTransaction()
+        {
+            return _dbContext.Database.BeginTransaction();
         }
 
         public ValueTask DisposeAsync()

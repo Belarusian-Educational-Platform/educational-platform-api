@@ -45,6 +45,7 @@ namespace educational_platform_api.Queries
             [Service] IGroupService groupService, 
             [Profile] Profile profile)
         {
+            // SOLVED - AUTHORIZE - view-private-information
             return groupService.GetMyOrganizationGroups(profile.Id);
         }
     }

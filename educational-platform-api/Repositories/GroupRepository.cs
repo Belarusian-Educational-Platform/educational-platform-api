@@ -14,7 +14,7 @@ namespace educational_platform_api.Repositories
             _dbContext = dbContext;
         }
 
-        public Group GetGroupById(int id)
+        public Group GetById(int id)
         {
             Group group;
             try
@@ -28,12 +28,12 @@ namespace educational_platform_api.Repositories
             return group;
         }
 
-        public IEnumerable<Group> GetGroups()
+        public IEnumerable<Group> GetAll()
         {
             return _dbContext.Groups.ToList();
         }
 
-        public IEnumerable<Group> GetOrganizationGroups(int organizationId)
+        public IEnumerable<Group> GetByOrgnizationId(int organizationId)
         {
             List<Group> groups = _dbContext.Groups
                 .Join(_dbContext.GroupOrganizationRelations.Where(gor => gor.OrganizationId == organizationId), 
@@ -45,7 +45,7 @@ namespace educational_platform_api.Repositories
             return groups;
         }
 
-        public IEnumerable<Group> GetProfileGroups(int profileId)
+        public IEnumerable<Group> GetByProfileId(int profileId)
         {
             List<Group> groups = _dbContext.Groups
                 .Join(_dbContext.ProfileGroupRelations.Where(pgr => pgr.ProfileId == profileId),
@@ -57,7 +57,7 @@ namespace educational_platform_api.Repositories
             return groups;
         }
 
-        public Group CreateGroup(Group group)
+        public Group Create(Group group)
         {
             Group groupEntity;
             try
@@ -72,7 +72,7 @@ namespace educational_platform_api.Repositories
             return groupEntity;
         }
 
-        public void UpdateGroup(Group group)
+        public void Update(Group group)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace educational_platform_api.Repositories
             }
         }
 
-        public void DeleteGroup(Group group)
+        public void Delete(Group group)
         {
             try
             {

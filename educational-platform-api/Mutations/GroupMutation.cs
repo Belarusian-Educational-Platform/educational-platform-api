@@ -1,6 +1,8 @@
 ﻿using AppAny.HotChocolate.FluentValidation;
 using educational_platform_api.Authorization.ProfileAuthorization;
 using educational_platform_api.DTOs.Group;
+using educational_platform_api.DTOs.ProfileGroupRelation;
+using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;
 using educational_platform_api.Services;
@@ -12,6 +14,54 @@ namespace educational_platform_api.Mutations
     [ExtendObjectType(typeof(Mutation))]
     public class GroupMutation
     {
+        [Authorize]
+        [GraphQLName("addProfileToGroup")]
+        [UseProfile]
+        public bool AddProfileToGroup(
+            [Service] IGroupService groupService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Profile] Profile profile,
+            CreateProfileGroupRelationInput input)
+        {
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("UpdateGroup");
+                options.AddProfile(profile.Id);
+                options.AddGroup(input.GroupId);
+                options.AddOrganization();
+            });
+            if (!groupService.CheckCanAddProfileToGroup(input.ProfileId, input.GroupId))
+            {
+                throw new ProfileUnauthorizedException();
+            }
+
+            groupService.CreateProfileGroupRelation(input);
+
+            return true;
+        }
+
+        [Authorize]
+        [GraphQLName("deleteProfileFromGroup")]
+        [UseProfile]
+        public bool DeleteProfileFromGroup(
+            [Service] IGroupService groupService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Profile] Profile profile,
+            int profileId, int groupId)
+        {
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("UpdateGroup");
+                options.AddProfile(profile.Id);
+                options.AddGroup(groupId);
+                options.AddOrganization();
+            });
+
+            groupService.DeleteProfileGroupRelation(profileId, groupId);
+
+            return true;
+        }
+
         [Authorize]
         [GraphQLName("createGroup")]
         [UseProfile]

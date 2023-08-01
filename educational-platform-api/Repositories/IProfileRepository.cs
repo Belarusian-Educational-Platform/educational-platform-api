@@ -4,14 +4,14 @@ namespace educational_platform_api.Repositories
 {
     public interface IProfileRepository
     {
-        public IEnumerable<Profile> GetProfiles();
-        public Profile GetProfile(int id);
-        public IEnumerable<Profile> GetAccountProfiles(string keycloakId);
-        public Profile GetActiveProfile(string keycloakId);
-        public IEnumerable<Profile> GetOrganizationProfiles(int organizationId);
+        public IEnumerable<Profile> GetAll();
+        public Profile GetById(int id);
+        public IEnumerable<Profile> GetByAccount(string keycloakId);
+        public Profile GetActiveByAccount(string keycloakId);
+        public IEnumerable<Profile> GetByOrganizationId(int organizationId);
 
-        public Profile CreateProfile(Profile profile);
-        public void UpdateProfile(Profile profile);
-        public void DeleteProfile(Profile profile);
+        public Profile Create(Profile profile);
+        public void Update(Profile profile);
+        public void Delete(Profile profile);
     }
 }

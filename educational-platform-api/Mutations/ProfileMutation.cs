@@ -22,6 +22,7 @@ namespace educational_platform_api.Mutations
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput profileInput)
         {
+            // TODO: CHECK ORGANIZATION EXISTS
             profileAuthorizationService.Authorize(options =>
             {
                 options.AddPolicy("CreateProfile");
@@ -41,7 +42,7 @@ namespace educational_platform_api.Mutations
             [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput profileInput,
             [Profile] Profile profile)
         {
-            if (profile.Id != profileInput.Id) // TODO: OK?
+            if (profile.Id != profileInput.Id)
             {
                 throw new ProfileUnauthorizedException();
             }

@@ -1,5 +1,4 @@
-﻿using educational_platform_api.Contexts;
-using educational_platform_api.Models;
+﻿using educational_platform_api.Models;
 using educational_platform_api.Services;
 using educational_platform_api.Types;
 using HotChocolate.Resolvers;
@@ -13,7 +12,7 @@ namespace educational_platform_api.Middlewares.UseProfile
 
         private readonly FieldDelegate _next;
 
-        public ProfileMiddleware(FieldDelegate next, string policyName)
+        public ProfileMiddleware(FieldDelegate next)
         {
             _next = next;
         }
@@ -28,13 +27,16 @@ namespace educational_platform_api.Middlewares.UseProfile
                     string? keycloakId = claimsPrincipal.FindFirstValue(KeycloakAccountClaimType.Id);
                     if (keycloakId is null || keycloakId.Length == 0)
                     {
-                        throw new Exception("Keycloak Id wasn`t found!"); // TODO: EXCEPTION NAME
+                        throw new UnauthorizedAccessException();
                     }
 
                     Profile profile = profileService.GetActiveProfile(keycloakId);
 
                     context.ContextData.TryAdd(PROFILE_CONTEXT_DATA_KEY, profile);
                 }
+            } else
+            {
+                throw new UnauthorizedAccessException();
             }
 
             await _next(context);

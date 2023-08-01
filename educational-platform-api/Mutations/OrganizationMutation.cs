@@ -13,7 +13,7 @@ namespace educational_platform_api.Mutations
     [ExtendObjectType(typeof(Mutation))]
     public class OrganizationMutation
     {
-        [Authorize]
+        [Authorize] // TODO: AUTHORIZE - WHO CAN DO THAT
         [GraphQLName("createOrganization")]
         public Organization CreateOrganization(
             [Service] IOrganizationService organizationService, 
@@ -35,13 +35,13 @@ namespace educational_platform_api.Mutations
             [UseFluentValidation, UseValidator<UpdateOrganizationInputValidator>] 
                 UpdateOrganizationInput organizationInput)
         {
-            if (!organizationService.CheckProfileInOrganization(profile.Id, organizationInput.Id)) // TODO: OK?
+            if (!organizationService.CheckProfileInOrganization(profile.Id, organizationInput.Id))
             {
                 throw new ProfileUnauthorizedException();
             }
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("UpdateOrganization");
+                options.AddPolicy("Update");
                 options.AddProfile(profile.Id);
                 options.AddOrganization();
             });
@@ -51,7 +51,7 @@ namespace educational_platform_api.Mutations
             return true;
         }
 
-        [Authorize]
+        [Authorize] // TODO: AUTHORIZE - WHO CAN DO THAT
         [GraphQLName("deleteOrganization")]
         public bool DeleteOrganization([Service] IOrganizationService organizationService, int id)
         {

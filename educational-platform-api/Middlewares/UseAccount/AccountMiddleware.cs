@@ -1,4 +1,5 @@
-﻿using educational_platform_api.Models;
+﻿using educational_platform_api.Exceptions.BusinessLogicExceptions;
+using educational_platform_api.Models;
 using educational_platform_api.Types;
 using educational_platform_api.Validators;
 using FluentValidation;
@@ -37,13 +38,13 @@ namespace educational_platform_api.Middlewares.UseAccount
                 ValidationResult validationResult = accountValidator.Validate(account);
                 if(!validationResult.IsValid)
                 {
-                    throw new Exception("Account validation failed!"); // TODO: EXCEPTION NAME
+                    throw new EntityValidationException(nameof(Account)); // SOLVED: BUSINESS LOGIC - VALIDATION EXC.
                 }
 
                 context.ContextData.Add(ACCOUNT_CONTEXT_DATA_KEY, account);
             } else
             {
-                throw new Exception("Something went wrong while accessing token data!"); // TODO: EXCEPTION NAME
+                throw new UnauthorizedAccessException(); // SOLVED: UNAUTH. EXCEPTION GRAPHQL
             }
 
             await _next(context);
