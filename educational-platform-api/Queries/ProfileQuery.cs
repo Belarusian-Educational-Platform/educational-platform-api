@@ -17,7 +17,7 @@ namespace educational_platform_api.Queries
         [UseSorting]
         public IEnumerable<Profile> GetProfiles([Service] IProfileService profileService)
         {
-            return profileService.GetProfiles();
+            return profileService.GetAllProfiles();
         }
 
         [Authorize]
@@ -30,7 +30,8 @@ namespace educational_platform_api.Queries
         [Authorize]
         [GraphQLName("myProfiles")]
         [UseAccount]
-        public IEnumerable<Profile> GetMyProfiles([Service] IProfileService profileService, 
+        public IEnumerable<Profile> GetMyProfiles(
+            [Service] IProfileService profileService, 
             [Account] Account account)
         {
             return profileService.GetAccountProfiles(account.KeycloakId!);
@@ -62,6 +63,46 @@ namespace educational_platform_api.Queries
             });
 
             return profileService.GetMyOrganizationProfiles(profile.Id);
+        }
+
+        [Authorize]
+        [GraphQLName("groupProfiles")]
+        [UseProfile]
+        public IEnumerable<Profile> GetGroupProfiles(
+            [Service] IProfileService profileService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Profile] Profile profile,
+            int groupId)
+        {
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("GetGroupProfiles");
+                options.AddProfile(profile.Id);
+                options.AddGroup(groupId);
+                options.AddOrganization();
+            });
+
+            return profileService.GetGroupProfiles(groupId);
+        }
+
+        [Authorize]
+        [GraphQLName("subgroupProfiles")]
+        [UseProfile]
+        public IEnumerable<Profile> GetSubgroupProfiles(
+            [Service] IProfileService profileService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Profile] Profile profile,
+            int subgroupId)
+        {
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("GetSubgroupProfiles"); // TODO: USER WITH view-private-information IN GROUP CAN?
+                options.AddProfile(profile.Id);
+                options.AddSubgroup(subgroupId);
+                options.AddOrganization();
+            });
+
+            return profileService.GetSubgroupProfiles(subgroupId);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace educational_platform_api.Repositories
             try
             {
                 relation = _dbContext.ProfileOrganizationRelations
-                    .First(relation => relation.ProfileId == profileId);
+                    .First(x => x.ProfileId == profileId);
             } catch (Exception ex)
             {
                 throw new EntityNotFoundException(nameof(ProfileOrganizationRelation), ex.Message, ex);
@@ -48,8 +48,9 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<ProfileOrganizationRelation> GetByOrgnizationId(int organizationId)
         {
-            List<ProfileOrganizationRelation> relations = _dbContext.ProfileOrganizationRelations
-                .Where(relation => relation.OrganizationId == organizationId).ToList();
+            var relations = _dbContext.ProfileOrganizationRelations
+                .Where(x => x.OrganizationId == organizationId)
+                .ToList();
 
             return relations;
         }
@@ -85,7 +86,8 @@ namespace educational_platform_api.Repositories
             try
             {
                 relation = _dbContext.ProfileOrganizationRelations
-                    .First(x => x.ProfileId == profileId && x.OrganizationId == organizationId);
+                    .First(x => x.ProfileId == profileId 
+                        && x.OrganizationId == organizationId);
                 return true;
             }
             catch (Exception ex)

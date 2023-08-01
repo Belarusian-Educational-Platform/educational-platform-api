@@ -15,14 +15,14 @@ namespace educational_platform_api.Queries
         [UseSorting]
         public IEnumerable<Organization> GetOrganizations([Service] IOrganizationService organizationService)
         {
-            return organizationService.GetOrganizations();
+            return organizationService.GetAllOrganizations();
         }
 
         [Authorize]
         [GraphQLName("organizationById")]
         public Organization GetOrganization([Service] IOrganizationService organizationService, int id)
         {
-            return organizationService.GetOrganization(id);
+            return organizationService.GetOrganizationById(id);
         }
 
         [Authorize]

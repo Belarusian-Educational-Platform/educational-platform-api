@@ -1,12 +1,13 @@
 ﻿using AppAny.HotChocolate.FluentValidation;
 using educational_platform_api.Authorization.ProfileAuthorization;
 using educational_platform_api.DTOs.Group;
-using educational_platform_api.DTOs.ProfileGroupRelation;
+using educational_platform_api.DTOs.Relations;
 using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 using educational_platform_api.Middlewares.UseProfile;
 using educational_platform_api.Models;
 using educational_platform_api.Services;
 using educational_platform_api.Validators.Group;
+using educational_platform_api.Validators.Relations;
 using HotChocolate.Authorization;
 
 namespace educational_platform_api.Mutations
@@ -21,7 +22,8 @@ namespace educational_platform_api.Mutations
             [Service] IGroupService groupService,
             [Service] IProfileAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
-            CreateProfileGroupRelationInput input)
+            [UseFluentValidation, UseValidator<CreateProfileGroupRelationInputValidator>] 
+                CreateProfileGroupRelationInput input)
         {
             profileAuthorizationService.Authorize(options =>
             {
@@ -78,7 +80,7 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            Group groupEntity = groupService.CreateGroup(input);
+            var groupEntity = groupService.CreateGroup(input);
 
             return groupEntity;
         }

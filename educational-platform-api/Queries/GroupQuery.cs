@@ -17,7 +17,7 @@ namespace educational_platform_api.Queries
         [UseSorting]
         public IEnumerable<Group> GetGroups([Service] IGroupService groupService)
         {
-            return groupService.GetGroups();
+            return groupService.GetAllGroups();
         }
 
         [Authorize]
@@ -42,10 +42,17 @@ namespace educational_platform_api.Queries
         [GraphQLName("myOrganizationGroups")]
         [UseProfile]
         public IEnumerable<Group> GetMyOrganizationGroups(
-            [Service] IGroupService groupService, 
+            [Service] IGroupService groupService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
             [Profile] Profile profile)
         {
-            // SOLVED - AUTHORIZE - view-private-information
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("GetMyOrganizationGroups");
+                options.AddProfile(profile.Id);
+                options.AddOrganization();
+            });
+
             return groupService.GetMyOrganizationGroups(profile.Id);
         }
     }

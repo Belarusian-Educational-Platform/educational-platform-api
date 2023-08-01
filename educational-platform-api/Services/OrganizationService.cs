@@ -16,19 +16,19 @@ namespace educational_platform_api.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<Organization> GetOrganizations()
+        public IEnumerable<Organization> GetAllOrganizations()
         {
             return _unitOfWork.Organizations.GetAll();
         }
 
-        public Organization GetOrganization(int id)
+        public Organization GetOrganizationById(int id)
         {
             return _unitOfWork.Organizations.GetById(id);
         }
 
         public Organization GetProfileOrganization(int profileId)
         {
-            var organization = _unitOfWork.Organizations.GetByProfile(profileId);
+            var organization = _unitOfWork.Organizations.GetByProfileId(profileId);
 
             return organization;
         }
@@ -38,6 +38,7 @@ namespace educational_platform_api.Services
             var organization = _mapper.Map<Organization>(input);
             var organizationEntity = _unitOfWork.Organizations.Create(organization);
             _unitOfWork.Save();
+
             return organizationEntity;
         }
 
@@ -48,7 +49,7 @@ namespace educational_platform_api.Services
             _unitOfWork.Save();
         }
 
-        public void DeleteOrganization(int id) // TODO: DELETE ALL!!!!
+        public void DeleteOrganization(int id) // TODO: DELETE ALL RELATED ENTITIES!!!!
         {
             var organization = _unitOfWork.Organizations.GetById(id);
             _unitOfWork.Organizations.Delete(organization);

@@ -46,7 +46,8 @@ namespace educational_platform_api.Repositories
             try
             {
                 relation = _dbContext.ProfileGroupRelations
-                    .First(relation => relation.ProfileId == profileId && relation.GroupId == groupId);
+                    .First(x => x.ProfileId == profileId 
+                        && x.GroupId == groupId);
             } catch (Exception ex)
             {
                 throw new EntityNotFoundException(nameof(ProfileGroupRelation), ex.Message, ex);
@@ -57,16 +58,18 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<ProfileGroupRelation> GetByGroupId(int groupId)
         {
-            List<ProfileGroupRelation> relations = _dbContext.ProfileGroupRelations
-                .Where(x => x.GroupId == groupId).ToList();
+            var relations = _dbContext.ProfileGroupRelations
+                .Where(x => x.GroupId == groupId)
+                .ToList();
 
             return relations;
         }
 
         public IEnumerable<ProfileGroupRelation> GetByProfileId(int profileId)
         {
-            List<ProfileGroupRelation> relations = _dbContext.ProfileGroupRelations
-                .Where(x => x.ProfileId == profileId).ToList();
+            var relations = _dbContext.ProfileGroupRelations
+                .Where(x => x.ProfileId == profileId)
+                .ToList();
             
             return relations;
         }
@@ -76,7 +79,8 @@ namespace educational_platform_api.Repositories
             try
             {
                 relation = _dbContext.ProfileGroupRelations
-                    .First(relation => relation.ProfileId == profileId && relation.GroupId == groupId);
+                    .First(x => x.ProfileId == profileId 
+                        && x.GroupId == groupId);
 
                 return true;
             } catch (Exception ex)

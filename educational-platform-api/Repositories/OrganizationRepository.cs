@@ -16,7 +16,7 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<Organization> GetAll()
         {
-            List<Organization> organizations = _dbContext.Organizations.ToList();
+            var organizations = _dbContext.Organizations.ToList();
 
             return organizations;
         }
@@ -35,27 +35,23 @@ namespace educational_platform_api.Repositories
             return organization;
         }
 
-        public Organization GetByProfile(int profileId)
+        public Organization GetByProfileId(int profileId)
         {
             Organization organization;
             try
             {
-                organization = _dbContext.Organizations
-                    .Join(_dbContext.ProfileOrganizationRelations,
-                        o => o.Id,
+                organization = _dbContext.ProfileOrganizationRelations
+                    .Where(por => por.ProfileId == profileId)
+                    .Join(_dbContext.Organizations,
                         por => por.OrganizationId,
-                        (o, por) => new { o, por })
-                    .Join(_dbContext.Profiles.Where(p => p.Id == profileId),
-                        op => op.por.ProfileId,
-                        p => p.Id,
-                        (op, p) => op.o)
+                        o => o.Id,
+                        (por, o) => o)
                     .First();
             } catch (Exception ex)
             {
                 throw new EntityNotFoundException(nameof(Organization), ex.Message, ex);
             }
             
-
             return organization;
         }
 
@@ -96,6 +92,54 @@ namespace educational_platform_api.Repositories
             {
                 throw new EntityDeleteException(nameof(Organization), ex.Message, ex);
             }
+        }
+
+        public Organization GetByGroupId(int groupId)
+        {
+            Organization organization;
+            try
+            {
+                organization = _dbContext.GroupOrganizationRelations
+                    .Where(gor => gor.GroupId == groupId)
+                    .Join(_dbContext.Organizations, 
+                        gor => gor.OrganizationId, 
+                        o => o.Id, 
+                        (gor, o) => o)
+                    .First();
+            } catch (Exception ex)
+            {
+                throw new EntityNotFoundException(nameof(Organization), ex.Message, ex);
+            }
+
+            return organization;
+        }
+
+        public Organization GetBySubgroupId(int subgroupId)
+        {
+            Organization organization;
+            try
+            {
+                organization = _dbContext.Subgroups
+                    .Where(s => s.Id == subgroupId)
+                    .Join(_dbContext.Groups, 
+                        s => s.GroupId, 
+                        g => g.Id, 
+                        (s, g) => new { s, g })
+                    .Join(_dbContext.GroupOrganizationRelations, 
+                        sg => sg.g.Id, 
+                        gor => gor.GroupId, 
+                        (sg, gor) => new { sg, gor })
+                    .Join(_dbContext.Organizations, 
+                        sggor => sggor.gor.OrganizationId, 
+                        o => o.Id, 
+                        (sggor, o) => o)
+                    .First();
+            } catch (Exception ex)
+            {
+                throw new EntityNotFoundException(nameof(Organization), ex.Message, ex);
+            }
+
+            return organization;
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using educational_platform_api.DTOs.Group;
-using educational_platform_api.DTOs.ProfileGroupRelation;
+using educational_platform_api.DTOs.Relations;
 using educational_platform_api.Models;
 using educational_platform_api.Repositories;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace educational_platform_api.Services
 {
@@ -18,7 +17,7 @@ namespace educational_platform_api.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<Group> GetGroups()
+        public IEnumerable<Group> GetAllGroups()
         {
             return _unitOfWork.Groups.GetAll();
         }
@@ -35,8 +34,8 @@ namespace educational_platform_api.Services
 
         public IEnumerable<Group> GetMyOrganizationGroups(int profileId)
         {
-            var organization = _unitOfWork.Organizations.GetByProfile(profileId);
-            var organizationGroups =_unitOfWork.Groups.GetByOrgnizationId(organization.Id);
+            var organization = _unitOfWork.Organizations.GetByProfileId(profileId);
+            var organizationGroups = _unitOfWork.Groups.GetByOrganizationId(organization.Id);
 
             return organizationGroups;
         }
@@ -47,12 +46,12 @@ namespace educational_platform_api.Services
             {
                 try
                 {
-                    Group group = _mapper.Map<Group>(input);
+                    var group = _mapper.Map<Group>(input);
 
-                    Group groupEntity = _unitOfWork.Groups.Create(group);
+                    var groupEntity = _unitOfWork.Groups.Create(group);
                     _unitOfWork.Save();
 
-                    GroupOrganizationRelation relation = new()
+                    var relation = new GroupOrganizationRelation()
                     {
                         GroupId = groupEntity.Id,
                         OrganizationId = input.OrganizationId
@@ -73,7 +72,7 @@ namespace educational_platform_api.Services
 
         public void UpdateGroup(UpdateGroupInput input)
         {
-            Group group = _mapper.Map<Group>(input);
+            var group = _mapper.Map<Group>(input);
             _unitOfWork.Groups.Update(group);
             _unitOfWork.Save();
         }
@@ -110,15 +109,15 @@ namespace educational_platform_api.Services
 
         public void CreateProfileGroupRelation(CreateProfileGroupRelationInput input)
         {
-            ProfileGroupRelation relation = _mapper.Map<ProfileGroupRelation>(input);
+            var relation = _mapper.Map<ProfileGroupRelation>(input);
             _unitOfWork.ProfileGroupRelations.Create(relation);
             _unitOfWork.Save();
         }
 
         public void DeleteProfileGroupRelation(int profileId, int groupId)
         {
-            ProfileGroupRelation relation = 
-                _unitOfWork.ProfileGroupRelations.GetByEntityIds(profileId, groupId);
+            var relation = _unitOfWork.ProfileGroupRelations
+                .GetByEntityIds(profileId, groupId);
             _unitOfWork.ProfileGroupRelations.Delete(relation);
             _unitOfWork.Save();
         }

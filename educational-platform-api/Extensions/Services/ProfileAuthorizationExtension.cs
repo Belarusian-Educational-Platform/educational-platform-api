@@ -45,6 +45,40 @@ namespace educational_platform_api.Extensions.Services
                             .ToPermission()
                     );
                 });
+                options.AddPolicy("GetMyOrganizationGroups", policy =>
+                {
+                    policy.AddRequirements(
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "veiw-private-information")
+                            .ToPermission()
+                    );
+                });
+                options.AddPolicy("GetGroupSubgroups", policy =>
+                {
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "view-groups-private-information")
+                            .ToPermission()) |
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "view-private-information")
+                            .ToPermission())
+                    );
+                });
+                options.AddPolicy("GetGroupProfiles", policy =>
+                {
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "view-groups-private-information")
+                            .ToPermission()) |
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "view-private-information")
+                            .ToPermission())
+                    );
+                });
+                options.AddPolicy("GetSubgroupProfiles", policy =>
+                {
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "view-subgroups-private-information")
+                            .ToPermission()) |
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, "view-private-information")
+                            .ToPermission())
+                    );
+                });
                 options.AddPolicy("UpdateGroup", policy =>
                 {
                     policy.RequireAssertion(process =>
@@ -60,6 +94,31 @@ namespace educational_platform_api.Extensions.Services
                         process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "delete-groups")
                             .ToPermission()) |
                         process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "delete")
+                            .ToPermission())
+                    );
+                });
+                options.AddPolicy("CreateSubgroup", policy =>
+                {
+                    policy.AddRequirements(
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "create-subgroups")
+                            .ToPermission()
+                    );
+                });
+                options.AddPolicy("UpdateSubgroup", policy =>
+                {
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "update-subgroups")
+                            .ToPermission()) |
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, "update")
+                            .ToPermission())
+                    );
+                });
+                options.AddPolicy("DeleteSubgroup", policy =>
+                {
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "delete-subgroups")
+                            .ToPermission()) |
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, "delete")
                             .ToPermission())
                     );
                 });

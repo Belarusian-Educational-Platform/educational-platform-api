@@ -30,16 +30,19 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<Group> GetAll()
         {
-            return _dbContext.Groups.ToList();
+            var groups = _dbContext.Groups.ToList();
+
+            return groups;
         }
 
-        public IEnumerable<Group> GetByOrgnizationId(int organizationId)
+        public IEnumerable<Group> GetByOrganizationId(int organizationId)
         {
-            List<Group> groups = _dbContext.Groups
-                .Join(_dbContext.GroupOrganizationRelations.Where(gor => gor.OrganizationId == organizationId), 
-                    g => g.Id, 
+            var groups = _dbContext.GroupOrganizationRelations
+                .Where(gor => gor.OrganizationId == organizationId)
+                .Join(_dbContext.Groups, 
                     gor => gor.GroupId, 
-                    (g, gor) => g)
+                    g => g.Id, 
+                    (gor, g) => g)
                 .ToList();
 
             return groups;
@@ -47,11 +50,12 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<Group> GetByProfileId(int profileId)
         {
-            List<Group> groups = _dbContext.Groups
-                .Join(_dbContext.ProfileGroupRelations.Where(pgr => pgr.ProfileId == profileId),
-                    g => g.Id,
+            var groups = _dbContext.ProfileGroupRelations
+                .Where(pgr => pgr.ProfileId == profileId)
+                .Join(_dbContext.Groups,
                     pgr => pgr.GroupId,
-                    (g, pgr) => g)
+                    g => g.Id,
+                    (pgr, g) => g)
                 .ToList();
 
             return groups;
@@ -85,11 +89,11 @@ namespace educational_platform_api.Repositories
             }
         }
 
-        public void Delete(Group group)
+        public void Delete(params Group[] groups)
         {
             try
             {
-                _dbContext.Groups.Remove(group);
+                _dbContext.Groups.RemoveRange(groups);
             }
             catch (Exception ex)
             {

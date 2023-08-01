@@ -1,5 +1,4 @@
 ﻿using educational_platform_api.DTOs.Profile;
-using educational_platform_api.DTOs.ProfileGroupRelation;
 using educational_platform_api.Models;
 using educational_platform_api.Repositories;
 
@@ -27,7 +26,7 @@ namespace educational_platform_api.Services
             return _unitOfWork.Profiles.GetActiveByAccount(keycloakId);
         }
 
-        public IEnumerable<Profile> GetProfiles()
+        public IEnumerable<Profile> GetAllProfiles()
         {
             return _unitOfWork.Profiles.GetAll();
         }
@@ -39,7 +38,7 @@ namespace educational_platform_api.Services
 
         public IEnumerable<Profile> GetMyOrganizationProfiles(int profileId)
         {
-            var organization = _unitOfWork.Organizations.GetByProfile(profileId);
+            var organization = _unitOfWork.Organizations.GetByProfileId(profileId);
             var organizationProfiles = _unitOfWork.Profiles.GetByOrganizationId(organization.Id);
 
             return organizationProfiles;
@@ -51,11 +50,11 @@ namespace educational_platform_api.Services
             {
                 try
                 {
-                    Profile profile = _mapper.Map<Profile>(input);
-                    Profile profileEntity = _unitOfWork.Profiles.Create(profile);
+                    var profile = _mapper.Map<Profile>(input);
+                    var profileEntity = _unitOfWork.Profiles.Create(profile);
                     _unitOfWork.Save();
 
-                    ProfileOrganizationRelation relation = new()
+                    var relation = new ProfileOrganizationRelation()
                     {
                         ProfileId = profileEntity.Id,
                         OrganizationId = input.OrganizationId,
@@ -76,16 +75,16 @@ namespace educational_platform_api.Services
 
         public void UpdateProfile(UpdateProfileInput input)
         {
-            Profile profile = _mapper.Map<Profile>(input);
+            var profile = _mapper.Map<Profile>(input);
             _unitOfWork.Profiles.Update(profile);
             _unitOfWork.Save();
         }
 
         public void DeleteProfile(int id)
         {
-            Profile profile = _unitOfWork.Profiles.GetById(id);
-            ProfileOrganizationRelation organizationRelation = 
-                _unitOfWork.ProfileOrganizationRelations.GetByProfileId(id);
+            var profile = _unitOfWork.Profiles.GetById(id);
+            var organizationRelation = _unitOfWork.ProfileOrganizationRelations
+                .GetByProfileId(id);
             var groupRelations = _unitOfWork.ProfileGroupRelations.GetByProfileId(id);
             var subgroupRelations = _unitOfWork.ProfileSubgroupRelations.GetByProfileId(id);
 
@@ -95,6 +94,16 @@ namespace educational_platform_api.Services
             _unitOfWork.ProfileSubgroupRelations.Delete(subgroupRelations.ToArray());
 
             _unitOfWork.Save();
+        }
+
+        public IEnumerable<Profile> GetGroupProfiles(int groupId)
+        {
+            return _unitOfWork.Profiles.GetByGroupId(groupId);
+        }
+
+        public IEnumerable<Profile> GetSubgroupProfiles(int subgroupId)
+        {
+            return _unitOfWork.Profiles.GetBySubgroupId(subgroupId);
         }
     }
 }

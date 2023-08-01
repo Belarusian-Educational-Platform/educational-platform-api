@@ -15,6 +15,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
             _policyVerifier = policyVerifier;
         }
 
+        // TODO CHECK PRFILE ORGANIZATION EQUALS TO SUBGROUP/GROUP ORGANIZATION
         public void Authorize(Action<ProfileAuthorizationVerificationOptions> configure)
         {
             var verificationOptions = new ProfileAuthorizationVerificationOptions();

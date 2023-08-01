@@ -16,7 +16,7 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<Profile> GetAll()
         {
-            List<Profile> profiles = _dbContext.Profiles.ToList();
+            var profiles = _dbContext.Profiles.ToList();
 
             return profiles;
         }
@@ -54,24 +54,21 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<Profile> GetByAccount(string keycloakId)
         {
-            List<Profile> accountProfiles = _dbContext.Profiles
+            var profiles = _dbContext.Profiles
                 .Where(x => x.KeycloakId == keycloakId)
                 .ToList();
 
-            return accountProfiles;
+            return profiles;
         }
 
         public IEnumerable<Profile> GetByOrganizationId(int organizationId)
         {
-            var profiles = _dbContext.Profiles
-                .Join(_dbContext.ProfileOrganizationRelations,
-                    p => p.Id,
-                    por => por.ProfileId,
-                    (p, por) => new { p, por })
-                .Join(_dbContext.Organizations.Where(o => o.Id == organizationId),
-                    pp => pp.por.OrganizationId,
-                    o => o.Id,
-                    (pp, o) => pp.p)
+            var profiles = _dbContext.ProfileOrganizationRelations
+                .Where(por => por.OrganizationId == organizationId)
+                .Join(_dbContext.Profiles, 
+                    por => por.ProfileId, 
+                    p => p.Id, 
+                    (por, p) => p)
                 .ToList();
 
             return profiles;
@@ -103,15 +100,41 @@ namespace educational_platform_api.Repositories
             }
         }
 
-        public void Delete(Profile profile)
+        public void Delete(params Profile[] profiles)
         {
             try
             {
-                _dbContext.Profiles.Remove(profile);
+                _dbContext.Profiles.RemoveRange(profiles);
             } catch (Exception ex) 
             {
                 throw new EntityDeleteException(nameof(Profile), ex.Message, ex);
             }
+        }
+
+        public IEnumerable<Profile> GetByGroupId(int groupId)
+        {
+            var profiles = _dbContext.ProfileGroupRelations
+                .Where(pgr => pgr.GroupId == groupId)
+                .Join(_dbContext.Profiles, 
+                    pgr => pgr.ProfileId, 
+                    p => p.Id, 
+                    (pgr, p) => p)
+                .ToList();
+
+            return profiles;
+        }
+
+        public IEnumerable<Profile> GetBySubgroupId(int subgroupId)
+        {
+            var profiles = _dbContext.ProfileSubgroupRelations
+                .Where(psr => psr.SubgroupId == subgroupId)
+                .Join(_dbContext.Profiles, 
+                    psr => psr.ProfileId, 
+                    p => p.Id, 
+                    (psr, p) => p)
+                .ToList();
+
+            return profiles;
         }
     }
 }

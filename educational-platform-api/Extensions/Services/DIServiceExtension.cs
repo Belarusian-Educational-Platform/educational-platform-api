@@ -4,6 +4,8 @@ using educational_platform_api.Validators;
 using educational_platform_api.Validators.Group;
 using educational_platform_api.Validators.Organization;
 using educational_platform_api.Validators.Profile;
+using educational_platform_api.Validators.Relations;
+using educational_platform_api.Validators.Subgroup;
 using FluentValidation.AspNetCore;
 
 namespace educational_platform_api.Extensions.Services
@@ -31,13 +33,23 @@ namespace educational_platform_api.Extensions.Services
         {
             services
                 .AddFluentValidation()
+                //Account
                 .AddScoped<AccountValidator>()
+                // Profile
                 .AddScoped<CreateProfileInputValidator>()
                 .AddScoped<UpdateProfileInputValidator>()
+                // Organization
                 .AddScoped<CreateOrganizationInputValidator>()
                 .AddScoped<UpdateOrganizationInputValidator>()
+                // Group
                 .AddScoped<CreateGroupInputValidator>()
-                .AddScoped<UpdateGroupInputValidator>();
+                .AddScoped<UpdateGroupInputValidator>()
+                // Subgroup
+                .AddScoped<CreateSubgroupInputValidator>()
+                .AddScoped<UpdateSubgroupInputValidator>()
+                // Relations
+                .AddScoped<CreateProfileGroupRelationInputValidator>()
+                .AddScoped<CreateProfileSubgroupRelationInputValidator>();
 
             return services;
         }

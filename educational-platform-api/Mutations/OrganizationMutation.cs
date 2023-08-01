@@ -20,7 +20,7 @@ namespace educational_platform_api.Mutations
             [UseFluentValidation, UseValidator<CreateOrganizationInputValidator>] 
                 CreateOrganizationInput organizationInput)
         {
-            Organization organizationEntity = organizationService.CreateOrganization(organizationInput);
+            var organizationEntity = organizationService.CreateOrganization(organizationInput);
 
             return organizationEntity;
         }

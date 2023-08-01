@@ -5,8 +5,8 @@ namespace educational_platform_api.Services
 {
     public interface IOrganizationService
     {
-        public IEnumerable<Organization> GetOrganizations();
-        public Organization GetOrganization(int id);
+        public IEnumerable<Organization> GetAllOrganizations();
+        public Organization GetOrganizationById(int id);
         public Organization GetProfileOrganization(int profileId);
 
         public Organization CreateOrganization(CreateOrganizationInput input);

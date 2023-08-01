@@ -28,11 +28,11 @@ namespace educational_platform_api.Repositories
             return relationEntity;
         }
 
-        public void Delete(GroupOrganizationRelation relation)
+        public void Delete(params GroupOrganizationRelation[] relations)
         {
             try
             {
-                _dbContext.GroupOrganizationRelations.Remove(relation);
+                _dbContext.GroupOrganizationRelations.RemoveRange(relations);
             } catch (Exception ex)
             {
                 throw new EntityDeleteException(nameof(GroupOrganizationRelation), ex.Message, ex);
@@ -53,9 +53,9 @@ namespace educational_platform_api.Repositories
             return relation;
         }
 
-        public IEnumerable<GroupOrganizationRelation> GetByOrgnizationId(int organizationId)
+        public IEnumerable<GroupOrganizationRelation> GetByOrganizationId(int organizationId)
         {
-            List<GroupOrganizationRelation> relations = _dbContext.GroupOrganizationRelations
+            var relations = _dbContext.GroupOrganizationRelations
                 .Where(x => x.OrganizationId == organizationId)
                 .ToList();
 

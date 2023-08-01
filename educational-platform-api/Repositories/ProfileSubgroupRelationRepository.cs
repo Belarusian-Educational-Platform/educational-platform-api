@@ -44,7 +44,8 @@ namespace educational_platform_api.Repositories
             try
             {
                 relation = _dbContext.ProfileSubgroupRelations
-                    .First(relation => relation.ProfileId == profileId && relation.SubgroupId == subgroupId);
+                    .First(x => x.ProfileId == profileId 
+                        && x.SubgroupId == subgroupId);
             } catch (Exception ex)
             {
                 throw new EntityNotFoundException(nameof(ProfileSubgroupRelation), ex.Message, ex);
@@ -55,8 +56,12 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<ProfileSubgroupRelation> GetByGroupId(int groupId)
         {
-            List<ProfileSubgroupRelation> relations = _dbContext.Subgroups.Where(s => s.GroupId == groupId)
-                .Join(_dbContext.ProfileSubgroupRelations, s => s.Id, psr => psr.SubgroupId, (s, psr) => psr)
+            var relations = _dbContext.Subgroups
+                .Where(s => s.GroupId == groupId)
+                .Join(_dbContext.ProfileSubgroupRelations, 
+                    s => s.Id, 
+                    psr => psr.SubgroupId, 
+                    (s, psr) => psr)
                 .ToList();
 
             return relations;
@@ -64,16 +69,18 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<ProfileSubgroupRelation> GetByProfileId(int profileId)
         {
-            List<ProfileSubgroupRelation> relations = _dbContext.ProfileSubgroupRelations
-                .Where(x => x.ProfileId == profileId).ToList();
+            var relations = _dbContext.ProfileSubgroupRelations
+                .Where(x => x.ProfileId == profileId)
+                .ToList();
 
             return relations;
         }
 
         public IEnumerable<ProfileSubgroupRelation> GetBySubgroupId(int subgroupId)
         {
-            List<ProfileSubgroupRelation> relations = _dbContext.ProfileSubgroupRelations
-                .Where(x => x.SubgroupId == subgroupId).ToList();
+            var relations = _dbContext.ProfileSubgroupRelations
+                .Where(x => x.SubgroupId == subgroupId)
+                .ToList();
 
             return relations;
         }
@@ -83,7 +90,9 @@ namespace educational_platform_api.Repositories
             try
             {
                 relation = _dbContext.ProfileSubgroupRelations
-                    .First(relation => relation.ProfileId == profileId && relation.SubgroupId == subgroupId);
+                    .First(x => x.ProfileId == profileId
+                        && x.SubgroupId == subgroupId);
+
                 return true;
             } catch (Exception ex)
             {

@@ -2,7 +2,6 @@
 using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 
 namespace educational_platform_api.Repositories
 {
@@ -25,6 +24,7 @@ namespace educational_platform_api.Repositories
             {
                 throw new EntityCreateException(nameof(Subgroup), ex.Message, ex);
             }
+
             return subgroupEntity;
         }
 
@@ -41,12 +41,14 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<Subgroup> GetAll()
         {
-            return _dbContext.Subgroups.ToList();
+            var subgroups = _dbContext.Subgroups.ToList();
+
+            return subgroups;
         }
 
         public IEnumerable<Subgroup> GetByGroupId(int groupId)
         {
-           List<Subgroup> subgroups = _dbContext.Subgroups
+            var subgroups = _dbContext.Subgroups
                 .Where(x => x.GroupId == groupId)
                 .ToList();
 
@@ -69,11 +71,12 @@ namespace educational_platform_api.Repositories
 
         public IEnumerable<Subgroup> GetByProfileId(int profileId)
         {
-            List<Subgroup> subgroups = _dbContext.Subgroups
-                .Join(_dbContext.ProfileSubgroupRelations.Where(psr => psr.ProfileId == profileId), 
-                    s => s.Id, 
-                    psr => psr.SubgroupId, 
-                    (s, psr) => s)
+            var subgroups = _dbContext.ProfileSubgroupRelations
+                .Where(psr => psr.ProfileId == profileId)
+                .Join(_dbContext.Subgroups,
+                    psr => psr.SubgroupId,
+                    s => s.Id,
+                    (psr, s) => s)
                 .ToList();
 
             return subgroups;

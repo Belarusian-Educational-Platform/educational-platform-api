@@ -1,5 +1,4 @@
-﻿using educational_platform_api.DTOs;
-using educational_platform_api.Models;
+﻿using educational_platform_api.Models;
 
 namespace educational_platform_api.Repositories
 {
@@ -7,7 +6,9 @@ namespace educational_platform_api.Repositories
     {
         public IEnumerable<Organization> GetAll();
         public Organization GetById(int id);
-        public Organization GetByProfile(int profileId);
+        public Organization GetByProfileId(int profileId);
+        public Organization GetByGroupId(int groupId);
+        public Organization GetBySubgroupId(int subgroupId);
 
         public Organization Create(Organization organization);
         public void Update(Organization organization);
