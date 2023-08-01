@@ -96,7 +96,7 @@ namespace educational_platform_api.Queries
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("GetSubgroupProfiles"); // TODO: USER WITH view-private-information IN GROUP CAN?
+                options.AddPolicy("GetSubgroupProfiles");
                 options.AddProfile(profile.Id);
                 options.AddSubgroup(subgroupId);
                 options.AddOrganization();

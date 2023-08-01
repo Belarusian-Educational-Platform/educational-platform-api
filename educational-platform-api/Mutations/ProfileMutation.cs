@@ -22,7 +22,6 @@ namespace educational_platform_api.Mutations
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput profileInput)
         {
-            // TODO: CHECK ORGANIZATION EXISTS
             profileAuthorizationService.Authorize(options =>
             {
                 options.AddPolicy("CreateProfile");

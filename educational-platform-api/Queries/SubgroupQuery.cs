@@ -53,7 +53,6 @@ namespace educational_platform_api.Queries
                 options.AddOrganization();
             });
 
-            // TODO CHECK GROUP ORGANIZATION IS IN THE PROFILE ORGANIZATION
             return subgroupService.GetGroupSubgroups(groupId);
         }
     }

@@ -13,7 +13,7 @@ namespace educational_platform_api.Mutations
     [ExtendObjectType(typeof(Mutation))]
     public class OrganizationMutation
     {
-        [Authorize] // TODO: AUTHORIZE - WHO CAN DO THAT
+        [Authorize]
         [GraphQLName("createOrganization")]
         public Organization CreateOrganization(
             [Service] IOrganizationService organizationService, 
@@ -51,7 +51,7 @@ namespace educational_platform_api.Mutations
             return true;
         }
 
-        [Authorize] // TODO: AUTHORIZE - WHO CAN DO THAT
+        [Authorize]
         [GraphQLName("deleteOrganization")]
         public bool DeleteOrganization([Service] IOrganizationService organizationService, int id)
         {

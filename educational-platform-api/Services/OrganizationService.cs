@@ -49,7 +49,7 @@ namespace educational_platform_api.Services
             _unitOfWork.Save();
         }
 
-        public void DeleteOrganization(int id) // TODO: DELETE ALL RELATED ENTITIES!!!!
+        public void DeleteOrganization(int id)
         {
             var organization = _unitOfWork.Organizations.GetById(id);
             _unitOfWork.Organizations.Delete(organization);
