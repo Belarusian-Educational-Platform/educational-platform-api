@@ -27,7 +27,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy.Tes
                 options.AddPolicy("test-policy");
                 options.AddProfile(1);
                 options.AddGroup(1);
-                options.AddSubgroup(1);
             };
 
             Action<ProfileAuthorizationPolicyBuilder> configurePolicyBuilder = (policy) =>

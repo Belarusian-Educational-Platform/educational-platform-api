@@ -8,7 +8,8 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
         private readonly IProfileAuthorizationPolicyProvider _policyProvider;
         private readonly IProfileAuthorizationPolicyVerifier _policyVerifier;
 
-        public ProfileAuthorizationService(IProfileAuthorizationPolicyProvider policyProvider,
+        public ProfileAuthorizationService(
+            IProfileAuthorizationPolicyProvider policyProvider,
             IProfileAuthorizationPolicyVerifier policyVerifier)
         {
             _policyProvider = policyProvider;

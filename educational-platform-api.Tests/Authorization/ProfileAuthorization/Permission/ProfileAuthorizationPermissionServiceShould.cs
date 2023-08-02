@@ -30,16 +30,11 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             {
                 ProfileId = 1, GroupId = 1, Permissions = "[\"view-private-information\"]", ProfileRole = Role.member
             };
-            var profileSubroupRelation = new ProfileSubgroupRelation()
-            {
-                ProfileId = 1, SubgroupId = 1, Permissions = "[\"view-private-information\"]", ProfileRole= Role.member
-            };
 
             Action<ProfileAuthorizationVerificationOptions> configureVerificationOptions = (options) =>
             {
                 options.AddProfile(1);
                 options.AddGroup(1);
-                options.AddSubgroup(1);
                 options.AddOrganization();
             };
             var verificationOptions = new ProfileAuthorizationVerificationOptions();
@@ -51,17 +46,12 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             _unitOfWork
                 .Setup(repo => repo.ProfileGroupRelations.GetByEntityIds(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(profileGroupRelation);
-            _unitOfWork
-                .Setup(repo => repo.ProfileSubgroupRelations.GetByEntityIds(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(profileSubroupRelation);
 
             Action<ProfileAuthorizationPermissionSet> configurePermissionSet = (permissionSet) =>
             {
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, 
                     "[\"view-private-information\"]");
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_GROUP, 
-                    "[\"view-private-information\"]");
-                permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, 
                     "[\"view-private-information\"]");
             };
 

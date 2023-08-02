@@ -10,9 +10,7 @@ namespace educational_platform_api.Extensions.Contexts
             modelBuilder.ApplyConfiguration(new ProfileContextConfiguration());
             modelBuilder.ApplyConfiguration(new OrganizationContextConfiguration());
             modelBuilder.ApplyConfiguration(new GroupContextConfiguration());
-            modelBuilder.ApplyConfiguration(new SubgroupContextConfiguration());
             modelBuilder.ApplyConfiguration(new ProfileGroupRelationContextConfiguration());
-            modelBuilder.ApplyConfiguration(new ProfileSubgroupRelationContextConfiguration());
             modelBuilder.ApplyConfiguration(new GroupOrganizationRelationContextConfiguration());
             modelBuilder.ApplyConfiguration(new ProfileOrganizationRelationContextConfiguration());
 

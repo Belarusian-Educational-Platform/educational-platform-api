@@ -10,7 +10,6 @@ namespace educational_platform_api.Repositories
         public Profile GetActiveByAccount(string keycloakId);
         public IEnumerable<Profile> GetByOrganizationId(int organizationId);
         public IEnumerable<Profile> GetByGroupId(int groupId);
-        public IEnumerable<Profile> GetBySubgroupId(int subgroupId);
 
         public Profile Create(Profile profile);
         public void Update(Profile profile);

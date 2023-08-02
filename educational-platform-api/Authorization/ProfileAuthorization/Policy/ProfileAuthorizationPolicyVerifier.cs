@@ -7,10 +7,14 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
     public class ProfileAuthorizationPolicyVerifier : IProfileAuthorizationPolicyVerifier
     {
         private readonly IProfileAuthorizationPermissionService _permissionService;
+        private readonly IProfileAuthorizationVerificationOptionsService _verificationOptionsService;
 
-        public ProfileAuthorizationPolicyVerifier(IProfileAuthorizationPermissionService permissionService)
+        public ProfileAuthorizationPolicyVerifier(
+            IProfileAuthorizationPermissionService permissionService, 
+            IProfileAuthorizationVerificationOptionsService verificationOptionsService)
         {
             _permissionService = permissionService;
+            _verificationOptionsService = verificationOptionsService;
         }
 
         public bool Verify(ProfileAuthorizationPolicy policy,
@@ -19,6 +23,10 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy
             if (!verificationOptions.VerificationLevels.SetEquals(policy.VerificationLevels))
             {
                 throw new ProvidedAndRequestedPermissionsMismatchException();
+            }
+            if (!_verificationOptionsService.CheckOrganizationСorrespondence(verificationOptions))
+            {
+                throw new ProvidedEntitiesOrganizationNotCorrespondsException();
             }
 
             var profilePermissions = _permissionService.GetProfilePermissions(verificationOptions);
