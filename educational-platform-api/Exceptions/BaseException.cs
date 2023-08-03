@@ -7,6 +7,10 @@ namespace educational_platform_api.Exceptions
         public BaseException()
         {
         }
+        public BaseException(Exception? innerException) : base()
+        {
+
+        }
 
         public BaseException(string? message) : base(message)
         {

@@ -42,7 +42,9 @@ namespace educational_platform_api.Validators.Profile
 
             RuleFor(x => x.ContactPhone)
                 .NotNull()
-                .WithMessage(CustomErrorMessages.PropertyIsNull);
+                .WithMessage(CustomErrorMessages.PropertyIsNull)
+                .Matches(@"\(?\d{3}\)?[-\.]? *\d{3}[-\.]? *[-\.]?\d{4}")//just validation for phone number
+                .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
 
             RuleFor(x => x.ContactEmail)
                 .NotNull()
