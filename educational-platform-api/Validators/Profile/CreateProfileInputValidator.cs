@@ -11,45 +11,46 @@ namespace educational_platform_api.Validators.Profile
         {
             RuleFor(x => x.FirstName)
                 .NotNull()
-                .WithMessage(ProfileErrorMessages.FirstNameIsNull)
+                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .NotEmpty()
-                .WithMessage(ProfileErrorMessages.FirstNameIsEmpty)
-                .Length(3, 32)
-                .WithMessage(ProfileErrorMessages.FirstNameIncorrectLength);
+                .WithMessage(CustomErrorMessages.PropertyIsEmpty)
+                .Length(2, 32)
+                .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
 
             RuleFor(x => x.LastName)
                 .NotNull()
-                .WithMessage(ProfileErrorMessages.LastNameIsNull)
+                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .NotEmpty()
-                .WithMessage(ProfileErrorMessages.LastNameIsEmpty)
-                .Length(3, 32)
-                .WithMessage(ProfileErrorMessages.LastNameIncorrectLength);
+                .WithMessage(CustomErrorMessages.PropertyIsEmpty)
+                .Length(2, 32)
+                .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
 
             RuleFor(x => x.Surname)
                 .NotNull()
-                .WithMessage(ProfileErrorMessages.SurnameIsNull)
+                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .NotEmpty()
-                .WithMessage(ProfileErrorMessages.SurnameIsEmpty)
-                .Length(3, 32)
-                .WithMessage(ProfileErrorMessages.SurnameIncorrectLength);
+                .WithMessage(CustomErrorMessages.PropertyIsEmpty)
+                .Length(2, 32)
+                .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
+
 
             RuleFor(x => x.Birthday)
                 .NotNull()
-                .WithMessage(ProfileErrorMessages.BirthdayIsNull)
+                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .CanParseDateTime()
-                .WithMessage(ProfileErrorMessages.BirthdayIncorrectDateFormat);
+                .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
 
             RuleFor(x => x.ContactPhone)
                 .NotNull()
-                .WithMessage(ProfileErrorMessages.ContactPhoneIsNull);
+                .WithMessage(CustomErrorMessages.PropertyIsNull);
 
             RuleFor(x => x.ContactEmail)
                 .NotNull()
-                .WithMessage(ProfileErrorMessages.ContactEmailIsNull);
+                .WithMessage(CustomErrorMessages.PropertyIsNull);
 
             RuleFor(x => x.Type)
                 .NotNull()
-                .WithMessage(ProfileErrorMessages.TypeIsNull);
+                .WithMessage(CustomErrorMessages.PropertyIsNull);
         }
     }
 }

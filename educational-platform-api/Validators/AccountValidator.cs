@@ -1,4 +1,5 @@
-﻿using educational_platform_api.Models;
+﻿using educational_platform_api.ErrorMessages;
+using educational_platform_api.Models;
 using FluentValidation;
 
 namespace educational_platform_api.Validators
@@ -9,39 +10,40 @@ namespace educational_platform_api.Validators
         {
             RuleFor(x => x.KeycloakId)
                 .NotEmpty()
-                .WithMessage("UserId empty!")
+                .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .NotNull()
-                .WithMessage("UserId wasn`t provided!");
+                .WithMessage(CustomErrorMessages.PropertyIsNull);
 
             RuleFor(x => x.Username)
                 .NotEmpty()
-                .WithMessage("Username is empty!")
+                .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .NotNull()
-                .WithMessage("Username wasn`t provided!");
+                .WithMessage(CustomErrorMessages.PropertyIsNull);
 
             RuleFor(x => x.FirstName)
                 .NotEmpty()
-                .WithMessage("First name is empty!")
+                .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .NotNull()
-                .WithMessage("First name wasn`t provided!")
+                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .MaximumLength(32)
-                .WithMessage("First name size must be less than 32 characters!");
+                .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
+
 
             RuleFor(x => x.LastName)
                 .NotEmpty()
-                .WithMessage("Last name is empty!")
+                .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .NotNull()
-                .WithMessage("Last name wasn`t provided!")
+                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .MaximumLength(32)
-                .WithMessage("Last name size must be less than 32 characters!");
+                .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
 
             RuleFor(x => x.Email)
                 .NotEmpty()
-                .WithMessage("Email is empty!")
+                .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .NotNull()
-                .WithMessage("Email wasn`t provided!")
+                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .EmailAddress()
-                .WithMessage("Email address can`t be recognized!");
+                .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
         }
     }
 }
