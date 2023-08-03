@@ -84,25 +84,5 @@ namespace educational_platform_api.Queries
 
             return profileService.GetGroupProfiles(groupId);
         }
-
-        [Authorize]
-        [GraphQLName("subgroupProfiles")]
-        [UseProfile]
-        public IEnumerable<Profile> GetSubgroupProfiles(
-            [Service] IProfileService profileService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
-            [Profile] Profile profile,
-            int subgroupId)
-        {
-            profileAuthorizationService.Authorize(options =>
-            {
-                options.AddPolicy("GetSubgroupProfiles");
-                options.AddProfile(profile.Id);
-                options.AddSubgroup(subgroupId);
-                options.AddOrganization();
-            });
-
-            return profileService.GetSubgroupProfiles(subgroupId);
-        }
     }
 }

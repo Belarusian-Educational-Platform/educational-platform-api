@@ -3,7 +3,6 @@
     public enum ProfileAuthorizationPermissionLevel
     {
         PROFILE_GROUP,
-        PROFILE_ORGANIZATION,
-        PROFILE_SUBGROUP
+        PROFILE_ORGANIZATION
     }
 }

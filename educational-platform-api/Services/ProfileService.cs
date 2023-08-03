@@ -82,28 +82,12 @@ namespace educational_platform_api.Services
 
         public void DeleteProfile(int id)
         {
-            var profile = _unitOfWork.Profiles.GetById(id);
-            var organizationRelation = _unitOfWork.ProfileOrganizationRelations
-                .GetByProfileId(id);
-            var groupRelations = _unitOfWork.ProfileGroupRelations.GetByProfileId(id);
-            var subgroupRelations = _unitOfWork.ProfileSubgroupRelations.GetByProfileId(id);
-
-            _unitOfWork.Profiles.Delete(profile);
-            _unitOfWork.ProfileOrganizationRelations.Delete(organizationRelation);
-            _unitOfWork.ProfileGroupRelations.Delete(groupRelations.ToArray());
-            _unitOfWork.ProfileSubgroupRelations.Delete(subgroupRelations.ToArray());
-
-            _unitOfWork.Save();
+            // TODO: CASCADE DELETE IMPLEMENTATION
         }
 
         public IEnumerable<Profile> GetGroupProfiles(int groupId)
         {
             return _unitOfWork.Profiles.GetByGroupId(groupId);
-        }
-
-        public IEnumerable<Profile> GetSubgroupProfiles(int subgroupId)
-        {
-            return _unitOfWork.Profiles.GetBySubgroupId(subgroupId);
         }
     }
 }

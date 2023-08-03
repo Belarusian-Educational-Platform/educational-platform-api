@@ -8,7 +8,6 @@ namespace educational_platform_api.Repositories
         public Organization GetById(int id);
         public Organization GetByProfileId(int profileId);
         public Organization GetByGroupId(int groupId);
-        public Organization GetBySubgroupId(int subgroupId);
 
         public Organization Create(Organization organization);
         public void Update(Organization organization);

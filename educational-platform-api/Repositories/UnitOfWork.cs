@@ -10,10 +10,8 @@ namespace educational_platform_api.Repositories
         private IProfileRepository profileRepository;
         private IOrganizationRepository organizationRepository;
         private IGroupRepository groupRepository;
-        private ISubgroupRepository subgroupRepository;
         private IProfileOrganizationRelationRepository profileOrganizationRelationRepository;
         private IProfileGroupRelationRepository profileGroupRelationRepository;
-        private IProfileSubgroupRelationRepository profileSubgroupRelationRepository;
         private IGroupOrganizationRelationRepository groupOrganizationRelationRepository;
 
         public UnitOfWork(IDbContextFactory<MySQLContext> dbContextFactory)
@@ -57,18 +55,6 @@ namespace educational_platform_api.Repositories
             }
         }
 
-        public ISubgroupRepository Subgroups
-        {
-            get
-            {
-                if (subgroupRepository == null)
-                {
-                    subgroupRepository = new SubgroupRepository(_dbContext);
-                }
-                return subgroupRepository;
-            }
-        }
-
         public IProfileOrganizationRelationRepository ProfileOrganizationRelations
         {
             get
@@ -90,18 +76,6 @@ namespace educational_platform_api.Repositories
                     profileGroupRelationRepository = new ProfileGroupRelationRepository(_dbContext);
                 }
                 return profileGroupRelationRepository;
-            }
-        }
-
-        public IProfileSubgroupRelationRepository ProfileSubgroupRelations
-        {
-            get
-            {
-                if (profileSubgroupRelationRepository == null)
-                {
-                    profileSubgroupRelationRepository = new ProfileSubgroupRelationRepository(_dbContext);
-                }
-                return profileSubgroupRelationRepository;
             }
         }
 

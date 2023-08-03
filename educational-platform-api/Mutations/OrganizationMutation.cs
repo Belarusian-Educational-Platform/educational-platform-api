@@ -13,7 +13,7 @@ namespace educational_platform_api.Mutations
     [ExtendObjectType(typeof(Mutation))]
     public class OrganizationMutation
     {
-        [Authorize]
+        [Authorize(Roles = new[] { "Admin" })]
         [GraphQLName("createOrganization")]
         public Organization CreateOrganization(
             [Service] IOrganizationService organizationService, 
@@ -51,7 +51,7 @@ namespace educational_platform_api.Mutations
             return true;
         }
 
-        [Authorize]
+        [Authorize(Roles = new[] { "Admin" })]
         [GraphQLName("deleteOrganization")]
         public bool DeleteOrganization([Service] IOrganizationService organizationService, int id)
         {

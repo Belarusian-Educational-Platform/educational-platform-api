@@ -52,23 +52,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Tests
         }
 
         [TestMethod()]
-        public void Add_Subgroup_As_Expected()
-        {
-            // Arrange
-            int subgroupId = 1;
-            var verificationOptions = new ProfileAuthorizationVerificationOptions();
-
-            // Act
-            verificationOptions.AddSubgroup(subgroupId);
-
-            // Assert
-            verificationOptions.SubgroupId.Should().Be(subgroupId);
-            verificationOptions.VerificationLevels
-                .Should()
-                .Contain(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP);
-        }
-
-        [TestMethod()]
         public void Add_Organization_As_Expected()
         {
             // Arrange

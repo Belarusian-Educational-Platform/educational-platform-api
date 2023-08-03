@@ -11,7 +11,6 @@ namespace educational_platform_api.Services
         public Profile GetActiveProfile(string keycloakId);
         public IEnumerable<Profile> GetMyOrganizationProfiles(int profileId);
         public IEnumerable<Profile> GetGroupProfiles(int groupId);
-        public IEnumerable<Profile> GetSubgroupProfiles(int subgroupId);
 
         public Profile CreateProfile(CreateProfileInput input);
         public void UpdateProfile(UpdateProfileInput input);
