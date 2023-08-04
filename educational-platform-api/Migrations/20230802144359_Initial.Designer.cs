@@ -11,8 +11,13 @@ using educational_platform_api.Contexts;
 namespace educational_platform_api.Migrations
 {
     [DbContext(typeof(MySQLContext))]
+<<<<<<<< HEAD:educational-platform-api/Migrations/20230802144359_Initial.Designer.cs
+    [Migration("20230802144359_Initial")]
+    partial class Initial
+========
     [Migration("20230802144218_InitialCreate")]
     partial class InitialCreate
+>>>>>>>> implement-base-resolvers:educational-platform-api/Migrations/20230802144218_InitialCreate.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
