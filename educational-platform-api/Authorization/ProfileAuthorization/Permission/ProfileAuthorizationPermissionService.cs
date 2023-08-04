@@ -37,15 +37,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
 
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_GROUP, rawPermissions);
             }
-            if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP))
-            {
-                _unitOfWork.ProfileSubgroupRelations
-                        .TryGetByEntityIds(verificationOptions.ProfileId, verificationOptions.SubgroupId, 
-                            out ProfileSubgroupRelation relation);
-                rawPermissions = relation.Permissions;
-
-                permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, rawPermissions);
-            }
 
             return permissionSet;
         }

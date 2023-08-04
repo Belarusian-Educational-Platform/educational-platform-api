@@ -39,7 +39,6 @@ namespace educational_platform_api.Extensions.Services
             requestExecutorBuilder
                 .AddTypeExtension<ProfileQuery>()
                 .AddTypeExtension<GroupQuery>()
-                .AddTypeExtension<SubgroupQuery>()
                 .AddTypeExtension<OrganizationQuery>();
 
             return requestExecutorBuilder;
@@ -50,7 +49,6 @@ namespace educational_platform_api.Extensions.Services
             requestExecutorBuilder
                 .AddTypeExtension<ProfileMutation>()
                 .AddTypeExtension<GroupMutation>()
-                .AddTypeExtension<SubgroupMutation>()
                 .AddTypeExtension<OrganizationMutation>();
 
             return requestExecutorBuilder;

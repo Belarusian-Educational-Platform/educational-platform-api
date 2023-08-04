@@ -79,22 +79,7 @@ namespace educational_platform_api.Services
 
         public void DeleteGroup(int id)
         {
-            var group = _unitOfWork.Groups.GetById(id);
-            _unitOfWork.Groups.Delete(group);
-
-            var organizationRelation = _unitOfWork.GroupOrganizationRelations.GetByGroupId(id);
-            _unitOfWork.GroupOrganizationRelations.Delete(organizationRelation);
-
-            var profileRelations = _unitOfWork.ProfileGroupRelations.GetByGroupId(id);
-            _unitOfWork.ProfileGroupRelations.Delete(profileRelations.ToArray());
-
-            var subgroupProfileRelations = _unitOfWork.ProfileSubgroupRelations.GetByGroupId(id);
-            _unitOfWork.ProfileSubgroupRelations.Delete(subgroupProfileRelations.ToArray());
-
-            var subgroups = _unitOfWork.Subgroups.GetByGroupId(id);
-            _unitOfWork.Subgroups.Delete(subgroups.ToArray());
-
-            _unitOfWork.Save();
+            // TODO: CASCADE DELETE IMPLEMENTATION
         }
 
         public bool CheckCanAddProfileToGroup(int profileId, int groupId)

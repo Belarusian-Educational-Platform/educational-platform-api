@@ -10,12 +10,15 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy.Tes
     public class ProfileAuthorizationPolicyVerifierShould
     {
         private readonly IProfileAuthorizationPolicyVerifier _policyVerifier;
+        private readonly Mock<IProfileAuthorizationVerificationOptionsService> _verificationOptionsService;
         private readonly Mock<IProfileAuthorizationPermissionService> _permissionService;
 
         public ProfileAuthorizationPolicyVerifierShould()
         {
             _permissionService = new Mock<IProfileAuthorizationPermissionService>();
-            _policyVerifier = new ProfileAuthorizationPolicyVerifier(_permissionService.Object);
+            _verificationOptionsService = new Mock<IProfileAuthorizationVerificationOptionsService>();
+            _policyVerifier = new ProfileAuthorizationPolicyVerifier(_permissionService.Object, 
+                _verificationOptionsService.Object);
         }
 
         [TestMethod()]
@@ -27,7 +30,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy.Tes
                 options.AddPolicy("test-policy");
                 options.AddProfile(1);
                 options.AddGroup(1);
-                options.AddSubgroup(1);
             };
 
             Action<ProfileAuthorizationPolicyBuilder> configurePolicyBuilder = (policy) =>
@@ -86,6 +88,10 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy.Tes
                 .Setup(service => service.GetProfilePermissions(It.IsAny<ProfileAuthorizationVerificationOptions>()))
                 .Returns(profilePermissionSet);
 
+            _verificationOptionsService
+                .Setup(x => x.CheckOrganizationСorrespondence(It.IsAny<ProfileAuthorizationVerificationOptions>()))
+                .Returns(true);
+
             // Act
             bool action = _policyVerifier.Verify(policy, verificationOptions);
 
@@ -130,6 +136,10 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy.Tes
             _permissionService
                 .Setup(service => service.GetProfilePermissions(It.IsAny<ProfileAuthorizationVerificationOptions>()))
                 .Returns(profilePermissionSet);
+
+            _verificationOptionsService
+                .Setup(x => x.CheckOrganizationСorrespondence(It.IsAny<ProfileAuthorizationVerificationOptions>()))
+                .Returns(true);
 
             // Act
             bool action = _policyVerifier.Verify(policy, verificationOptions);
@@ -177,6 +187,10 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy.Tes
             _permissionService
                 .Setup(service => service.GetProfilePermissions(It.IsAny<ProfileAuthorizationVerificationOptions>()))
                 .Returns(profilePermissionSet);
+
+            _verificationOptionsService
+                .Setup(x => x.CheckOrganizationСorrespondence(It.IsAny<ProfileAuthorizationVerificationOptions>()))
+                .Returns(true);
 
             // Act
             bool action = _policyVerifier.Verify(policy, verificationOptions);

@@ -123,18 +123,5 @@ namespace educational_platform_api.Repositories
 
             return profiles;
         }
-
-        public IEnumerable<Profile> GetBySubgroupId(int subgroupId)
-        {
-            var profiles = _dbContext.ProfileSubgroupRelations
-                .Where(psr => psr.SubgroupId == subgroupId)
-                .Join(_dbContext.Profiles, 
-                    psr => psr.ProfileId, 
-                    p => p.Id, 
-                    (psr, p) => p)
-                .ToList();
-
-            return profiles;
-        }
     }
 }

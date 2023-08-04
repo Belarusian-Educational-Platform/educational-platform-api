@@ -11,8 +11,13 @@ using educational_platform_api.Contexts;
 namespace educational_platform_api.Migrations
 {
     [DbContext(typeof(MySQLContext))]
+<<<<<<<< HEAD:educational-platform-api/Migrations/20230802144359_Initial.Designer.cs
     [Migration("20230802144359_Initial")]
     partial class Initial
+========
+    [Migration("20230802144218_InitialCreate")]
+    partial class InitialCreate
+>>>>>>>> implement-base-resolvers:educational-platform-api/Migrations/20230802144218_InitialCreate.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -401,115 +406,6 @@ namespace educational_platform_api.Migrations
                             ProfileId = 7,
                             OrganizationId = 3,
                             Permissions = "[\"view-private-information\"]"
-                        });
-                });
-
-            modelBuilder.Entity("educational_platform_api.Models.ProfileSubgroupRelation", b =>
-                {
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubgroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Permissions")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("ProfileRole")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProfileId", "SubgroupId");
-
-                    b.ToTable("ProfileSubgroupRelations");
-
-                    b.HasData(
-                        new
-                        {
-                            ProfileId = 1,
-                            SubgroupId = 1,
-                            Permissions = "[\"view-private-information\"]",
-                            ProfileRole = 2
-                        },
-                        new
-                        {
-                            ProfileId = 2,
-                            SubgroupId = 1,
-                            Permissions = "[\"view-private-information\"]",
-                            ProfileRole = 1
-                        },
-                        new
-                        {
-                            ProfileId = 3,
-                            SubgroupId = 1,
-                            Permissions = "[\"view-private-information\"]",
-                            ProfileRole = 0
-                        },
-                        new
-                        {
-                            ProfileId = 4,
-                            SubgroupId = 2,
-                            Permissions = "[\"view-private-information\"]",
-                            ProfileRole = 2
-                        },
-                        new
-                        {
-                            ProfileId = 5,
-                            SubgroupId = 2,
-                            Permissions = "[\"view-private-information\"]",
-                            ProfileRole = 0
-                        },
-                        new
-                        {
-                            ProfileId = 6,
-                            SubgroupId = 3,
-                            Permissions = "[\"view-private-information\"]",
-                            ProfileRole = 2
-                        },
-                        new
-                        {
-                            ProfileId = 7,
-                            SubgroupId = 3,
-                            Permissions = "[\"view-private-information\"]",
-                            ProfileRole = 0
-                        });
-                });
-
-            modelBuilder.Entity("educational_platform_api.Models.Subgroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Subgroups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            GroupId = 0,
-                            Name = "11B1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            GroupId = 0,
-                            Name = "9F1"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            GroupId = 0,
-                            Name = "8Th1"
                         });
                 });
 #pragma warning restore 612, 618

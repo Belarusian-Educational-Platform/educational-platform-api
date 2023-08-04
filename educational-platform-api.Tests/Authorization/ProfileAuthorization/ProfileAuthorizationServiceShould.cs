@@ -29,7 +29,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Tests
             Action<ProfileAuthorizationPolicyBuilder> configurePolicyBuilder = (policy) =>
             {
                 policy.AddRequirements(
-                    (ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, "view-private-information").ToPermission()
+                    (ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "view-private-information").ToPermission()
                 );
             };
             var policyBuilder = new ProfileAuthorizationPolicyBuilder();
@@ -40,7 +40,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Tests
             {
                 options.AddProfile(1);
                 options.AddGroup(1);
-                options.AddSubgroup(1);
                 options.AddOrganization();
             };
 

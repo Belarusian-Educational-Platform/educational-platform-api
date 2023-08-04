@@ -16,7 +16,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy.Tes
             var builder = new ProfileAuthorizationPolicyBuilder();
             var requirements = new ProfileAuthorizationPermission[]
             {
-                (ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP, "view-private-information").ToPermission(),
                 (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "view-private-information").ToPermission()
             };
             var assertions = new List<AssertionPredicate>()
@@ -28,8 +27,7 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Policy.Tes
             var verificationLevels = new HashSet<ProfileAuthorizationPermissionLevel>()
             {
                 ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION,
-                ProfileAuthorizationPermissionLevel.PROFILE_GROUP,
-                ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP
+                ProfileAuthorizationPermissionLevel.PROFILE_GROUP
             };
 
             builder.AddRequirements(requirements);

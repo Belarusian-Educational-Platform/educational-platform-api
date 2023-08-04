@@ -123,38 +123,6 @@ namespace educational_platform_api.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "ProfileSubgroupRelations",
-                columns: table => new
-                {
-                    ProfileId = table.Column<int>(type: "int", nullable: false),
-                    SubgroupId = table.Column<int>(type: "int", nullable: false),
-                    ProfileRole = table.Column<int>(type: "int", nullable: false),
-                    Permissions = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProfileSubgroupRelations", x => new { x.ProfileId, x.SubgroupId });
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Subgroups",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    GroupId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subgroups", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.InsertData(
                 table: "GroupOrganizationRelations",
                 columns: new[] { "GroupId", "OrganizationId" },
@@ -214,20 +182,6 @@ namespace educational_platform_api.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ProfileSubgroupRelations",
-                columns: new[] { "ProfileId", "SubgroupId", "Permissions", "ProfileRole" },
-                values: new object[,]
-                {
-                    { 1, 1, "[\"view-private-information\"]", 2 },
-                    { 2, 1, "[\"view-private-information\"]", 1 },
-                    { 3, 1, "[\"view-private-information\"]", 0 },
-                    { 4, 2, "[\"view-private-information\"]", 2 },
-                    { 5, 2, "[\"view-private-information\"]", 0 },
-                    { 6, 3, "[\"view-private-information\"]", 2 },
-                    { 7, 3, "[\"view-private-information\"]", 0 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Profiles",
                 columns: new[] { "Id", "Birthday", "ContactEmail", "ContactPhone", "FirstName", "IsActive", "KeycloakId", "LastName", "Surname", "Type" },
                 values: new object[,]
@@ -239,16 +193,6 @@ namespace educational_platform_api.Migrations
                     { 5, new DateTime(1975, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "franicomunication@gmisow.com", "+375 29 609-07-74", "Yan", false, "c9c5c403-280e-491a-9217-e60a04022b7g", "Kavalioŭ", "Marta", 1 },
                     { 6, new DateTime(2011, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "psylio@yagatekimi.com", "+375 29 415-46-04", "Karyna", true, "c9c5c403-280e-491a-9217-e60a04022b7c", "Ivanow", " Ilia", 0 },
                     { 7, new DateTime(1994, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "zulu54@pankasyno23.com", "+375 29 865-01-63", "Hleb", true, "c9c5c403-280e-491a-9217-e60a04022b7c", "Ivanow", "Kira", 1 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Subgroups",
-                columns: new[] { "Id", "GroupId", "Name" },
-                values: new object[,]
-                {
-                    { 1, 0, "11B1" },
-                    { 2, 0, "9F1" },
-                    { 3, 0, "8Th1" }
                 });
         }
 
@@ -272,12 +216,6 @@ namespace educational_platform_api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Profiles");
-
-            migrationBuilder.DropTable(
-                name: "ProfileSubgroupRelations");
-
-            migrationBuilder.DropTable(
-                name: "Subgroups");
         }
     }
 }

@@ -113,33 +113,5 @@ namespace educational_platform_api.Repositories
 
             return organization;
         }
-
-        public Organization GetBySubgroupId(int subgroupId)
-        {
-            Organization organization;
-            try
-            {
-                organization = _dbContext.Subgroups
-                    .Where(s => s.Id == subgroupId)
-                    .Join(_dbContext.Groups, 
-                        s => s.GroupId, 
-                        g => g.Id, 
-                        (s, g) => new { s, g })
-                    .Join(_dbContext.GroupOrganizationRelations, 
-                        sg => sg.g.Id, 
-                        gor => gor.GroupId, 
-                        (sg, gor) => new { sg, gor })
-                    .Join(_dbContext.Organizations, 
-                        sggor => sggor.gor.OrganizationId, 
-                        o => o.Id, 
-                        (sggor, o) => o)
-                    .First();
-            } catch (Exception ex)
-            {
-                throw new EntityNotFoundException(nameof(Organization), ex.Message, ex);
-            }
-
-            return organization;
-        }
     }
 }
