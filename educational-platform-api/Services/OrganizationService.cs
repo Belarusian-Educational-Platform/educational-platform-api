@@ -1,65 +1,94 @@
-﻿using educational_platform_api.DTOs.Organization;
+﻿using educational_platform_api.Contexts;
+using educational_platform_api.DTOs.Organization;
+using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
-using educational_platform_api.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Services
 {
-    public class OrganizationService : IOrganizationService
+    public class OrganizationService : IOrganizationService, IAsyncDisposable
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly MySQLContext _dbContext;
         private readonly AutoMapper.IMapper _mapper;
 
-        public OrganizationService(UnitOfWork unitOfWork,
+        public OrganizationService(IDbContextFactory<MySQLContext> dbContextFactory,
             AutoMapper.IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _dbContext = dbContextFactory.CreateDbContext();
             _mapper = mapper;
         }
 
-        public IEnumerable<Organization> GetAllOrganizations()
+        public ValueTask DisposeAsync()
         {
-            return _unitOfWork.Organizations.GetAll();
+            return _dbContext.DisposeAsync();
         }
 
-        public Organization GetOrganizationById(int id)
+        public IQueryable<Organization> GetAll()
         {
-            return _unitOfWork.Organizations.GetById(id);
+            return _dbContext.Organizations;
         }
 
-        public Organization GetProfileOrganization(int profileId)
+        public IQueryable<Organization> GetById(int id)
         {
-            var organization = _unitOfWork.Organizations.GetByProfileId(profileId);
-
-            return organization;
+            return _dbContext.Organizations.Where(o => o.Id == id);
         }
 
         public Organization CreateOrganization(CreateOrganizationInput input)
         {
             var organization = _mapper.Map<Organization>(input);
-            var organizationEntity = _unitOfWork.Organizations.Create(organization);
-            _unitOfWork.Save();
-
+            Organization organizationEntity;
+            try
+            {
+                organizationEntity = _dbContext.Organizations.Add(organization).Entity;
+                _dbContext.SaveChanges();
+            } catch(Exception ex)
+            {
+                throw new EntityCreateException(nameof(Profile), ex.Message, ex);
+            }
+            
+            // TODO: RETURN GETBYID QUERY? OR MAYBE JUST ID?
             return organizationEntity;
         }
 
         public void UpdateOrganization(UpdateOrganizationInput input)
         {
             var organization = _mapper.Map<Organization>(input);
-            _unitOfWork.Organizations.Update(organization);
-            _unitOfWork.Save();
+            try
+            {
+                _dbContext.Entry(organization).State = EntityState.Modified;
+                _dbContext.SaveChanges();
+            } catch (Exception ex)
+            {
+                throw new EntityUpdateException(nameof(Organization), ex.Message, ex);
+            }
         }
 
         public void DeleteOrganization(int id)
         {
-            var organization = _unitOfWork.Organizations.GetById(id);
-            _unitOfWork.Organizations.Delete(organization);
-            _unitOfWork.Save();
+            // TODO: OK? OR CREATE EXTENSION METHOD LIKE RemoveById(int id)?
+            Organization organization;
+            try
+            {
+                organization = _dbContext.Organizations.First(p => p.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new EntityNotFoundException(nameof(Organization), ex.Message, ex);
+            }
+            try
+            {
+                _dbContext.Organizations.Remove(organization);
+            }
+            catch (Exception ex)
+            {
+                throw new EntityDeleteException(nameof(Organization), ex.Message, ex);
+            }
         }
 
         public bool CheckProfileInOrganization(int profileId, int organizationId)
         {
-            return _unitOfWork.ProfileOrganizationRelations
-                .TryGetByEntityIds(profileId, organizationId, out ProfileOrganizationRelation relation);
+            return _dbContext.ProfileOrganizationRelations
+                .Any(por => por.ProfileId == profileId && por.OrganizationId == organizationId);
         }
     }
 }

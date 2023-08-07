@@ -6,10 +6,8 @@ namespace educational_platform_api.Services
 {
     public interface IGroupService
     {
-        public IEnumerable<Group> GetAllGroups();
-        public Group GetGroupById(int id);
-        public IEnumerable<Group> GetProfileGroups(int profileId);
-        public IEnumerable<Group> GetMyOrganizationGroups(int profileId);
+        public IQueryable<Group> GetAll();
+        public IQueryable<Group> GetById(int id);
 
         public bool CheckCanAddProfileToGroup(int profileId, int groupId);
         public void CreateProfileGroupRelation(CreateProfileGroupRelationInput input);
