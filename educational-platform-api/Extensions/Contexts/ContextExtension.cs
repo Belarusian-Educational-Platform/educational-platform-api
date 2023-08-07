@@ -23,5 +23,12 @@ namespace educational_platform_api.Extensions.Contexts
 
             return modelBuilder;
         }
+
+        public static ModelBuilder AddModelsRelations(this ModelBuilder modelBuilder)
+        {
+
+
+            return modelBuilder;
+        }
     }
 }
