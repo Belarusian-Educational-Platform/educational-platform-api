@@ -64,7 +64,7 @@ namespace educational_platform_api.Services
                 } catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw ex; // TODO: OK?
+                    throw ex;
                 }
             }
         }
@@ -73,7 +73,6 @@ namespace educational_platform_api.Services
         {
             var profile = _mapper.Map<Profile>(input);
 
-            // TODO: REFACTOR? OK?
             _dbContext.Entry(profile).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }

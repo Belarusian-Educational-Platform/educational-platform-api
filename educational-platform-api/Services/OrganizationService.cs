@@ -54,7 +54,6 @@ namespace educational_platform_api.Services
         public void DeleteOrganization(int id)
         {
             // TODO: OK? OR CREATE EXTENSION METHOD LIKE RemoveById(int id)?
-
             var organization = _dbContext.Organizations.FirstOrDefault(p => p.Id == id);
             if (organization is null) {
                 throw new EntityNotFoundException(nameof(Organization));
