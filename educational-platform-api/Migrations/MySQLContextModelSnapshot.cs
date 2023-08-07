@@ -61,6 +61,11 @@ namespace educational_platform_api.Migrations
 
                     b.HasKey("GroupId", "OrganizationId");
 
+                    b.HasIndex("GroupId")
+                        .IsUnique();
+
+                    b.HasIndex("OrganizationId");
+
                     b.ToTable("GroupOrganizationRelations");
 
                     b.HasData(
@@ -286,6 +291,8 @@ namespace educational_platform_api.Migrations
 
                     b.HasKey("ProfileId", "GroupId");
 
+                    b.HasIndex("GroupId");
+
                     b.ToTable("ProfileGroupRelations");
 
                     b.HasData(
@@ -354,6 +361,11 @@ namespace educational_platform_api.Migrations
 
                     b.HasKey("ProfileId", "OrganizationId");
 
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("ProfileId")
+                        .IsUnique();
+
                     b.ToTable("ProfileOrganizationRelations");
 
                     b.HasData(
@@ -399,6 +411,86 @@ namespace educational_platform_api.Migrations
                             OrganizationId = 3,
                             Permissions = "[\"view-private-information\"]"
                         });
+                });
+
+            modelBuilder.Entity("educational_platform_api.Models.GroupOrganizationRelation", b =>
+                {
+                    b.HasOne("educational_platform_api.Models.Group", "Group")
+                        .WithOne("OrganizationRelation")
+                        .HasForeignKey("educational_platform_api.Models.GroupOrganizationRelation", "GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("educational_platform_api.Models.Organization", "Organization")
+                        .WithMany("GroupRelations")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("educational_platform_api.Models.ProfileGroupRelation", b =>
+                {
+                    b.HasOne("educational_platform_api.Models.Group", "Group")
+                        .WithMany("ProfileRelations")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("educational_platform_api.Models.Profile", "Profile")
+                        .WithMany("GroupRelations")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("educational_platform_api.Models.ProfileOrganizationRelation", b =>
+                {
+                    b.HasOne("educational_platform_api.Models.Organization", "Organization")
+                        .WithMany("ProfileRelations")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("educational_platform_api.Models.Profile", "Profile")
+                        .WithOne("OrganizationRelation")
+                        .HasForeignKey("educational_platform_api.Models.ProfileOrganizationRelation", "ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("educational_platform_api.Models.Group", b =>
+                {
+                    b.Navigation("OrganizationRelation")
+                        .IsRequired();
+
+                    b.Navigation("ProfileRelations");
+                });
+
+            modelBuilder.Entity("educational_platform_api.Models.Organization", b =>
+                {
+                    b.Navigation("GroupRelations");
+
+                    b.Navigation("ProfileRelations");
+                });
+
+            modelBuilder.Entity("educational_platform_api.Models.Profile", b =>
+                {
+                    b.Navigation("GroupRelations");
+
+                    b.Navigation("OrganizationRelation")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
