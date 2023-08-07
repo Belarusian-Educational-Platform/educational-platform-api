@@ -36,15 +36,8 @@ namespace educational_platform_api.Services
         public Organization CreateOrganization(CreateOrganizationInput input)
         {
             var organization = _mapper.Map<Organization>(input);
-            Organization organizationEntity;
-            try
-            {
-                organizationEntity = _dbContext.Organizations.Add(organization).Entity;
-                _dbContext.SaveChanges();
-            } catch(Exception ex)
-            {
-                throw new EntityCreateException(nameof(Profile), ex.Message, ex);
-            }
+            var organizationEntity = _dbContext.Organizations.Add(organization).Entity;
+            _dbContext.SaveChanges();
             
             // TODO: RETURN GETBYID QUERY? OR MAYBE JUST ID?
             return organizationEntity;
@@ -53,36 +46,21 @@ namespace educational_platform_api.Services
         public void UpdateOrganization(UpdateOrganizationInput input)
         {
             var organization = _mapper.Map<Organization>(input);
-            try
-            {
-                _dbContext.Entry(organization).State = EntityState.Modified;
-                _dbContext.SaveChanges();
-            } catch (Exception ex)
-            {
-                throw new EntityUpdateException(nameof(Organization), ex.Message, ex);
-            }
+
+            _dbContext.Entry(organization).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
 
         public void DeleteOrganization(int id)
         {
             // TODO: OK? OR CREATE EXTENSION METHOD LIKE RemoveById(int id)?
-            Organization organization;
-            try
-            {
-                organization = _dbContext.Organizations.First(p => p.Id == id);
+
+            var organization = _dbContext.Organizations.FirstOrDefault(p => p.Id == id);
+            if (organization is null) {
+                throw new EntityNotFoundException(nameof(Organization));
             }
-            catch (Exception ex)
-            {
-                throw new EntityNotFoundException(nameof(Organization), ex.Message, ex);
-            }
-            try
-            {
-                _dbContext.Organizations.Remove(organization);
-            }
-            catch (Exception ex)
-            {
-                throw new EntityDeleteException(nameof(Organization), ex.Message, ex);
-            }
+            _dbContext.Organizations.Remove(organization);
+            _dbContext.SaveChanges();
         }
 
         public bool CheckProfileInOrganization(int profileId, int organizationId)

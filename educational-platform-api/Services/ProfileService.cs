@@ -64,7 +64,7 @@ namespace educational_platform_api.Services
                 } catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw new EntityCreateException(nameof(Profile), ex.Message, ex); // TODO: OK?
+                    throw ex; // TODO: OK?
                 }
             }
         }
@@ -74,34 +74,20 @@ namespace educational_platform_api.Services
             var profile = _mapper.Map<Profile>(input);
 
             // TODO: REFACTOR? OK?
-            try
-            {
-                _dbContext.Entry(profile).State = EntityState.Modified;
-                _dbContext.SaveChanges();
-            } catch (Exception ex)
-            {
-                throw new EntityUpdateException(nameof(Profile), ex.Message, ex);
-            }
+            _dbContext.Entry(profile).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
 
         public void DeleteProfile(int id)
         {
             // TODO: OK? OR CREATE EXTENSION METHOD LIKE RemoveById(int id)?
-            Profile profile;
-            try
-            {
-                profile = _dbContext.Profiles.First(p => p.Id == id);
-            } catch (Exception ex)
-            {
-                throw new EntityNotFoundException(nameof(Profile), ex.Message, ex);
+            var profile = _dbContext.Profiles.FirstOrDefault(p => p.Id == id);
+            if (profile is null) {
+                throw new EntityNotFoundException(nameof(Profile));
             }
-            try
-            {
-                _dbContext.Profiles.Remove(profile);
-            } catch (Exception ex)
-            {
-                throw new EntityDeleteException(nameof(Profile), ex.Message, ex);
-            }
+
+            _dbContext.Profiles.Remove(profile);
+            _dbContext.SaveChanges();
         }
     }
 }

@@ -1,30 +1,51 @@
-﻿using educational_platform_api.Repositories;
+﻿using educational_platform_api.Contexts;
+using educational_platform_api.Exceptions.RepositoryExceptions;
+using educational_platform_api.Models;
 using educational_platform_api.Types.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization
 {
-    public class ProfileAuthorizationVerificationOptionsService : IProfileAuthorizationVerificationOptionsService
+    public class ProfileAuthorizationVerificationOptionsService : IProfileAuthorizationVerificationOptionsService, 
+        IAsyncDisposable
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly MySQLContext _dbContext;
 
-        public ProfileAuthorizationVerificationOptionsService(UnitOfWork unitOfWork)
+        public ProfileAuthorizationVerificationOptionsService(IDbContextFactory<MySQLContext> dbContextFactory)
         {
-            _unitOfWork = unitOfWork;
+            _dbContext = dbContextFactory.CreateDbContext();
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            return _dbContext.DisposeAsync();
         }
 
         public bool CheckOrganizationСorrespondence(ProfileAuthorizationVerificationOptions options)
         {
-            bool checkResult = true;
-            var profileOrganizationId = _unitOfWork.Organizations.GetByProfileId(options.ProfileId).Id;
+            var profile = _dbContext.Profiles
+                .Include(p => p.OrganizationRelation)
+                .FirstOrDefault(p => p.Id == options.ProfileId);
+            if (profile is null) {
+                throw new EntityNotFoundException(nameof(Profile));
+            }
+            var organizationId = profile.OrganizationRelation.OrganizationId;
             
             if (options.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_GROUP))
             {
-                checkResult = _unitOfWork.Organizations
-                    .GetByGroupId(options.GroupId).Id
-                    .Equals(profileOrganizationId);
+                var group = _dbContext.Groups
+                    .Include(g => g.OrganizationRelation)
+                    .FirstOrDefault(g => g.Id == options.GroupId);
+                if (group is null) {
+                    throw new EntityNotFoundException(nameof(Group));
+                }
+                if (!group.OrganizationRelation.OrganizationId.Equals(organizationId))
+                {
+                    return false;
+                }
             }
 
-            return checkResult;
+            return true;
         }
     }
 }

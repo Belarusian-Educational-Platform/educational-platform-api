@@ -59,7 +59,7 @@ namespace educational_platform_api.Services
                 } catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw new EntityCreateException(nameof(Group), ex.Message, ex); // TODO: OK?
+                    throw ex;
                 }
             }
         }
@@ -67,37 +67,21 @@ namespace educational_platform_api.Services
         public void UpdateGroup(UpdateGroupInput input)
         {
             var group = _mapper.Map<Group>(input);
-            try
-            {
-                _dbContext.Entry(group).State = EntityState.Modified;
-                _dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new EntityUpdateException(nameof(Group), ex.Message, ex);
-            }
+
+            _dbContext.Entry(group).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
 
         public void DeleteGroup(int id)
         {
             // TODO: OK? OR CREATE EXTENSION METHOD LIKE RemoveById(int id)?
-            Group group;
-            try
-            {
-                group = _dbContext.Groups.First(g => g.Id == id);
+            var group = _dbContext.Groups.FirstOrDefault(g => g.Id == id);
+            if (group is null) {
+                throw new EntityNotFoundException(nameof(Group));
             }
-            catch (Exception ex)
-            {
-                throw new EntityNotFoundException(nameof(Group), ex.Message, ex);
-            }
-            try
-            {
-                _dbContext.Groups.Remove(group);
-            }
-            catch (Exception ex)
-            {
-                throw new EntityDeleteException(nameof(Group), ex.Message, ex);
-            }
+
+            _dbContext.Groups.Remove(group);
+            _dbContext.SaveChanges();
         }
 
         public bool CheckCanAddProfileToGroup(int profileId, int groupId)
@@ -113,35 +97,22 @@ namespace educational_platform_api.Services
         public void CreateProfileGroupRelation(CreateProfileGroupRelationInput input)
         {
             var relation = _mapper.Map<ProfileGroupRelation>(input);
-            try
-            {
-                _dbContext.ProfileGroupRelations.Add(relation);
-            } catch(Exception ex)
-            {
-                throw new EntityCreateException(nameof(ProfileGroupRelation), ex.Message, ex);
-            }
+
+            _dbContext.ProfileGroupRelations.Add(relation);
+            _dbContext.SaveChanges(true);
         }
 
         public void DeleteProfileGroupRelation(int profileId, int groupId)
         {
-            ProfileGroupRelation relation;
-            try
+            var relation = _dbContext.ProfileGroupRelations
+                .FirstOrDefault(pgr => pgr.ProfileId == profileId && pgr.GroupId == groupId);
+            if (relation is null)
             {
-                relation = _dbContext.ProfileGroupRelations
-                    .First(pgr => pgr.ProfileId == profileId && pgr.GroupId == groupId);
+                throw new EntityNotFoundException(nameof(ProfileGroupRelation));
             }
-            catch (Exception ex)
-            {
-                throw new EntityNotFoundException(nameof(ProfileGroupRelation), ex.Message, ex);
-            }
-            try
-            {
-                _dbContext.ProfileGroupRelations.Remove(relation);
-            }
-            catch (Exception ex)
-            {
-                throw new EntityDeleteException(nameof(ProfileGroupRelation), ex.Message, ex);
-            }
+                
+            _dbContext.ProfileGroupRelations.Remove(relation);
+            _dbContext.SaveChanges(true);
         }
     }
 }
