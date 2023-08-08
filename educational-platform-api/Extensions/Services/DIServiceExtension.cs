@@ -1,5 +1,4 @@
-﻿using educational_platform_api.Repositories;
-using educational_platform_api.Services;
+﻿using educational_platform_api.Services;
 using educational_platform_api.Validators;
 using educational_platform_api.Validators.Group;
 using educational_platform_api.Validators.Organization;
@@ -16,13 +15,6 @@ namespace educational_platform_api.Extensions.Services
             services.AddScoped<IProfileService, ProfileService>()
                     .AddScoped<IGroupService, GroupService>()
                     .AddScoped<IOrganizationService, OrganizationService>();
-
-            return services;
-        }
-
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
-        {
-            services.AddTransient<UnitOfWork>();
 
             return services;
         }

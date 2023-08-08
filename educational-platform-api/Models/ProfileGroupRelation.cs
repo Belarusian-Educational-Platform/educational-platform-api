@@ -8,5 +8,8 @@ namespace educational_platform_api.Models
         public int GroupId { get; set; }
         public Role ProfileRole { get; set; }
         public string Permissions { get; set; }
+
+        public Profile Profile { get; set; }
+        public Group Group { get; set; }
     }
 }

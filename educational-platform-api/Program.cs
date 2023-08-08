@@ -31,11 +31,9 @@ builder.Services
     .AddErrorFilters()
     .AddQueryTypeExtensions()
     .AddMutationTypeExtensions();
-    
-// Services & Repositories
-builder.Services
-    .AddServices()
-    .AddRepositories();
+
+// Services
+builder.Services.AddServices();
 
 // Validators
 builder.Services.AddValidators();

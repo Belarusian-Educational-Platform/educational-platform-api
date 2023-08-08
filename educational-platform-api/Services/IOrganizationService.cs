@@ -5,13 +5,12 @@ namespace educational_platform_api.Services
 {
     public interface IOrganizationService
     {
-        public IEnumerable<Organization> GetAllOrganizations();
-        public Organization GetOrganizationById(int id);
-        public Organization GetProfileOrganization(int profileId);
+        public IQueryable<Organization> GetAll();
+        public IQueryable<Organization> GetById(int id);
 
-        public Organization CreateOrganization(CreateOrganizationInput input);
-        public void UpdateOrganization(UpdateOrganizationInput input);
-        public void DeleteOrganization(int id);
+        public int Create(CreateOrganizationInput input);
+        public void Update(UpdateOrganizationInput input);
+        public void Delete(int id);
 
         public bool CheckProfileInOrganization(int profileId, int organizationId);
     }
