@@ -86,12 +86,11 @@ namespace educational_platform_api.Services
 
         public bool CheckCanAddProfileToGroup(int profileId, int groupId)
         {
-            return _dbContext.ProfileOrganizationRelations
-                .Join(_dbContext.GroupOrganizationRelations,
-                    por => por.OrganizationId,
-                    gor => gor.OrganizationId,
-                    (por, gor) => new { por, gor })
-                .Any(r => r.por.ProfileId == profileId && r.gor.GroupId == groupId);
+            return _dbContext.Organizations
+                .Include(o => o.ProfileRelations)
+                .Include(o => o.GroupRelations)
+                .Any(o => o.ProfileRelations.Any(por => por.ProfileId == profileId) && 
+                    o.GroupRelations.Any(gor => gor.GroupId == groupId));
         }
 
         public void CreateProfileGroupRelation(CreateProfileGroupRelationInput input)

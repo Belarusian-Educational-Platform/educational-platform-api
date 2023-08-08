@@ -8,7 +8,7 @@
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-        public ICollection<ProfileOrganizationRelation>? ProfileRelations { get; set; }
-        public ICollection<GroupOrganizationRelation>? GroupRelations { get; set; }
+        public ICollection<ProfileOrganizationRelation> ProfileRelations { get; set; }
+        public ICollection<GroupOrganizationRelation> GroupRelations { get; set; }
     }
 }

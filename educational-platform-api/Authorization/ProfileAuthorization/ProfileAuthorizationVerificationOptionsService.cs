@@ -21,25 +21,21 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
             return _dbContext.DisposeAsync();
         }
 
+        // TODO: RENAME?
         public bool CheckOrganizationСorrespondence(ProfileAuthorizationVerificationOptions options)
         {
             var profile = _dbContext.Profiles
                 .Include(p => p.OrganizationRelation)
+                .Include(p => p.GroupRelations)
                 .FirstOrDefault(p => p.Id == options.ProfileId);
+
             if (profile is null) {
                 throw new EntityNotFoundException(nameof(Profile));
             }
-            var organizationId = profile.OrganizationRelation.OrganizationId;
             
             if (options.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_GROUP))
             {
-                var group = _dbContext.Groups
-                    .Include(g => g.OrganizationRelation)
-                    .FirstOrDefault(g => g.Id == options.GroupId);
-                if (group is null) {
-                    throw new EntityNotFoundException(nameof(Group));
-                }
-                if (!group.OrganizationRelation.OrganizationId.Equals(organizationId))
+                if (!profile.GroupRelations.Any(pgr => pgr.GroupId == options.GroupId))
                 {
                     return false;
                 }
