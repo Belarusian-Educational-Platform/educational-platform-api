@@ -21,7 +21,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
             return _dbContext.DisposeAsync();
         }
 
-        // TODO: RENAME?
         public bool CheckOrganizationСorrespondence(ProfileAuthorizationVerificationOptions options)
         {
             var profile = _dbContext.Profiles

@@ -33,31 +33,31 @@ namespace educational_platform_api.Services
             return _dbContext.Organizations.Where(o => o.Id == id);
         }
 
-        public Organization CreateOrganization(CreateOrganizationInput input)
+        public int Create(CreateOrganizationInput input)
         {
-            var organization = _mapper.Map<Organization>(input);
-            var organizationEntity = _dbContext.Organizations.Add(organization).Entity;
+            Organization organization = _mapper.Map<Organization>(input);
+            Organization organizationEntity = _dbContext.Organizations.Add(organization).Entity;
             _dbContext.SaveChanges();
             
-            // TODO: RETURN GETBYID QUERY? OR MAYBE JUST ID?
-            return organizationEntity;
+            return organizationEntity.Id;
         }
 
-        public void UpdateOrganization(UpdateOrganizationInput input)
+        public void Update(UpdateOrganizationInput input)
         {
-            var organization = _mapper.Map<Organization>(input);
+            Organization organization = _mapper.Map<Organization>(input);
 
             _dbContext.Entry(organization).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
 
-        public void DeleteOrganization(int id)
+        public void Delete(int id)
         {
-            // TODO: OK? OR CREATE EXTENSION METHOD LIKE RemoveById(int id)?
-            var organization = _dbContext.Organizations.FirstOrDefault(p => p.Id == id);
+            Organization? organization = _dbContext.Organizations
+                .FirstOrDefault(p => p.Id == id);
             if (organization is null) {
                 throw new EntityNotFoundException(nameof(Organization));
             }
+
             _dbContext.Organizations.Remove(organization);
             _dbContext.SaveChanges();
         }

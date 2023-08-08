@@ -38,49 +38,48 @@ namespace educational_platform_api.Services
             return _dbContext.Profiles.Where(p => p.KeycloakId == keycloakId);
         }
 
-        public Profile CreateProfile(CreateProfileInput input)
+        public int Create(CreateProfileInput input)
         {
             using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    var profile = _mapper.Map<Profile>(input);
-                    var profileEntity = _dbContext.Profiles.Add(profile).Entity;
+                    Profile profile = _mapper.Map<Profile>(input);
+                    Profile profileEntity = _dbContext.Profiles.Add(profile).Entity;
                     _dbContext.SaveChanges();
 
-                    var organizationRelation = new ProfileOrganizationRelation()
+                    ProfileOrganizationRelation organizationRelation = new ProfileOrganizationRelation()
                     {
                         ProfileId = profileEntity.Id,
                         OrganizationId = input.OrganizationId,
                         Permissions = "[]"
                     };
                     _dbContext.ProfileOrganizationRelations.Add(organizationRelation);
-
                     _dbContext.SaveChanges();
-                    // TODO: RETURN GETBYID QUERY? OR MAYBE JUST ID?
+
                     transaction.Commit();
 
-                    return profileEntity;
+                    return profileEntity.Id;
                 } catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw ex;
+
+                    throw;
                 }
             }
         }
 
-        public void UpdateProfile(UpdateProfileInput input)
+        public void Update(UpdateProfileInput input)
         {
-            var profile = _mapper.Map<Profile>(input);
+            Profile profile = _mapper.Map<Profile>(input);
 
             _dbContext.Entry(profile).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
 
-        public void DeleteProfile(int id)
+        public void Delete(int id)
         {
-            // TODO: OK? OR CREATE EXTENSION METHOD LIKE RemoveById(int id)?
-            var profile = _dbContext.Profiles.FirstOrDefault(p => p.Id == id);
+            Profile? profile = _dbContext.Profiles.FirstOrDefault(p => p.Id == id);
             if (profile is null) {
                 throw new EntityNotFoundException(nameof(Profile));
             }

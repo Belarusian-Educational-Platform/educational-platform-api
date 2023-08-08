@@ -34,48 +34,47 @@ namespace educational_platform_api.Services
             return _dbContext.Groups.Where(g => g.Id == id);
         }
 
-        public Group CreateGroup(CreateGroupInput input)
+        public int Create(CreateGroupInput input)
         {
             using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    var group = _mapper.Map<Group>(input);
-
-                    var groupEntity = _dbContext.Groups.Add(group).Entity;
+                    Group group = _mapper.Map<Group>(input);
+                    Group groupEntity = _dbContext.Groups.Add(group).Entity;
                     _dbContext.SaveChanges();
 
-                    var organizationRelation = new GroupOrganizationRelation()
-                    {
-                        GroupId = groupEntity.Id,
-                        OrganizationId = input.OrganizationId
-                    };
+                    GroupOrganizationRelation organizationRelation = 
+                        new GroupOrganizationRelation() {
+                            GroupId = groupEntity.Id,
+                            OrganizationId = input.OrganizationId
+                        };
                     _dbContext.GroupOrganizationRelations.Add(organizationRelation);
                     _dbContext.SaveChanges();
-                    // TODO: RETURN GETBYID QUERY? OR MAYBE JUST ID?
+
                     transaction.Commit();
 
-                    return groupEntity;
+                    return groupEntity.Id;
                 } catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw ex;
+
+                    throw;
                 }
             }
         }
 
-        public void UpdateGroup(UpdateGroupInput input)
+        public void Update(UpdateGroupInput input)
         {
-            var group = _mapper.Map<Group>(input);
+            Group group = _mapper.Map<Group>(input);
 
             _dbContext.Entry(group).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
 
-        public void DeleteGroup(int id)
+        public void Delete(int id)
         {
-            // TODO: OK? OR CREATE EXTENSION METHOD LIKE RemoveById(int id)?
-            var group = _dbContext.Groups.FirstOrDefault(g => g.Id == id);
+            Group? group = _dbContext.Groups.FirstOrDefault(g => g.Id == id);
             if (group is null) {
                 throw new EntityNotFoundException(nameof(Group));
             }
@@ -95,7 +94,7 @@ namespace educational_platform_api.Services
 
         public void CreateProfileGroupRelation(CreateProfileGroupRelationInput input)
         {
-            var relation = _mapper.Map<ProfileGroupRelation>(input);
+            ProfileGroupRelation relation = _mapper.Map<ProfileGroupRelation>(input);
 
             _dbContext.ProfileGroupRelations.Add(relation);
             _dbContext.SaveChanges(true);
@@ -103,7 +102,7 @@ namespace educational_platform_api.Services
 
         public void DeleteProfileGroupRelation(int profileId, int groupId)
         {
-            var relation = _dbContext.ProfileGroupRelations
+            ProfileGroupRelation? relation = _dbContext.ProfileGroupRelations
                 .FirstOrDefault(pgr => pgr.ProfileId == profileId && pgr.GroupId == groupId);
             if (relation is null)
             {
