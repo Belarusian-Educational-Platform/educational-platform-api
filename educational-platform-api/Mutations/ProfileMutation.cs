@@ -15,8 +15,9 @@ namespace educational_platform_api.Mutations
     {
         [Authorize]
         [GraphQLName("createProfile")]
+        [UseProjection]
         [UseProfile]
-        public Profile CreateProfile(
+        public IQueryable<Profile> CreateProfile(
             [Service] IProfileService profileService,
             [Service] IProfileAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,

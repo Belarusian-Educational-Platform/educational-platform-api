@@ -15,7 +15,8 @@ namespace educational_platform_api.Mutations
     {
         [Authorize(Roles = new[] { "Admin" })]
         [GraphQLName("createOrganization")]
-        public Organization CreateOrganization(
+        [UseProjection]
+        public IQueryable<Organization> CreateOrganization(
             [Service] IOrganizationService organizationService, 
             [UseFluentValidation, UseValidator<CreateOrganizationInputValidator>] 
                 CreateOrganizationInput organizationInput)
