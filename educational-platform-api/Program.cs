@@ -29,6 +29,7 @@ builder.Services.SetupProfileAuthorization();
 builder.Services
     .SetupGraphQLServer()
     .AddErrorFilters()
+    .AddProjections()
     .AddQueryTypeExtensions()
     .AddMutationTypeExtensions();
 

@@ -30,7 +30,7 @@ namespace educational_platform_api.Middlewares.UseProfile
                         throw new UnauthorizedAccessException();
                     }
 
-                    Profile profile = profileService.GetActiveProfile(keycloakId);
+                    Profile profile = profileService.GetByAccount(keycloakId).First();
 
                     context.ContextData.TryAdd(PROFILE_CONTEXT_DATA_KEY, profile);
                 }

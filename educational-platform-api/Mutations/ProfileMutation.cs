@@ -15,8 +15,9 @@ namespace educational_platform_api.Mutations
     {
         [Authorize]
         [GraphQLName("createProfile")]
+        [UseProjection]
         [UseProfile]
-        public Profile CreateProfile(
+        public int CreateProfile(
             [Service] IProfileService profileService,
             [Service] IProfileAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
@@ -29,9 +30,9 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            Profile profileEntity = profileService.Create(profileInput);
+            int ProfileId = profileService.Create(profileInput);
 
-            return profileEntity;
+            return ProfileId;
         }
 
         [Authorize]

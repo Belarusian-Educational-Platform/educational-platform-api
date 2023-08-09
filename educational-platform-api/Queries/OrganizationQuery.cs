@@ -11,38 +11,20 @@ namespace educational_platform_api.Queries
         [Authorize]
         [GraphQLName("organizations")]
         [UseOffsetPaging]
+        [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IEnumerable<Organization> GetOrganizations([Service] IOrganizationService organizationService)
+        public IQueryable<Organization> GetOrganizations([Service] IOrganizationService organizationService)
         {
-            return organizationService.GetAllOrganizations();
+            return organizationService.GetAll();
         }
 
         [Authorize]
         [GraphQLName("organizationById")]
-        public Organization GetOrganization([Service] IOrganizationService organizationService, int id)
+        [UseProjection]
+        public IQueryable<Organization> GetOrganization([Service] IOrganizationService organizationService, int id)
         {
-            return organizationService.GetOrganizationById(id);
-        }
-
-        [Authorize]
-        [GraphQLName("myOrganization")]
-        [UseProfile]
-        public Organization GetMyOrganization(
-            [Service] IOrganizationService organizationService, 
-            [Profile] Profile profile)
-        {
-            return organizationService.GetProfileOrganization(profile.Id);
-        }
-
-        [Authorize]
-        [GraphQLName("profileOrganization")]
-        [UseProfile]
-        public Organization GetProfileOrganization(
-            [Service] IOrganizationService organizationService,
-            int profileId)
-        {
-            return organizationService.GetProfileOrganization(profileId);
+            return organizationService.GetById(id);
         }
     }
 }

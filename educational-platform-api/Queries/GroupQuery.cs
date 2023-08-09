@@ -13,47 +13,21 @@ namespace educational_platform_api.Queries
         [Authorize]
         [GraphQLName("groups")]
         [UseOffsetPaging]
+        [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IEnumerable<Group> GetGroups([Service] IGroupService groupService)
+        public IQueryable<Group> GetGroups([Service] IGroupService groupService)
         {
-            return groupService.GetAllGroups();
+            return groupService.GetAll();
         }
 
         [Authorize]
         [GraphQLName("groupById")]
+        [UseProjection]
         [UseAccount]
-        public Group GetGroup([Service] IGroupService groupService, int id)
+        public IQueryable<Group> GetGroup([Service] IGroupService groupService, int id)
         {
-            return groupService.GetGroupById(id);
-        }
-
-        [Authorize]
-        [GraphQLName("myGroups")]
-        [UseProfile]
-        public IEnumerable<Group> GetMyGroups(
-            [Service] IGroupService groupService, 
-            [Profile] Profile profile)
-        {
-            return groupService.GetProfileGroups(profile.Id);
-        }
-
-        [Authorize]
-        [GraphQLName("myOrganizationGroups")]
-        [UseProfile]
-        public IEnumerable<Group> GetMyOrganizationGroups(
-            [Service] IGroupService groupService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
-            [Profile] Profile profile)
-        {
-            profileAuthorizationService.Authorize(options =>
-            {
-                options.AddPolicy("GetMyOrganizationGroups");
-                options.AddProfile(profile.Id);
-                options.AddOrganization();
-            });
-
-            return groupService.GetMyOrganizationGroups(profile.Id);
+            return groupService.GetById(id);
         }
     }
 }
