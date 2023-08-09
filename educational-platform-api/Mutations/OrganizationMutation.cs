@@ -21,7 +21,7 @@ namespace educational_platform_api.Mutations
             [UseFluentValidation, UseValidator<CreateOrganizationInputValidator>] 
                 CreateOrganizationInput organizationInput)
         {
-            var organizationEntity = organizationService.CreateOrganization(organizationInput);
+            var organizationEntity = organizationService.Create(organizationInput);
 
             return organizationEntity;
         }
@@ -47,7 +47,7 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            organizationService.UpdateOrganization(organizationInput);
+            organizationService.Update(organizationInput);
 
             return true;
         }
@@ -56,7 +56,7 @@ namespace educational_platform_api.Mutations
         [GraphQLName("deleteOrganization")]
         public bool DeleteOrganization([Service] IOrganizationService organizationService, int id)
         {
-            organizationService.DeleteOrganization(id);
+            organizationService.Delete(id);
 
             return true;
         }

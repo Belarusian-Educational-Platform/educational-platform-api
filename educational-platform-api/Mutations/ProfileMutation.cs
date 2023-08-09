@@ -30,7 +30,7 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            Profile profileEntity = profileService.CreateProfile(profileInput);
+            Profile profileEntity = profileService.Create(profileInput);
 
             return profileEntity;
         }
@@ -47,7 +47,7 @@ namespace educational_platform_api.Mutations
                 throw new ProfileUnauthorizedException();
             }
 
-            profileService.UpdateProfile(profileInput);
+            profileService.Update(profileInput);
 
             return true;
         }
@@ -68,7 +68,7 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            profileService.DeleteProfile(id);
+            profileService.Delete(id);
 
             return true;
         }

@@ -17,5 +17,8 @@ namespace educational_platform_api.Models
 
         public ProfileType Type { get; set; }
         public bool IsActive { get; set; }
+
+        public ProfileOrganizationRelation OrganizationRelation { get; set; }
+        public ICollection<ProfileGroupRelation> GroupRelations { get; set; }
     }
 }

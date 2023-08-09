@@ -1,30 +1,46 @@
-﻿using educational_platform_api.Repositories;
+﻿using educational_platform_api.Contexts;
+using educational_platform_api.Exceptions.RepositoryExceptions;
+using educational_platform_api.Models;
 using educational_platform_api.Types.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization
 {
-    public class ProfileAuthorizationVerificationOptionsService : IProfileAuthorizationVerificationOptionsService
+    public class ProfileAuthorizationVerificationOptionsService : IProfileAuthorizationVerificationOptionsService, 
+        IAsyncDisposable
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly MySQLContext _dbContext;
 
-        public ProfileAuthorizationVerificationOptionsService(UnitOfWork unitOfWork)
+        public ProfileAuthorizationVerificationOptionsService(IDbContextFactory<MySQLContext> dbContextFactory)
         {
-            _unitOfWork = unitOfWork;
+            _dbContext = dbContextFactory.CreateDbContext();
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            return _dbContext.DisposeAsync();
         }
 
         public bool CheckOrganizationСorrespondence(ProfileAuthorizationVerificationOptions options)
         {
-            bool checkResult = true;
-            var profileOrganizationId = _unitOfWork.Organizations.GetByProfileId(options.ProfileId).Id;
+            var profile = _dbContext.Profiles
+                .Include(p => p.OrganizationRelation)
+                .Include(p => p.GroupRelations)
+                .FirstOrDefault(p => p.Id == options.ProfileId);
+
+            if (profile is null) {
+                throw new EntityNotFoundException(nameof(Profile));
+            }
             
             if (options.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_GROUP))
             {
-                checkResult = _unitOfWork.Organizations
-                    .GetByGroupId(options.GroupId).Id
-                    .Equals(profileOrganizationId);
+                if (!profile.GroupRelations.Any(pgr => pgr.GroupId == options.GroupId))
+                {
+                    return false;
+                }
             }
 
-            return checkResult;
+            return true;
         }
     }
 }

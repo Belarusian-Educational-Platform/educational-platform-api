@@ -35,9 +35,6 @@ namespace educational_platform_api.Validators.Relations
                     return Regex.Match(str, regexp).Success;
                 })
                 .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
-/*                .Matches(@"^[[]+(?:[\"]+[a - z |\d |\-] +[\"]+[,]?)+[]]$")
-                .WithMessage(ProfileErrorMessages.PropertyIncorrectFormat);*/ //TODO create regex
-
         }
     }
 }

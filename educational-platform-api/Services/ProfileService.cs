@@ -1,93 +1,91 @@
-﻿using educational_platform_api.DTOs.Profile;
+﻿using educational_platform_api.Contexts;
+using educational_platform_api.DTOs.Profile;
+using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
-using educational_platform_api.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Services
 {
-    public class ProfileService : IProfileService
+    public class ProfileService : IProfileService, IAsyncDisposable
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly MySQLContext _dbContext;
         private readonly AutoMapper.IMapper _mapper;
 
-        public ProfileService(UnitOfWork unitOfWork,
+        public ProfileService(IDbContextFactory<MySQLContext> dbContextFactory,
             AutoMapper.IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _dbContext = dbContextFactory.CreateDbContext();
             _mapper = mapper;
         }
 
-        public Profile GetProfileById(int id)
+        public ValueTask DisposeAsync()
         {
-            return _unitOfWork.Profiles.GetById(id);
+            return _dbContext.DisposeAsync();
         }
 
-        public Profile GetActiveProfile(string keycloakId)
+        public IQueryable<Profile> GetById(int id)
         {
-            return _unitOfWork.Profiles.GetActiveByAccount(keycloakId);
+            return _dbContext.Profiles.Where(p => p.Id == id);
         }
 
-        public IEnumerable<Profile> GetAllProfiles()
+        public IQueryable<Profile> GetAll()
         {
-            return _unitOfWork.Profiles.GetAll();
+            return _dbContext.Profiles;
         }
 
-        public IEnumerable<Profile> GetAccountProfiles(string keycloakId)
+        public IQueryable<Profile> GetByAccount(string keycloakId)
         {
-            return _unitOfWork.Profiles.GetByAccount(keycloakId);
+            return _dbContext.Profiles.Where(p => p.KeycloakId == keycloakId);
         }
 
-        public IEnumerable<Profile> GetMyOrganizationProfiles(int profileId)
+        public int Create(CreateProfileInput input)
         {
-            var organization = _unitOfWork.Organizations.GetByProfileId(profileId);
-            var organizationProfiles = _unitOfWork.Profiles.GetByOrganizationId(organization.Id);
-
-            return organizationProfiles;
-        }
-
-        public Profile CreateProfile(CreateProfileInput input)
-        {
-            using (var transaction = _unitOfWork.BeginTransaction())
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    var profile = _mapper.Map<Profile>(input);
-                    var profileEntity = _unitOfWork.Profiles.Create(profile);
-                    _unitOfWork.Save();
+                    Profile profile = _mapper.Map<Profile>(input);
+                    Profile profileEntity = _dbContext.Profiles.Add(profile).Entity;
+                    _dbContext.SaveChanges();
 
-                    var relation = new ProfileOrganizationRelation()
+                    ProfileOrganizationRelation organizationRelation = new ProfileOrganizationRelation()
                     {
                         ProfileId = profileEntity.Id,
                         OrganizationId = input.OrganizationId,
                         Permissions = "[]"
                     };
-                    _unitOfWork.ProfileOrganizationRelations.Create(relation);
+                    _dbContext.ProfileOrganizationRelations.Add(organizationRelation);
+                    _dbContext.SaveChanges();
 
-                    _unitOfWork.Save();
+                    transaction.Commit();
 
-                    return profileEntity;
+                    return profileEntity.Id;
                 } catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw ex; 
+
+                    throw;
                 }
             }
         }
 
-        public void UpdateProfile(UpdateProfileInput input)
+        public void Update(UpdateProfileInput input)
         {
-            var profile = _mapper.Map<Profile>(input);
-            _unitOfWork.Profiles.Update(profile);
-            _unitOfWork.Save();
+            Profile profile = _mapper.Map<Profile>(input);
+
+            _dbContext.Entry(profile).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
 
-        public void DeleteProfile(int id)
+        public void Delete(int id)
         {
-            // TODO: CASCADE DELETE IMPLEMENTATION
-        }
+            Profile? profile = _dbContext.Profiles.FirstOrDefault(p => p.Id == id);
+            if (profile is null) {
+                throw new EntityNotFoundException(nameof(Profile));
+            }
 
-        public IEnumerable<Profile> GetGroupProfiles(int groupId)
-        {
-            return _unitOfWork.Profiles.GetByGroupId(groupId);
+            _dbContext.Profiles.Remove(profile);
+            _dbContext.SaveChanges();
         }
     }
 }

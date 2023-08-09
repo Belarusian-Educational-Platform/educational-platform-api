@@ -19,7 +19,8 @@ namespace educational_platform_api.Contexts
         {
             modelBuilder
                 .ApplyTestData()
-                .AddModelsPrimaryKeys();
+                .AddModelsPrimaryKeys()
+                .AddModelsRelations();
         }
     }
 }

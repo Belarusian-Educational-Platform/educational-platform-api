@@ -1,18 +1,23 @@
-﻿using educational_platform_api.Models;
-using educational_platform_api.Repositories;
+﻿using educational_platform_api.Contexts;
+using educational_platform_api.Exceptions.RepositoryExceptions;
+using educational_platform_api.Models;
 using educational_platform_api.Types.Enums;
-using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
 {
-    public class ProfileAuthorizationPermissionService : IProfileAuthorizationPermissionService
+    public class ProfileAuthorizationPermissionService : IProfileAuthorizationPermissionService, IAsyncDisposable
     {
+        private readonly MySQLContext _dbContext;
 
-        private readonly UnitOfWork _unitOfWork;
-
-        public ProfileAuthorizationPermissionService(UnitOfWork unitOfWork)
+        public ProfileAuthorizationPermissionService(IDbContextFactory<MySQLContext> dbContextFactory)
         {
-            _unitOfWork = unitOfWork;
+            _dbContext = dbContextFactory.CreateDbContext();
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            return _dbContext.DisposeAsync();
         }
 
         public ProfileAuthorizationPermissionSet GetProfilePermissions(
@@ -20,21 +25,32 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
         {
             ProfileAuthorizationPermissionSet permissionSet = new();
             string rawPermissions;
+
+            var profile = _dbContext.Profiles
+                    .Include(p => p.OrganizationRelation)
+                    .Include(p => p.GroupRelations)
+                    .FirstOrDefault(p => p.Id == verificationOptions.ProfileId);
+            if (profile is null)
+            {
+                throw new EntityNotFoundException(nameof(Profile));
+            }
+
             if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION))
             {
-                _unitOfWork.ProfileOrganizationRelations
-                    .TryGetByProfileId(verificationOptions.ProfileId, out ProfileOrganizationRelation relation);
-                rawPermissions = relation.Permissions;
+                rawPermissions = profile.OrganizationRelation.Permissions;
 
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, rawPermissions);
             }
             if (verificationOptions.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_GROUP))
             {
-                _unitOfWork.ProfileGroupRelations
-                    .TryGetByEntityIds(verificationOptions.ProfileId, verificationOptions.GroupId, 
-                        out ProfileGroupRelation relation);
-                rawPermissions = relation.Permissions;
-
+                var groupRelation = profile.GroupRelations
+                    .FirstOrDefault(pgr => pgr.GroupId == verificationOptions.GroupId);
+                if(groupRelation is null)
+                {
+                    throw new EntityNotFoundException(nameof(ProfileGroupRelation));
+                }
+                rawPermissions = groupRelation.Permissions;
+                
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_GROUP, rawPermissions);
             }
 

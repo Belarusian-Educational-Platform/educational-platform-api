@@ -81,7 +81,7 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            var groupEntity = groupService.CreateGroup(input);
+            var groupEntity = groupService.Create(input);
 
             return groupEntity;
         }
@@ -103,7 +103,7 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            groupService.UpdateGroup(input);
+            groupService.Update(input);
 
             return true;
         }
@@ -125,7 +125,7 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            groupService.DeleteGroup(id);
+            groupService.Delete(id);
 
             return true;
         }
