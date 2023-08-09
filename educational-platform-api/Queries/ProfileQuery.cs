@@ -19,7 +19,7 @@ namespace educational_platform_api.Queries
         [UseSorting]
         public IQueryable<Profile> GetProfiles([Service] IProfileService profileService)
         {
-            return (IQueryable<Profile>)profileService.GetAllProfiles();
+            return profileService.GetAll();
         }
 
         [Authorize]
@@ -27,7 +27,7 @@ namespace educational_platform_api.Queries
         [GraphQLName("profileById")]
         public IQueryable<Profile> GetProfile([Service] IProfileService profileService, int id)
         {
-            return profileService.GetProfileById(id);
+            return profileService.GetById(id);
         }
 
         [Authorize]
@@ -39,7 +39,7 @@ namespace educational_platform_api.Queries
             [Service] IProfileService profileService, 
             [Account] Account account)
         {
-            return profileService.GetAccountProfiles(account.KeycloakId!);
+            return profileService.GetByAccount(account.KeycloakId!);
         }
     }
 }

@@ -16,14 +16,14 @@ namespace educational_platform_api.Mutations
         [Authorize(Roles = new[] { "Admin" })]
         [GraphQLName("createOrganization")]
         [UseProjection]
-        public IQueryable<Organization> CreateOrganization(
+        public int CreateOrganization(
             [Service] IOrganizationService organizationService, 
             [UseFluentValidation, UseValidator<CreateOrganizationInputValidator>] 
                 CreateOrganizationInput organizationInput)
         {
-            var organizationEntity = organizationService.Create(organizationInput);
+            int OrganizationId = organizationService.Create(organizationInput);
 
-            return organizationEntity;
+            return OrganizationId;
         }
 
         [Authorize]

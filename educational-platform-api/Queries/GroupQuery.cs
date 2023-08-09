@@ -18,7 +18,7 @@ namespace educational_platform_api.Queries
         [UseSorting]
         public IQueryable<Group> GetGroups([Service] IGroupService groupService)
         {
-            return groupService.GetAllGroups();
+            return groupService.GetAll();
         }
 
         [Authorize]
@@ -27,7 +27,7 @@ namespace educational_platform_api.Queries
         [UseAccount]
         public IQueryable<Group> GetGroup([Service] IGroupService groupService, int id)
         {
-            return groupService.GetGroupById(id);
+            return groupService.GetById(id);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace educational_platform_api.Queries
         [UseSorting]
         public IQueryable<Organization> GetOrganizations([Service] IOrganizationService organizationService)
         {
-            return organizationService.GetAllOrganizations();
+            return organizationService.GetAll();
         }
 
         [Authorize]
@@ -24,7 +24,7 @@ namespace educational_platform_api.Queries
         [UseProjection]
         public IQueryable<Organization> GetOrganization([Service] IOrganizationService organizationService, int id)
         {
-            return organizationService.GetOrganizationById(id);
+            return organizationService.GetById(id);
         }
     }
 }
