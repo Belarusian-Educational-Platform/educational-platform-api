@@ -13,6 +13,7 @@ namespace educational_platform_api.Queries
         [Authorize]
         [GraphQLName("groups")]
         [UseOffsetPaging]
+        [UseFirstOrDefault]
         [UseProjection]
         [UseFiltering]
         [UseSorting]

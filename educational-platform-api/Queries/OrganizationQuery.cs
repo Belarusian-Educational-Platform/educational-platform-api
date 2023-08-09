@@ -11,6 +11,7 @@ namespace educational_platform_api.Queries
         [Authorize]
         [GraphQLName("organizations")]
         [UseOffsetPaging]
+        [UseFirstOrDefault]
         [UseProjection]
         [UseFiltering]
         [UseSorting]
