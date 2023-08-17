@@ -45,11 +45,8 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
             {
                 var groupRelation = profile.GroupRelations
                     .FirstOrDefault(pgr => pgr.GroupId == verificationOptions.GroupId);
-                if(groupRelation is null)
-                {
-                    throw new EntityNotFoundException(nameof(ProfileGroupRelation));
-                }
-                rawPermissions = groupRelation.Permissions;
+
+                rawPermissions = groupRelation != null ? groupRelation.Permissions : "[]";
                 
                 permissionSet.AddPermissions(ProfileAuthorizationPermissionLevel.PROFILE_GROUP, rawPermissions);
             }

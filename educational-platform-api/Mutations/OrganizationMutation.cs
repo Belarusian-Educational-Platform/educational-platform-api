@@ -15,7 +15,6 @@ namespace educational_platform_api.Mutations
     {
         [Authorize(Roles = new[] { "Admin" })]
         [GraphQLName("createOrganization")]
-        [UseProjection]
         public int CreateOrganization(
             [Service] IOrganizationService organizationService, 
             [UseFluentValidation, UseValidator<CreateOrganizationInputValidator>] 
@@ -42,7 +41,7 @@ namespace educational_platform_api.Mutations
             }
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("Update");
+                options.AddPolicy("UpdateOrganization");
                 options.AddProfile(profile.Id);
                 options.AddOrganization();
             });

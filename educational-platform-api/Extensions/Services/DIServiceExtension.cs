@@ -12,9 +12,9 @@ namespace educational_platform_api.Extensions.Services
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IProfileService, ProfileService>()
-                    .AddScoped<IGroupService, GroupService>()
-                    .AddScoped<IOrganizationService, OrganizationService>();
+            services.AddTransient<IProfileService, ProfileService>()
+                    .AddTransient<IGroupService, GroupService>()
+                    .AddTransient<IOrganizationService, OrganizationService>();
 
             return services;
         }

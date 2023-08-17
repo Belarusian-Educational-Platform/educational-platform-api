@@ -25,8 +25,9 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
         {
             var profile = _dbContext.Profiles
                 .Include(p => p.OrganizationRelation)
-                .Include(p => p.GroupRelations)
                 .FirstOrDefault(p => p.Id == options.ProfileId);
+
+            int organizationId = profile.OrganizationRelation.OrganizationId;
 
             if (profile is null) {
                 throw new EntityNotFoundException(nameof(Profile));
@@ -34,7 +35,14 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
             
             if (options.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_GROUP))
             {
-                if (!profile.GroupRelations.Any(pgr => pgr.GroupId == options.GroupId))
+                var group = _dbContext.Groups
+                    .Include(g => g.OrganizationRelation)
+                    .FirstOrDefault(g => g.Id == options.GroupId);
+                if (group is null)
+                {
+                    throw new EntityNotFoundException(nameof(Group));
+                }
+                if (group.OrganizationRelation.OrganizationId != organizationId)
                 {
                     return false;
                 }

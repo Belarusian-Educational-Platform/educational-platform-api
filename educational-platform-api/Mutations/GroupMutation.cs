@@ -66,7 +66,6 @@ namespace educational_platform_api.Mutations
 
         [Authorize]
         [GraphQLName("createGroup")]
-        [UseProjection]
         [UseProfile]
         public int CreateGroup(
             [Service] IGroupService groupService,
