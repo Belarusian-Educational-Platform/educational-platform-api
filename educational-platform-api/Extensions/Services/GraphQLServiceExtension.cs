@@ -1,4 +1,5 @@
-﻿using educational_platform_api.Contexts;
+﻿using AppAny.HotChocolate.FluentValidation;
+using educational_platform_api.Contexts;
 using educational_platform_api.Filters;
 using educational_platform_api.Mutations;
 using educational_platform_api.Queries;
@@ -11,6 +12,7 @@ namespace educational_platform_api.Extensions.Services
         public static IRequestExecutorBuilder SetupGraphQLServer(this IServiceCollection services)
         {
             var requestExecutorBuilder = services.AddGraphQLServer()
+                    .AddFluentValidation()
                     .AddAuthorization()
                     .AddFiltering()
                     .AddSorting()
@@ -24,11 +26,10 @@ namespace educational_platform_api.Extensions.Services
         public static IRequestExecutorBuilder AddErrorFilters(this IRequestExecutorBuilder requestExecutorBuilder)
         {
             requestExecutorBuilder
+                .AddErrorFilter<ErrorWithNullExceptionFilter>()
                 .AddErrorFilter<BusinessLogicErrorFilter>()
                 .AddErrorFilter<ProfileAuthorizationErrorFilter>()
-                .AddErrorFilter<RepositoryErrorFilter>()
-                .AddErrorFilter<ErrorWithNullExceptionFilter>();
-                
+                .AddErrorFilter<RepositoryErrorFilter>();
 
             return requestExecutorBuilder;
         }
@@ -38,7 +39,6 @@ namespace educational_platform_api.Extensions.Services
             requestExecutorBuilder
                 .AddTypeExtension<ProfileQuery>()
                 .AddTypeExtension<GroupQuery>()
-                .AddTypeExtension<SubgroupQuery>()
                 .AddTypeExtension<OrganizationQuery>();
 
             return requestExecutorBuilder;
@@ -49,7 +49,6 @@ namespace educational_platform_api.Extensions.Services
             requestExecutorBuilder
                 .AddTypeExtension<ProfileMutation>()
                 .AddTypeExtension<GroupMutation>()
-                .AddTypeExtension<SubgroupMutation>()
                 .AddTypeExtension<OrganizationMutation>();
 
             return requestExecutorBuilder;

@@ -12,12 +12,12 @@ namespace educational_platform_api.Authorization.ProfileAuthorization.Permission
         {
             try
             {
-                List<string> parsedPermissions = JsonSerializer.Deserialize<List<string>>(rawPermissions);
+                List<string> parsedPermissions = JsonSerializer.Deserialize<List<string>>(rawPermissions)!;
                 return parsedPermissions;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new JSONPermissionsParseException();
+                throw new JSONPermissionsParseException(ex.Message, ex);
             }
         }
 

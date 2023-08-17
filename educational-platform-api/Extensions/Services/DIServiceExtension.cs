@@ -1,8 +1,9 @@
-﻿using educational_platform_api.Models;
-using educational_platform_api.Repositories;
-using educational_platform_api.Services;
+﻿using educational_platform_api.Services;
 using educational_platform_api.Validators;
-using FluentValidation;
+using educational_platform_api.Validators.Group;
+using educational_platform_api.Validators.Organization;
+using educational_platform_api.Validators.Profile;
+using educational_platform_api.Validators.Relations;
 using FluentValidation.AspNetCore;
 
 namespace educational_platform_api.Extensions.Services
@@ -11,24 +12,9 @@ namespace educational_platform_api.Extensions.Services
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IProfileService, ProfileService>()
-                    .AddScoped<IGroupService, GroupService>()
-                    .AddScoped<ISubgroupService, SubgroupService>()
-                    .AddScoped<IOrganizationService, OrganizationService>();
-
-            return services;
-        }
-
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
-        {
-            services.AddTransient<IProfileRepository, ProfileRepository>()
-                    .AddTransient<IGroupRepository, GroupRepository>()
-                    .AddTransient<ISubgroupRepository, SubgroupRepository>()
-                    .AddTransient<IOrganizationRepository, OrganizationRepository>()
-                    .AddTransient<IProfileOrganizationRelationRepository, ProfileOrganizationRelationRepository>()
-                    .AddTransient<IProfileGroupRelationRepository, ProfileGroupRelationRepository>()
-                    .AddTransient<IProfileSubgroupRelationRepository, ProfileSubgroupRelationRepository>()
-                    .AddTransient<IGroupOrganizationRelationRepository, GroupOrganizationRelationRepository>();
+            services.AddTransient<IProfileService, ProfileService>()
+                    .AddTransient<IGroupService, GroupService>()
+                    .AddTransient<IOrganizationService, OrganizationService>();
 
             return services;
         }
@@ -37,7 +23,19 @@ namespace educational_platform_api.Extensions.Services
         {
             services
                 .AddFluentValidation()
-                .AddScoped<IValidator<Account>, AccountValidator>();
+                //Account
+                .AddScoped<AccountValidator>()
+                // Profile
+                .AddScoped<CreateProfileInputValidator>()
+                .AddScoped<UpdateProfileInputValidator>()
+                // Organization
+                .AddScoped<CreateOrganizationInputValidator>()
+                .AddScoped<UpdateOrganizationInputValidator>()
+                // Group
+                .AddScoped<CreateGroupInputValidator>()
+                .AddScoped<UpdateGroupInputValidator>()
+                // Relations
+                .AddScoped<CreateProfileGroupRelationInputValidator>();
 
             return services;
         }

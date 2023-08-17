@@ -12,8 +12,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
 
         public int GroupId { get; set; }
 
-        public int SubgroupId { get; set; }
-
         public void AddPolicy(string policyName)
         {
             PolicyName = policyName;
@@ -30,11 +28,6 @@ namespace educational_platform_api.Authorization.ProfileAuthorization
             VerificationLevels.Add(ProfileAuthorizationPermissionLevel.PROFILE_GROUP);
         }
 
-        public void AddSubgroup(int id)
-        {
-            SubgroupId = id;
-            VerificationLevels.Add(ProfileAuthorizationPermissionLevel.PROFILE_SUBGROUP);
-        }
         public void AddOrganization()
         {
             VerificationLevels.Add(ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION);

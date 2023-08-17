@@ -1,24 +1,30 @@
-﻿using educational_platform_api.Models;
+﻿using educational_platform_api.Middlewares.UseProfile;
+using educational_platform_api.Models;
 using educational_platform_api.Services;
+using HotChocolate.Authorization;
 
 namespace educational_platform_api.Queries
 {
     [ExtendObjectType(typeof(Query))]
     public class OrganizationQuery
     {
+        [Authorize]
         [GraphQLName("organizations")]
         [UseOffsetPaging]
+        [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public List<Organization> GetAllOrganizations([Service] IOrganizationService organizationService)
+        public IQueryable<Organization> GetOrganizations([Service] IOrganizationService organizationService)
         {
-            return new List<Organization>();
+            return organizationService.GetAll();
         }
 
+        [Authorize]
         [GraphQLName("organizationById")]
-        public Organization GetOrganization([Service] IOrganizationService organizationService, int id)
+        [UseProjection]
+        public IQueryable<Organization> GetOrganization([Service] IOrganizationService organizationService, int id)
         {
-            return new Organization();
+            return organizationService.GetById(id);
         }
     }
 }

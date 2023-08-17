@@ -1,5 +1,4 @@
 ﻿using educational_platform_api.Exceptions.RepositoryExceptions;
-using educational_platform_api.Exceptions.RepositoryExceptions.EnityNotFoundExceptions;
 
 namespace educational_platform_api.Filters
 {
@@ -9,9 +8,21 @@ namespace educational_platform_api.Filters
         {
             if (typeof(BaseRepositoryException).IsAssignableFrom(error.Exception.GetType()))
             {
-                if (typeof(BaseEntityNotFoundException).IsAssignableFrom(error.Exception.GetType()))
+                if (typeof(EntityNotFoundException).IsAssignableFrom(error.Exception.GetType()))
                 {
                     return ProcessEntityNotFoundException(error);
+                } 
+                else if (typeof(EntityCreateException).IsAssignableFrom(error.Exception.GetType()))
+                {
+                    return ProcessEntityCreateException(error);
+                }
+                else if (typeof(EntityUpdateException).IsAssignableFrom(error.Exception.GetType()))
+                {
+                    return ProcessEntityUpdateException(error);
+                }
+                else if (typeof(EntityDeleteException).IsAssignableFrom(error.Exception.GetType()))
+                {
+                    return ProcessEntityDeleteException(error);
                 }
                 else
                 {
@@ -26,14 +37,26 @@ namespace educational_platform_api.Filters
 
         private IError ProcessEntityNotFoundException(IError error)
         {
-            if (typeof(ProfileByIdNotFoundException).IsAssignableFrom(error.Exception.GetType()))
-            {
-                return error.WithMessage("ProfileByIdNotFoundException");
-            }
-            else
-            {
-                return error.WithMessage("Unexpected EntityNotFoundException");
-            }
+            EntityNotFoundException exception = (EntityNotFoundException) error.Exception!;
+            return error.WithMessage(String.Format("{0}ByIdNotFoundException", exception.Entity));
+        }
+
+        private IError ProcessEntityCreateException(IError error)
+        {
+            EntityCreateException exception = (EntityCreateException)error.Exception!;
+            return error.WithMessage(String.Format("{0}CreateException", exception.Entity));
+        }
+
+        private IError ProcessEntityUpdateException(IError error)
+        {
+            EntityUpdateException exception = (EntityUpdateException)error.Exception!;
+            return error.WithMessage(String.Format("{0}UpdateException", exception.Entity));
+        }
+
+        private IError ProcessEntityDeleteException(IError error)
+        {
+            EntityDeleteException exception = (EntityDeleteException)error.Exception!;
+            return error.WithMessage(String.Format("{0}DeleteException", exception.Entity));
         }
     }
 }

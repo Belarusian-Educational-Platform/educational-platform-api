@@ -5,11 +5,20 @@ namespace educational_platform_api.Models
     public class Profile
     {
         public int Id { get; set; }
+        public string KeycloakId { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Surname { get; set; }
+        public DateTime? Birthday { get; set; }
+
         public string ContactEmail { get; set; }
         public string ContactPhone { get; set; }
+
         public ProfileType Type { get; set; }
-        public int OrganizationId { get; set; }
-        public string KeycloakId { get; set; }
         public bool IsActive { get; set; }
+
+        public ProfileOrganizationRelation OrganizationRelation { get; set; }
+        public ICollection<ProfileGroupRelation> GroupRelations { get; set; }
     }
 }

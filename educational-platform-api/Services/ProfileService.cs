@@ -1,30 +1,91 @@
-﻿using educational_platform_api.Models;
-using educational_platform_api.Repositories;
+﻿using educational_platform_api.Contexts;
+using educational_platform_api.DTOs.Profile;
+using educational_platform_api.Exceptions.RepositoryExceptions;
+using educational_platform_api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Services
 {
-    public class ProfileService : IProfileService
+    public class ProfileService : IProfileService, IAsyncDisposable
     {
-        private readonly IProfileRepository _profileRepository;
+        private readonly MySQLContext _dbContext;
+        private readonly AutoMapper.IMapper _mapper;
 
-        public ProfileService(IProfileRepository profileRepository)
+        public ProfileService(IDbContextFactory<MySQLContext> dbContextFactory,
+            AutoMapper.IMapper mapper)
         {
-            _profileRepository = profileRepository;
+            _dbContext = dbContextFactory.CreateDbContext();
+            _mapper = mapper;
         }
 
-        public Profile GetProfileById(int id)
+        public ValueTask DisposeAsync()
         {
-            return _profileRepository.GetProfile(id);
+            return _dbContext.DisposeAsync();
         }
 
-        public Profile GetActiveProfile(string keycloakId)
+        public IQueryable<Profile> GetById(int id)
         {
-            return _profileRepository.GetActiveProfile(keycloakId);
+            return _dbContext.Profiles.Where(p => p.Id == id);
         }
 
-        public IEnumerable<Profile> GetProfiles()
+        public IQueryable<Profile> GetAll()
         {
-            return _profileRepository.GetProfiles();
+            return _dbContext.Profiles;
+        }
+
+        public IQueryable<Profile> GetByAccount(string keycloakId)
+        {
+            return _dbContext.Profiles.Where(p => p.KeycloakId == keycloakId);
+        }
+
+        public int Create(CreateProfileInput input)
+        {
+            using (var transaction = _dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    Profile profile = _mapper.Map<Profile>(input);
+                    Profile profileEntity = _dbContext.Profiles.Add(profile).Entity;
+                    _dbContext.SaveChanges();
+
+                    ProfileOrganizationRelation organizationRelation = new ProfileOrganizationRelation()
+                    {
+                        ProfileId = profileEntity.Id,
+                        OrganizationId = input.OrganizationId,
+                        Permissions = "[]"
+                    };
+                    _dbContext.ProfileOrganizationRelations.Add(organizationRelation);
+                    _dbContext.SaveChanges();
+
+                    transaction.Commit();
+
+                    return profileEntity.Id;
+                } catch (Exception ex)
+                {
+                    transaction.Rollback();
+
+                    throw;
+                }
+            }
+        }
+
+        public void Update(UpdateProfileInput input)
+        {
+            Profile profile = _mapper.Map<Profile>(input);
+
+            _dbContext.Entry(profile).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            Profile? profile = _dbContext.Profiles.FirstOrDefault(p => p.Id == id);
+            if (profile is null) {
+                throw new EntityNotFoundException(nameof(Profile));
+            }
+
+            _dbContext.Profiles.Remove(profile);
+            _dbContext.SaveChanges();
         }
     }
 }

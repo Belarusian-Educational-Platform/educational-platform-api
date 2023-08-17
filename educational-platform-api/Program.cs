@@ -29,16 +29,18 @@ builder.Services.SetupProfileAuthorization();
 builder.Services
     .SetupGraphQLServer()
     .AddErrorFilters()
+    .AddProjections()
     .AddQueryTypeExtensions()
     .AddMutationTypeExtensions();
-    
-// Services & Repositories
-builder.Services
-    .AddServices()
-    .AddRepositories();
+
+// Services
+builder.Services.AddServices();
 
 // Validators
 builder.Services.AddValidators();
+
+// Auto mapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // CORS Policy
 builder.Services.AddCors(p => p.AddPolicy(AllowOrigins, builder =>

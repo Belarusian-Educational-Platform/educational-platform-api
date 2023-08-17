@@ -10,33 +10,24 @@ namespace educational_platform_api.Queries
     [ExtendObjectType(typeof(Query))]
     public class GroupQuery
     {
+        [Authorize]
         [GraphQLName("groups")]
         [UseOffsetPaging]
+        [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public List<Group> GetGroups([Service] IGroupService groupService)
+        public IQueryable<Group> GetGroups([Service] IGroupService groupService)
         {
-            return new List<Group>();
+            return groupService.GetAll();
         }
 
-        
-        [GraphQLName("groupById")]
         [Authorize]
+        [GraphQLName("groupById")]
+        [UseProjection]
         [UseAccount]
-        [UseProfile]
-        public Group GetGroup([Service] IGroupService groupService, 
-            [Service] IProfileAuthorizationService profileAuthService,
-            [Account] Account account, [Profile] Profile profile,
-            int id)
+        public IQueryable<Group> GetGroup([Service] IGroupService groupService, int id)
         {
-            /*profileAuthService.AuthorizeProfile(verificationOptions =>
-            {
-                verificationOptions.AddProfile(profile.Id);
-                verificationOptions.AddPolicy("edit-group");
-                verificationOptions.AddGroup(id);
-            });*/
-
-            return new Group();
+            return groupService.GetById(id);
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using educational_platform_api.Exceptions.BusinessLogicExceptions;
-using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
-using educational_platform_api.Exceptions.RepositoryExceptions.EnityNotFoundExceptions;
-using System.Runtime.CompilerServices;
+﻿using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
 
 namespace educational_platform_api.Filters
 {
@@ -34,11 +31,11 @@ namespace educational_platform_api.Filters
         }
         private IError ProcessJSONPermissionsParseException(IError error)
         {
-                return error.WithMessage("processJSONPermissionsParseException");
+            return error.WithMessage("processJSONPermissionsParseException");
         }
         private IError ProcessProvidedAndRequestedPermissionsMismatch(IError error)
         {
-                return error.WithMessage("processProvidedAndRequestedPermissionsMismatch");
+            return error.WithMessage("processProvidedAndRequestedPermissionsMismatch");
         }
         private IError ProcessRequestedPolicyDoesNotExistsException(IError error)
         {
