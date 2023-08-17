@@ -14,7 +14,6 @@ namespace educational_platform_api.Queries
         [Authorize]
         [GraphQLName("profiles")]
         [UseOffsetPaging]
-        [UseFirstOrDefault]
         [UseProjection]
         [UseFiltering]
         [UseSorting]
@@ -33,7 +32,6 @@ namespace educational_platform_api.Queries
 
         [Authorize]
         [GraphQLName("myProfiles")]
-        [UseFirstOrDefault]
         [UseProjection]
         [UseFiltering]
         [UseAccount]
