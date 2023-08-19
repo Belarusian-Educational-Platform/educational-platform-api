@@ -15,7 +15,7 @@ namespace educational_platform_api.Services
 
         public void UpdateProfileGroupRelation(UpdateProfileGroupRelationInput input);
 
-        public bool CheckOrganizationCorrespondence(int profileId, int groupId); // TODO: RENAME?
+        public bool CheckOrganizationCorrespondence(int profileId, int groupId);
         public void CreateProfileGroupRelation(CreateProfileGroupRelationInput input);
         public void DeleteProfileGroupRelation(int profileId, int groupId);
     }
