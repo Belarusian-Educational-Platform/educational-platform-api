@@ -15,8 +15,6 @@ namespace educational_platform_api.Validators.Organization
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty);
 
             RuleFor(x => x.Name)
-                .NotNull()
-                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .NotEmpty()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .Length(2, 32)
@@ -25,8 +23,6 @@ namespace educational_platform_api.Validators.Organization
             RuleFor(x => x.Description); // No rules yet 
 
             RuleFor(x => x.Latitude)
-                .NotNull()
-                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .NotEmpty()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .GreaterThanOrEqualTo(-180)
@@ -35,8 +31,6 @@ namespace educational_platform_api.Validators.Organization
                 .WithMessage(CustomErrorMessages.IncorrectCoordinatesValue);
 
             RuleFor(x => x.Longitude)
-                .NotNull()
-                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .NotEmpty()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .GreaterThanOrEqualTo(-180)

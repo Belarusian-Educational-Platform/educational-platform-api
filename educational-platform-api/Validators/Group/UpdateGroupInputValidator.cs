@@ -14,8 +14,6 @@ namespace educational_platform_api.Validators.Group
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty);
 
             RuleFor(x => x.Name)
-                .NotNull()
-                .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .NotEmpty()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .Length(2, 32)

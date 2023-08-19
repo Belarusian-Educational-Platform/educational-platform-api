@@ -10,10 +10,9 @@ namespace educational_platform_api.Mappers
         {
             CreateMap<CreateProfileInput, Profile>()
                 .ForMember(dest => dest.KeycloakId, opt => opt.MapFrom(src => ""))
-                .ForMember(dest => dest.Birthday, 
-                    opt => opt.MapFrom(src => 
+                .ForMember(dest => dest.Birthday,
+                    opt => opt.MapFrom(src =>
                         DateTime.ParseExact(src.Birthday, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
-
             CreateMap<UpdateProfileInput, Profile>()
                 .ForMember(dest => dest.Birthday,
                     opt => opt.MapFrom(src => 
