@@ -35,8 +35,10 @@ namespace educational_platform_api.Extensions.Services
                 .AddScoped<CreateGroupInputValidator>()
                 .AddScoped<UpdateGroupInputValidator>()
                 // Relations
-                .AddScoped<CreateProfileGroupRelationInputValidator>();
-
+                .AddScoped<CreateProfileGroupRelationInputValidator>()
+                .AddScoped<UpdateProfileGroupRelationInputValidator>()
+                .AddScoped<UpdateProfileOrganizationRelationInputValidator>();
+             
             return services;
         }
     }

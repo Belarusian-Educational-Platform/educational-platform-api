@@ -16,6 +16,34 @@ namespace educational_platform_api.Mutations
     public class GroupMutation
     {
         [Authorize]
+        [GraphQLName("updateProfileGroupRelation")]
+        [UseProfile]
+        public bool UpdateProfileGroupRelation(
+            [Service] IGroupService groupService,
+            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Profile] Profile profile,
+            [UseFluentValidation, UseValidator<UpdateProfileGroupRelationInputValidator>]
+                UpdateProfileGroupRelationInput input)
+        {
+            profileAuthorizationService.Authorize(options =>
+            {
+                options.AddPolicy("UpdateGroup");
+                options.AddProfile(profile.Id);
+                options.AddGroup(input.GroupId);
+                options.AddOrganization();
+            });
+
+            if (groupService.CheckOrganizationCorrespondence(input.ProfileId, input.GroupId))
+            {
+                throw new ProfileUnauthorizedException();
+            }
+
+            groupService.UpdateProfileGroupRelation(input);
+
+            return true;
+        }
+
+        [Authorize]
         [GraphQLName("addProfileToGroup")]
         [UseProfile]
         public bool AddProfileToGroup(
@@ -32,7 +60,7 @@ namespace educational_platform_api.Mutations
                 options.AddGroup(input.GroupId);
                 options.AddOrganization();
             });
-            if (!groupService.CheckCanAddProfileToGroup(input.ProfileId, input.GroupId))
+            if (!groupService.CheckOrganizationCorrespondence(input.ProfileId, input.GroupId))
             {
                 throw new ProfileUnauthorizedException();
             }
@@ -71,7 +99,7 @@ namespace educational_platform_api.Mutations
             [Service] IGroupService groupService,
             [Service] IProfileAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
-            [UseFluentValidation, UseValidator<CreateGroupInputValidator>]  CreateGroupInput input)
+            [UseFluentValidation, UseValidator<CreateGroupInputValidator>] CreateGroupInput input)
         {
             profileAuthorizationService.Authorize(options =>
             {
