@@ -69,8 +69,51 @@ namespace educational_platform_api.Services
             }
         }
 
+        private void CompleteInputNullProperties(UpdateProfileInput input, Profile profile)
+        {
+            UpdateProfileInput completedInput = input;
+            if (completedInput.Type== null) 
+            {
+                completedInput.Type = profile.Type;
+            }
+            else if (completedInput.KeycloakId == null)
+            {
+                completedInput.KeycloakId = profile.KeycloakId;
+            }
+            else if (completedInput.ContactEmail == null)
+            {
+                completedInput.ContactEmail = profile.ContactEmail;
+            }
+            else if (completedInput.ContactPhone == null)
+            {
+                completedInput.ContactPhone = profile.ContactPhone;
+            }
+            else if (completedInput.Birthday == null)
+            {
+                completedInput.Birthday = profile.Birthday.ToString();
+            }
+            else if (completedInput.FirstName == null)
+            {
+                completedInput.FirstName = profile.FirstName;
+            }
+            else if (completedInput.LastName == null)
+            {
+                completedInput.LastName = profile.LastName;
+            }
+            else if (completedInput.Surname == null)
+            {
+                completedInput.Surname = profile.Surname;
+            }
+            else if (completedInput.IsActive == null)
+            {
+                completedInput.IsActive = profile.IsActive;
+            }
+        }
+
         public void Update(UpdateProfileInput input)
         {
+        //    Profile originalProfile = GetById(input.Id).FirstOrDefault();
+      //      CompleteInputNullProperties(input, originalProfile);
             Profile profile = _mapper.Map<Profile>(input);
 
             _dbContext.Entry(profile).State = EntityState.Modified;
