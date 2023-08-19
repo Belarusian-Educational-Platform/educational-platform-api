@@ -1,5 +1,6 @@
 ﻿using educational_platform_api.DTOs.Relations;
 using educational_platform_api.ErrorMessages;
+using educational_platform_api.Extensions.Validators;
 using FluentValidation;
 using System.Text.RegularExpressions;
 
@@ -27,13 +28,7 @@ namespace educational_platform_api.Validators.Relations
                 .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .NotEmpty()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
-                .Must(permissions =>
-                {
-                    string str = permissions;
-                    str = str.Replace("\"", "~");
-                    var regexp = @"^[[]([~][]\w|-]+[~]+[,]?)+[]]$";
-                    return Regex.Match(str, regexp).Success;
-                })
+         //       .CorrectPermissionsFormat()
                 .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
         }
     }
