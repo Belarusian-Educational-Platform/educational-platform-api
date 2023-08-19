@@ -29,9 +29,10 @@ namespace educational_platform_api.Mutations
             {
                 throw new ProfileUnauthorizedException();
             }
+
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("UpdateOrganization");
+                options.AddPolicy("UpdateProfileOrganizationRelation");
                 options.AddProfile(profile.Id);
                 options.AddOrganization();
             });

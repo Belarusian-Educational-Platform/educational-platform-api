@@ -79,6 +79,22 @@ namespace educational_platform_api.Extensions.Services
                             .ToPermission())
                     );
                 });
+                options.AddPolicy("UpdateProfileGroupRelation", policy =>
+                {
+                    policy.RequireAssertion(process =>
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "edit-group-profiles-permissions")
+                            .ToPermission()) |
+                        process((ProfileAuthorizationPermissionLevel.PROFILE_GROUP, "edit-profiles-permissions")
+                            .ToPermission())
+                    );
+                });
+                options.AddPolicy("UpdateProfileOrganizationRelation", policy =>
+                {
+                    policy.AddRequirements(
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "edit-profiles-permissions")
+                            .ToPermission()
+                    );
+                });
             });
 
             return services;

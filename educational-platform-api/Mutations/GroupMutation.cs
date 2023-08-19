@@ -27,7 +27,7 @@ namespace educational_platform_api.Mutations
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("UpdateGroup");
+                options.AddPolicy("UpdateProfileGroupRelation");
                 options.AddProfile(profile.Id);
                 options.AddGroup(input.GroupId);
                 options.AddOrganization();
