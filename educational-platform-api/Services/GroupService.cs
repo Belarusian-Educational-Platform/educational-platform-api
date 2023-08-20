@@ -2,7 +2,7 @@
 using educational_platform_api.DTOs.Group;
 using educational_platform_api.DTOs.Relations;
 using educational_platform_api.Exceptions.RepositoryExceptions;
-using educational_platform_api.Extensions.Repositories;
+using educational_platform_api.Extensions.ORMS;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -69,7 +69,11 @@ namespace educational_platform_api.Services
         {
             Group group = _mapper.Map<Group>(input);
             Group originalGroup = _dbContext.Groups.FirstOrDefault(g => g.Id == input.Id);
-            RepositoryExtentsion.CopyNotNullProperties(group, originalGroup);
+            if (originalGroup is null)
+            {
+                throw new EntityNotFoundException(nameof(Group));
+            }
+            ORMExtention.CopyNotNullProperties(group, originalGroup);
             _dbContext.SaveChanges();
         }
 

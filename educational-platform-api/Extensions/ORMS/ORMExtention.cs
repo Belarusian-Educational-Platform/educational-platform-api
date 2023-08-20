@@ -1,6 +1,6 @@
-﻿namespace educational_platform_api.Extensions.Repositories
+﻿namespace educational_platform_api.Extensions.ORMS
 {
-    public static class RepositoryExtentsion
+    public static class ORMExtention
     {
         public static void CopyNotNullProperties<T>(T from, T to)
         {
@@ -14,6 +14,6 @@
                     property.SetValue(to, value, null);
                 }
             }
-        }//TODO: move or rename extension class and folder
+        }
     }
 }

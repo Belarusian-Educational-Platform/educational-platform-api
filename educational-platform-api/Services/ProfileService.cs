@@ -3,7 +3,7 @@ using educational_platform_api.DTOs.Profile;
 using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
-using educational_platform_api.Extensions.Repositories;
+using educational_platform_api.Extensions.ORMS;
 
 namespace educational_platform_api.Services
 {
@@ -77,7 +77,11 @@ namespace educational_platform_api.Services
       //      CompleteInputNullProperties(input, originalProfile);
             Profile profile = _mapper.Map<Profile>(input);
             Profile originalProfile = _dbContext.Profiles.FirstOrDefault(p => p.Id == input.Id);
-            RepositoryExtentsion.CopyNotNullProperties(profile, originalProfile);
+            if (originalProfile is null)
+            {
+                throw new EntityNotFoundException(nameof(Profile));
+            }
+            ORMExtention.CopyNotNullProperties(profile, originalProfile);
 
             _dbContext.SaveChanges();
         }
