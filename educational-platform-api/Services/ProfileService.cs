@@ -72,8 +72,15 @@ namespace educational_platform_api.Services
         public void Update(UpdateProfileInput input)
         {
             Profile profile = _mapper.Map<Profile>(input);
+            Profile originalProfile = _dbContext.Profiles.FirstOrDefault(p => p.Id == input.Id);
+            foreach (var property in typeof(Profile).GetProperties().Where(prop => prop.CanRead && prop.CanWrite)){
+                var value = property.GetValue(profile, null);
+                if(value != null)
+                {
+                    property.SetValue(originalProfile, value, null);
+                }
+            }
 
-            _dbContext.Entry(profile).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
 
