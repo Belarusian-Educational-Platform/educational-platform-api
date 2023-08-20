@@ -8,6 +8,7 @@ namespace educational_platform_api.Mappers
         public ProfileGroupRelationMapper()
         {
             CreateMap<CreateProfileGroupRelationInput, ProfileGroupRelation>();
+            CreateMap<UpdateProfileGroupRelationInput, ProfileGroupRelation>();
         }
     }
 }

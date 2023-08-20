@@ -52,7 +52,7 @@ namespace educational_platform_api.Services
                     {
                         ProfileId = profileEntity.Id,
                         OrganizationId = input.OrganizationId,
-                        Permissions = "[]"
+                        Permissions = "[\"view-private-information\"]"
                     };
                     _dbContext.ProfileOrganizationRelations.Add(organizationRelation);
                     _dbContext.SaveChanges();

@@ -83,7 +83,7 @@ namespace educational_platform_api.Services
             _dbContext.SaveChanges();
         }
 
-        public bool CheckCanAddProfileToGroup(int profileId, int groupId)
+        public bool CheckOrganizationCorrespondence(int profileId, int groupId)
         {
             return _dbContext.Organizations
                 .Include(o => o.ProfileRelations)
@@ -111,6 +111,14 @@ namespace educational_platform_api.Services
                 
             _dbContext.ProfileGroupRelations.Remove(relation);
             _dbContext.SaveChanges(true);
+        }
+
+        public void UpdateProfileGroupRelation(UpdateProfileGroupRelationInput input)
+        {
+            ProfileGroupRelation relation = _mapper.Map<ProfileGroupRelation>(input);
+
+            _dbContext.Entry(relation).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
     }
 }

@@ -13,7 +13,9 @@ namespace educational_platform_api.Services
         public void Update(UpdateGroupInput input);
         public void Delete(int id);
 
-        public bool CheckCanAddProfileToGroup(int profileId, int groupId);
+        public void UpdateProfileGroupRelation(UpdateProfileGroupRelationInput input);
+
+        public bool CheckOrganizationCorrespondence(int profileId, int groupId);
         public void CreateProfileGroupRelation(CreateProfileGroupRelationInput input);
         public void DeleteProfileGroupRelation(int profileId, int groupId);
     }

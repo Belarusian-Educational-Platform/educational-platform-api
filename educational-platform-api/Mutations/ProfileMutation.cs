@@ -20,7 +20,7 @@ namespace educational_platform_api.Mutations
             [Service] IProfileService profileService,
             [Service] IProfileAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
-            [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput profileInput)
+            [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput input)
         {
             profileAuthorizationService.Authorize(options =>
             {
@@ -29,7 +29,7 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            int ProfileId = profileService.Create(profileInput);
+            int ProfileId = profileService.Create(input);
 
             return ProfileId;
         }
@@ -38,15 +38,15 @@ namespace educational_platform_api.Mutations
         [GraphQLName("updateProfile")]
         [UseProfile]
         public bool UpdateProfile([Service] IProfileService profileService, 
-            [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput profileInput,
+            [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput input,
             [Profile] Profile profile)
         {
-            if (profile.Id != profileInput.Id)
+            if (profile.Id != input.Id)
             {
                 throw new ProfileUnauthorizedException();
             }
 
-            profileService.Update(profileInput);
+            profileService.Update(input);
 
             return true;
         }
