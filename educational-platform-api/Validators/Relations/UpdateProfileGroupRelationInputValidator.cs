@@ -1,20 +1,20 @@
 ﻿using educational_platform_api.DTOs.Relations;
 using educational_platform_api.ErrorMessages;
-using educational_platform_api.Extensions.Validators;
 using FluentValidation;
 using System.Text.RegularExpressions;
 
 namespace educational_platform_api.Validators.Relations
 {
-    public class CreateProfileGroupRelationInputValidator : AbstractValidator<CreateProfileGroupRelationInput>
+    public class UpdateProfileGroupRelationInputValidator : 
+        AbstractValidator<UpdateProfileGroupRelationInput>
     {
-        public CreateProfileGroupRelationInputValidator()
+        public UpdateProfileGroupRelationInputValidator()
         {
             RuleFor(x => x.ProfileId)
-                .NotNull()
-                .WithMessage(CustomErrorMessages.PropertyIsNull)
-                .NotEmpty()
-                .WithMessage(CustomErrorMessages.PropertyIsEmpty);
+               .NotNull()
+               .WithMessage(CustomErrorMessages.PropertyIsNull)
+               .NotEmpty()
+               .WithMessage(CustomErrorMessages.PropertyIsEmpty);
             RuleFor(x => x.GroupId)
                 .NotNull()
                 .WithMessage(CustomErrorMessages.PropertyIsNull)
@@ -28,7 +28,13 @@ namespace educational_platform_api.Validators.Relations
                 .WithMessage(CustomErrorMessages.PropertyIsNull)
                 .NotEmpty()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
-         //       .CorrectPermissionsFormat()
+                .Must(permissions =>
+                {
+                    string str = permissions;
+                    str = str.Replace("\"", "~");
+                    var regexp = @"^[[]([~][]\w|-]+[~]+[,]?)+[]]$";
+                    return Regex.Match(str, regexp).Success;
+                })
                 .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
         }
     }

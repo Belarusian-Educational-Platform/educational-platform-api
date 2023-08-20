@@ -1,5 +1,6 @@
 ﻿using educational_platform_api.Contexts;
 using educational_platform_api.DTOs.Organization;
+using educational_platform_api.DTOs.Relations;
 using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,14 @@ namespace educational_platform_api.Services
         {
             return _dbContext.ProfileOrganizationRelations
                 .Any(por => por.ProfileId == profileId && por.OrganizationId == organizationId);
+        }
+
+        public void UpdateProfileOrganizationRelation(UpdateProfileOrganizationRelationInput input)
+        {
+            ProfileOrganizationRelation relation = _mapper.Map<ProfileOrganizationRelation>(input);
+
+            _dbContext.Entry(relation).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
     }
 }

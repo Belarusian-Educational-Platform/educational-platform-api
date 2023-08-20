@@ -44,14 +44,14 @@ namespace educational_platform_api.Validators.Profile
                 .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
 
             RuleFor(x => x.ContactPhone)
-                .Matches(@"\(?\d{3}\)?[-\.]? *\d{3}[-\.]? *[-\.]?\d{4}")//just validation for phone number
+                .CorrectMobilePhoneFormat()
                 .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
 
             RuleFor(x => x.ContactEmail)
                 .EmailAddress()
                 .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
 
-            RuleFor(x => x.Type);// No rules there yet
+            RuleFor(x => x.Type); // No rules there yet
         }
     }
 }
