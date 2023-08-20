@@ -33,7 +33,7 @@ namespace educational_platform_api.Mutations
                 options.AddOrganization();
             });
 
-            if (groupService.CheckOrganizationCorrespondence(input.ProfileId, input.GroupId))
+            if (!groupService.CheckOrganizationCorrespondence(input.ProfileId, input.GroupId))
             {
                 throw new ProfileUnauthorizedException();
             }
