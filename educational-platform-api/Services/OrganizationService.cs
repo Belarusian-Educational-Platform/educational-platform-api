@@ -2,6 +2,7 @@
 using educational_platform_api.DTOs.Organization;
 using educational_platform_api.DTOs.Relations;
 using educational_platform_api.Exceptions.RepositoryExceptions;
+using educational_platform_api.Extensions.ORMS;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,8 +47,14 @@ namespace educational_platform_api.Services
         public void Update(UpdateOrganizationInput input)
         {
             Organization organization = _mapper.Map<Organization>(input);
+            Organization originalOrganization = _dbContext.Organizations.FirstOrDefault(o => o.Id == input.Id);
+            if (originalOrganization is null)
+            {
+                throw new EntityNotFoundException(nameof(Organization));
+            }
+            ORMExtention.CopyNotNullProperties(organization, originalOrganization);
 
-            _dbContext.Entry(organization).State = EntityState.Modified;
+
             _dbContext.SaveChanges();
         }
 

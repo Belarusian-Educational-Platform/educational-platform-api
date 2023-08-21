@@ -16,31 +16,31 @@ namespace educational_platform_api.Validators.Profile
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty);
 
             RuleFor(x => x.KeycloakId)
-                .NotEmpty()
+                .NotEmptyButAllowNull()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .Length(0, 128)
                 .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
 
             RuleFor(x => x.FirstName)
-                .NotEmpty()
+                .NotEmptyButAllowNull()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .Length(3, 32)
                 .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
 
             RuleFor(x => x.LastName)
-                .NotEmpty()
+                .NotEmptyButAllowNull()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .Length(3, 32)
                 .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
 
             RuleFor(x => x.Surname)
-                .NotEmpty()
+                .NotEmptyButAllowNull()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .Length(3, 32)
                 .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
 
             RuleFor(x => x.Birthday)
-                .CanParseDateTime()
+                .CanParseDateTimeOrNull()
                 .WithMessage(CustomErrorMessages.PropertyIncorrectFormat);
 
             RuleFor(x => x.ContactPhone)

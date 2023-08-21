@@ -1,5 +1,6 @@
 ﻿using educational_platform_api.DTOs.Organization;
 using educational_platform_api.ErrorMessages;
+using educational_platform_api.Extensions.Validators;
 using FluentValidation;
 
 namespace educational_platform_api.Validators.Organization
@@ -11,11 +12,11 @@ namespace educational_platform_api.Validators.Organization
             RuleFor(x => x.Id)
                 .NotNull()
                 .WithMessage(CustomErrorMessages.PropertyIsNull)
-                .NotEmpty()
+                .NotEmptyButAllowNull()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty);
 
             RuleFor(x => x.Name)
-                .NotEmpty()
+                .NotEmptyButAllowNull()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .Length(2, 32)
                 .WithMessage(CustomErrorMessages.PropertyIsIncorrectLength);
@@ -23,7 +24,7 @@ namespace educational_platform_api.Validators.Organization
             RuleFor(x => x.Description); // No rules yet 
 
             RuleFor(x => x.Latitude)
-                .NotEmpty()
+                .NotEmptyButAllowNull()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .GreaterThanOrEqualTo(-180)
                 .WithMessage(CustomErrorMessages.IncorrectCoordinatesValue)
@@ -31,7 +32,7 @@ namespace educational_platform_api.Validators.Organization
                 .WithMessage(CustomErrorMessages.IncorrectCoordinatesValue);
 
             RuleFor(x => x.Longitude)
-                .NotEmpty()
+                .NotEmptyButAllowNull()
                 .WithMessage(CustomErrorMessages.PropertyIsEmpty)
                 .GreaterThanOrEqualTo(-180)
                 .WithMessage(CustomErrorMessages.IncorrectCoordinatesValue)
