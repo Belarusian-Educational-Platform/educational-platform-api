@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using educational_platform_api.Types.Enums;
 
-namespace educational_platform_api.TestData
+namespace educational_platform_api.EntityFramework.TestData
 {
     public class ProfileGroupRelationContextConfiguration : IEntityTypeConfiguration<ProfileGroupRelation>
     {
@@ -16,7 +16,7 @@ namespace educational_platform_api.TestData
                     GroupId = 1,
                     ProfileRole = Role.member,
                     ProfileId = 1,
-                    Permissions= "[\"view-private-information\"]"
+                    Permissions = "[\"view-private-information\"]"
                 },
                 new ProfileGroupRelation
                 {

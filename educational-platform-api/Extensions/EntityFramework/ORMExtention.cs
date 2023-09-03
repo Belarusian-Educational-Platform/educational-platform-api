@@ -1,4 +1,4 @@
-﻿namespace educational_platform_api.Extensions.ORMS
+﻿namespace educational_platform_api.Extensions.EntityFramework
 {
     public static class ORMExtention
     {

@@ -80,7 +80,7 @@ namespace educational_platform_api.Mutations
             return true;
         }
 
-        [Authorize(Roles = new[] { "Admin" })]
+        [Authorize]
         [GraphQLName("deleteOrganization")]
         public bool DeleteOrganization([Service] IOrganizationService organizationService, int id)
         {

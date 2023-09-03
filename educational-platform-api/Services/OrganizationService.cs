@@ -1,8 +1,8 @@
-﻿using educational_platform_api.Contexts;
-using educational_platform_api.DTOs.Organization;
+﻿using educational_platform_api.DTOs.Organization;
 using educational_platform_api.DTOs.Relations;
+using educational_platform_api.EntityFramework.Contexts;
 using educational_platform_api.Exceptions.RepositoryExceptions;
-using educational_platform_api.Extensions.ORMS;
+using educational_platform_api.Extensions.EntityFramework;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,7 +47,8 @@ namespace educational_platform_api.Services
         public void Update(UpdateOrganizationInput input)
         {
             Organization organization = _mapper.Map<Organization>(input);
-            Organization originalOrganization = _dbContext.Organizations.FirstOrDefault(o => o.Id == input.Id);
+            Organization? originalOrganization = _dbContext.Organizations
+                .FirstOrDefault(o => o.Id == input.Id);
             if (originalOrganization is null)
             {
                 throw new EntityNotFoundException(nameof(Organization));
@@ -61,12 +62,29 @@ namespace educational_platform_api.Services
         public void Delete(int id)
         {
             Organization? organization = _dbContext.Organizations
+                .Include(o => o.GroupRelations)
+                    .ThenInclude(gor => gor.Group)
+                .Include(o => o.ProfileRelations)
+                    .ThenInclude(por => por.Profile)
+                        .ThenInclude(p => p.GroupRelations)
                 .FirstOrDefault(p => p.Id == id);
-            if (organization is null) {
+
+            if (organization is null)
+            {
                 throw new EntityNotFoundException(nameof(Organization));
             }
 
+            List<Profile> profiles = organization.ProfileRelations
+                .Select(por => por.Profile)
+                .ToList();
+            List<Group> groups = organization.GroupRelations
+                .Select(gor => gor.Group)
+                .ToList();
+
             _dbContext.Organizations.Remove(organization);
+            _dbContext.Groups.RemoveRange(groups);
+            _dbContext.Profiles.RemoveRange(profiles);
+
             _dbContext.SaveChanges();
         }
 

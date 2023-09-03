@@ -1,7 +1,7 @@
-﻿using educational_platform_api.TestData;
+﻿using educational_platform_api.EntityFramework.TestData;
 using Microsoft.EntityFrameworkCore;
 
-namespace educational_platform_api.Extensions.Contexts
+namespace educational_platform_api.Extensions.EntityFramework.Configuration
 {
     public static class TestDataExtension
     {

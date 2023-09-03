@@ -1,4 +1,4 @@
-﻿using educational_platform_api.Contexts;
+﻿using educational_platform_api.EntityFramework.Contexts;
 using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
 using educational_platform_api.Types.Enums;

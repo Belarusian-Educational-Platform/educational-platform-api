@@ -1,4 +1,4 @@
-﻿using educational_platform_api.Contexts;
+﻿using educational_platform_api.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace educational_platform_api.Extensions.Services

@@ -1,8 +1,9 @@
-﻿using educational_platform_api.Types.Enums;
+﻿using educational_platform_api.Models.Base;
+using educational_platform_api.Types.Enums;
 
 namespace educational_platform_api.Models
 {
-    public class Profile
+    public class Profile : EntityBase
     {
         public int Id { get; set; }
         public string KeycloakId { get; set; }

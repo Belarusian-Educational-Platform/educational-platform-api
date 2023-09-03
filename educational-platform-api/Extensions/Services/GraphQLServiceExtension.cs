@@ -1,5 +1,5 @@
 ﻿using AppAny.HotChocolate.FluentValidation;
-using educational_platform_api.Contexts;
+using educational_platform_api.EntityFramework.Contexts;
 using educational_platform_api.Filters;
 using educational_platform_api.Mutations;
 using educational_platform_api.Queries;
