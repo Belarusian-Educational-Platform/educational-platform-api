@@ -1,6 +1,8 @@
-﻿namespace educational_platform_api.Models
+﻿using educational_platform_api.Models.Base;
+
+namespace educational_platform_api.Models
 {
-    public class Organization
+    public class Organization : EntityBase
     {
         public int Id { get; set; }
         public string Name { get; set; }

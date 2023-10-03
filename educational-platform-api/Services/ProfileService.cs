@@ -1,9 +1,9 @@
-﻿using educational_platform_api.Contexts;
-using educational_platform_api.DTOs.Profile;
+﻿using educational_platform_api.DTOs.Profile;
 using educational_platform_api.Exceptions.RepositoryExceptions;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
-using educational_platform_api.Extensions.ORMS;
+using educational_platform_api.EntityFramework.Contexts;
+using educational_platform_api.Extensions.EntityFramework;
 
 namespace educational_platform_api.Services
 {
@@ -73,8 +73,6 @@ namespace educational_platform_api.Services
    
         public void Update(UpdateProfileInput input)
         {
-        //    Profile originalProfile = GetById(input.Id).FirstOrDefault();
-      //      CompleteInputNullProperties(input, originalProfile);
             Profile profile = _mapper.Map<Profile>(input);
             Profile originalProfile = _dbContext.Profiles.FirstOrDefault(p => p.Id == input.Id);
             if (originalProfile is null)
@@ -88,7 +86,10 @@ namespace educational_platform_api.Services
 
         public void Delete(int id)
         {
-            Profile? profile = _dbContext.Profiles.FirstOrDefault(p => p.Id == id);
+            Profile? profile = _dbContext.Profiles
+                .Include(p => p.OrganizationRelation)
+                .Include(p => p.GroupRelations)
+                .FirstOrDefault(p => p.Id == id);
             if (profile is null) {
                 throw new EntityNotFoundException(nameof(Profile));
             }

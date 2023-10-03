@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace educational_platform_api.TestData
+namespace educational_platform_api.EntityFramework.TestData
 {
     public class OrganizationContextConfiguration : IEntityTypeConfiguration<Organization>
     {

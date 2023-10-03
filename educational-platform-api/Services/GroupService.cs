@@ -1,8 +1,8 @@
-﻿using educational_platform_api.Contexts;
-using educational_platform_api.DTOs.Group;
+﻿using educational_platform_api.DTOs.Group;
 using educational_platform_api.DTOs.Relations;
+using educational_platform_api.EntityFramework.Contexts;
 using educational_platform_api.Exceptions.RepositoryExceptions;
-using educational_platform_api.Extensions.ORMS;
+using educational_platform_api.Extensions.EntityFramework;
 using educational_platform_api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -79,7 +79,10 @@ namespace educational_platform_api.Services
 
         public void Delete(int id)
         {
-            Group? group = _dbContext.Groups.FirstOrDefault(g => g.Id == id);
+            Group? group = _dbContext.Groups
+                .Include(g => g.ProfileRelations)
+                .Include(g => g.OrganizationRelation)
+                .FirstOrDefault(g => g.Id == id);
             if (group is null) {
                 throw new EntityNotFoundException(nameof(Group));
             }

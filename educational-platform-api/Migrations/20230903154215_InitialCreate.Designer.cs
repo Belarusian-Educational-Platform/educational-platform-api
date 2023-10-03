@@ -4,22 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using educational_platform_api.Contexts;
+using educational_platform_api.EntityFramework.Contexts;
 
 #nullable disable
 
 namespace educational_platform_api.Migrations
 {
     [DbContext(typeof(MySQLContext))]
-    [Migration("20230817124248_Initioal")]
-    partial class Initioal
+    [Migration("20230903154215_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("educational_platform_api.Models.Group", b =>
@@ -27,6 +27,9 @@ namespace educational_platform_api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -40,16 +43,19 @@ namespace educational_platform_api.Migrations
                         new
                         {
                             Id = 1,
+                            IsDeleted = false,
                             Name = "11B"
                         },
                         new
                         {
                             Id = 2,
+                            IsDeleted = false,
                             Name = "9F"
                         },
                         new
                         {
                             Id = 3,
+                            IsDeleted = false,
                             Name = "8Th"
                         });
                 });
@@ -61,6 +67,9 @@ namespace educational_platform_api.Migrations
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("GroupId", "OrganizationId");
 
@@ -75,17 +84,20 @@ namespace educational_platform_api.Migrations
                         new
                         {
                             GroupId = 1,
-                            OrganizationId = 1
+                            OrganizationId = 1,
+                            IsDeleted = false
                         },
                         new
                         {
                             GroupId = 2,
-                            OrganizationId = 2
+                            OrganizationId = 2,
+                            IsDeleted = false
                         },
                         new
                         {
                             GroupId = 3,
-                            OrganizationId = 3
+                            OrganizationId = 3,
+                            IsDeleted = false
                         });
                 });
 
@@ -98,6 +110,9 @@ namespace educational_platform_api.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<double>("Latitude")
                         .HasColumnType("double");
@@ -118,6 +133,7 @@ namespace educational_platform_api.Migrations
                         {
                             Id = 1,
                             Description = "Kyiv Natural Science Lyceum No. 145 is a secondary educational institution located in Pechersk District of Kyiv, Ukraine. The program of study emphasizes Physics, Mathematics, Computer Science and Chemistry1. The school’s address is 46 Shota Rustaveli Street Pechersk Raion , Kyiv , 01033 Ukraine1. ",
+                            IsDeleted = false,
                             Latitude = 53.893309000000002,
                             Longitude = 27.567422000000001,
                             Name = "Kyiv Natural Science Lyceum No. 145"
@@ -126,6 +142,7 @@ namespace educational_platform_api.Migrations
                         {
                             Id = 2,
                             Description = "Meridian International School is a private school located in Kyiv, Ukraine. It was established in 20012. Unfortunately, I could not find the exact address or coordinates of the school.\r\n\r\n",
+                            IsDeleted = false,
                             Latitude = 53.893034,
                             Longitude = 27.567443999999998,
                             Name = "Meridian International School"
@@ -134,6 +151,7 @@ namespace educational_platform_api.Migrations
                         {
                             Id = 3,
                             Description = "Kyiv Secondary School No. 189 is a public school located in Kyiv, Ukraine. Unfortunately, I could not find any information on the program of study or the exact address or coordinates of the school.\r\n\r\n",
+                            IsDeleted = false,
                             Latitude = 53.893034,
                             Longitude = 27.567454000000001,
                             Name = "Kyiv Secondary School No. 189"
@@ -164,6 +182,9 @@ namespace educational_platform_api.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("KeycloakId")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -192,6 +213,7 @@ namespace educational_platform_api.Migrations
                             ContactPhone = "+375 29 403-72-60",
                             FirstName = "Daniil",
                             IsActive = true,
+                            IsDeleted = false,
                             KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7f",
                             LastName = "Kananenka",
                             Surname = "Alexandrovich",
@@ -205,6 +227,7 @@ namespace educational_platform_api.Migrations
                             ContactPhone = "+375 44 164-23-69",
                             FirstName = "Karyna",
                             IsActive = false,
+                            IsDeleted = false,
                             KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7f",
                             LastName = "Novik",
                             Surname = "Tsimur",
@@ -218,6 +241,7 @@ namespace educational_platform_api.Migrations
                             ContactPhone = "+375 29 352-28-10",
                             FirstName = "Tsimur",
                             IsActive = true,
+                            IsDeleted = false,
                             KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7g",
                             LastName = "Kavalioŭ",
                             Surname = "Henadz",
@@ -231,6 +255,7 @@ namespace educational_platform_api.Migrations
                             ContactPhone = "+375 33 938-46-86",
                             FirstName = "Artur",
                             IsActive = false,
+                            IsDeleted = false,
                             KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7g",
                             LastName = "Kazlow",
                             Surname = " Iryna",
@@ -244,6 +269,7 @@ namespace educational_platform_api.Migrations
                             ContactPhone = "+375 29 609-07-74",
                             FirstName = "Yan",
                             IsActive = false,
+                            IsDeleted = false,
                             KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7g",
                             LastName = "Kavalioŭ",
                             Surname = "Marta",
@@ -257,6 +283,7 @@ namespace educational_platform_api.Migrations
                             ContactPhone = "+375 29 415-46-04",
                             FirstName = "Karyna",
                             IsActive = true,
+                            IsDeleted = false,
                             KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7c",
                             LastName = "Ivanow",
                             Surname = " Ilia",
@@ -270,6 +297,7 @@ namespace educational_platform_api.Migrations
                             ContactPhone = "+375 29 865-01-63",
                             FirstName = "Hleb",
                             IsActive = true,
+                            IsDeleted = false,
                             KeycloakId = "c9c5c403-280e-491a-9217-e60a04022b7c",
                             LastName = "Ivanow",
                             Surname = "Kira",
@@ -284,6 +312,9 @@ namespace educational_platform_api.Migrations
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Permissions")
                         .IsRequired()
@@ -303,6 +334,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 1,
                             GroupId = 1,
+                            IsDeleted = false,
                             Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
@@ -310,6 +342,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 2,
                             GroupId = 1,
+                            IsDeleted = false,
                             Permissions = "[\"view-private-information\"]",
                             ProfileRole = 1
                         },
@@ -317,6 +350,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 3,
                             GroupId = 1,
+                            IsDeleted = false,
                             Permissions = "[\"update\",\"view-private-information\"]",
                             ProfileRole = 0
                         },
@@ -324,6 +358,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 4,
                             GroupId = 2,
+                            IsDeleted = false,
                             Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
@@ -331,6 +366,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 5,
                             GroupId = 2,
+                            IsDeleted = false,
                             Permissions = "[\"update\",\"view-private-information\"]",
                             ProfileRole = 0
                         },
@@ -338,6 +374,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 6,
                             GroupId = 3,
+                            IsDeleted = false,
                             Permissions = "[\"view-private-information\"]",
                             ProfileRole = 2
                         },
@@ -345,6 +382,7 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 7,
                             GroupId = 3,
+                            IsDeleted = false,
                             Permissions = "[\"update\",\"view-private-information\"]",
                             ProfileRole = 0
                         });
@@ -357,6 +395,9 @@ namespace educational_platform_api.Migrations
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Permissions")
                         .IsRequired()
@@ -376,42 +417,49 @@ namespace educational_platform_api.Migrations
                         {
                             ProfileId = 1,
                             OrganizationId = 1,
-                            Permissions = "[\"view-private-information\"]"
+                            IsDeleted = false,
+                            Permissions = "[\"view-private-information\",\"update\",\"edit-profiles-permissions\",\"edit-group-profiles-permissions\",\"create-profiles\",\"delete-profiles\", \"create-groups\", \"delete-groups\",\"update-groups\"]"
                         },
                         new
                         {
                             ProfileId = 2,
                             OrganizationId = 1,
+                            IsDeleted = false,
                             Permissions = "[\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 3,
                             OrganizationId = 1,
+                            IsDeleted = false,
                             Permissions = "[\"update\",\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 4,
                             OrganizationId = 2,
+                            IsDeleted = false,
                             Permissions = "[\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 5,
                             OrganizationId = 2,
+                            IsDeleted = false,
                             Permissions = "[\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 6,
                             OrganizationId = 3,
+                            IsDeleted = false,
                             Permissions = "[\"view-private-information\"]"
                         },
                         new
                         {
                             ProfileId = 7,
                             OrganizationId = 3,
+                            IsDeleted = false,
                             Permissions = "[\"view-private-information\"]"
                         });
                 });

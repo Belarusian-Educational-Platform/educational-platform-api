@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using educational_platform_api.Models;
 using educational_platform_api.Types.Enums;
 
-namespace educational_platform_api.TestData
+namespace educational_platform_api.EntityFramework.TestData
 {
     public class ProfileContextConfiguration : IEntityTypeConfiguration<Profile>
     {
@@ -55,7 +55,7 @@ namespace educational_platform_api.TestData
 
                     ContactEmail = "kxarmark@cbdnut.net",
                     ContactPhone = "+375 29 352-28-10",
-                    
+
                     Type = ProfileType.organizationEmployee,
                     IsActive = true,
                 },
@@ -119,7 +119,7 @@ namespace educational_platform_api.TestData
 
                     ContactEmail = "zulu54@pankasyno23.com",
                     ContactPhone = "+375 29 865-01-63",
-                    
+
                     Type = ProfileType.organizationEmployee,
                     IsActive = true,
                 }

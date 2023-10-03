@@ -1,6 +1,8 @@
-﻿namespace educational_platform_api.Models
+﻿using educational_platform_api.Models.Base;
+
+namespace educational_platform_api.Models
 {
-    public class ProfileOrganizationRelation
+    public class ProfileOrganizationRelation : EntityBase
     {
         public int ProfileId { get; set; }
         public int OrganizationId { get; set; }
