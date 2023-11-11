@@ -19,6 +19,7 @@ namespace educational_platform_api.Queries
         [UseSorting]
         public IQueryable<Profile> GetProfiles([Service] IProfileService profileService)
         {
+            //TODO admin permission
             return profileService.GetAll();
         }
 
