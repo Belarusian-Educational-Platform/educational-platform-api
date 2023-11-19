@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>educational_platform_api</RootNamespace>
+    <RootNamespace>api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

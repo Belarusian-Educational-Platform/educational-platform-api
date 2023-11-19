@@ -5,9 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using FluentValidation.Validators;
-using educational_platform_api.Validators;
+using api.Validators;
 
-namespace educational_platform_api.Extensions.Validators
+namespace api.Extensions.Validators
 {
     public static class ValidatorExtension
     {

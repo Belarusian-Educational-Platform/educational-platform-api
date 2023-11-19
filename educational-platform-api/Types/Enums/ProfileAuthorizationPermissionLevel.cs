@@ -1,4 +1,4 @@
-﻿namespace educational_platform_api.Types.Enums
+﻿namespace api.Types.Enums
 {
     public enum ProfileAuthorizationPermissionLevel
     {
