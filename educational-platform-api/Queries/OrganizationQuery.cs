@@ -11,15 +11,24 @@ namespace educational_platform_api.Queries
     public class OrganizationQuery
     {
         [Authorize]
-        [GraphQLName("organizations")]
+        [GraphQLName("organizations_admin")]
         [UseOffsetPaging]
         [UseProjection]
         [UseFiltering]
         [UseSorting]
         public IQueryable<Organization> GetOrganizations([Service] IOrganizationService organizationService)
         {
-            //TODO admin permission
+            //TODO: Admin permission
             return organizationService.GetAll();
+        }
+
+        [Authorize]
+        [GraphQLName("organizationById_admin")]
+        [UseProjection]
+        public IQueryable<Organization> GetOrganization([Service] IOrganizationService organizationService,
+            int id)
+        {
+            return organizationService.GetById(id);
         }
 
         [Authorize]
@@ -30,7 +39,7 @@ namespace educational_platform_api.Queries
             [Service] IProfileAuthorizationService profileAuthorizationService,
             [Profile] Profile profile)
         {
-            if(!organizationService.CheckProfileInOrganization(profile.Id, id))
+            if (!organizationService.CheckProfileInOrganization(profile.Id, id))
             {
                 throw new ProfileUnauthorizedException();
             }

@@ -25,17 +25,23 @@ namespace educational_platform_api.Services
             return _dbContext.DisposeAsync();
         }
 
-        public IQueryable<Group> GetAll(int organizationId)
+        public IQueryable<Group> GetAll()
+        {
+            return _dbContext.Groups;
+        }
+
+        public IQueryable<Group> GetByOrganization(int organizationId)
         {
             return _dbContext.Groups.Where(g => g.OrganizationRelation.OrganizationId == organizationId);
         }
 
-        public IQueryable<Group> GetAllByProfile(int profileId)
+        public IQueryable<Group> GetByProfileOrganization(int profileId)
         {
-            var organization = _dbContext.ProfileOrganizationRelations.Where(r => r.ProfileId == profileId);
-            return GetAll(organization.First().OrganizationId);
+            var organizationId = _dbContext.ProfileOrganizationRelations
+                .FirstOrDefault(por => por.ProfileId == profileId)!
+                .OrganizationId;
+            return GetByOrganization(organizationId);
         }
-
 
         public IQueryable<Group> GetById(int id)
         {
@@ -52,8 +58,9 @@ namespace educational_platform_api.Services
                     Group groupEntity = _dbContext.Groups.Add(group).Entity;
                     _dbContext.SaveChanges();
 
-                    GroupOrganizationRelation organizationRelation = 
-                        new GroupOrganizationRelation() {
+                    GroupOrganizationRelation organizationRelation =
+                        new()
+                        {
                             GroupId = groupEntity.Id,
                             OrganizationId = input.OrganizationId
                         };
@@ -63,7 +70,8 @@ namespace educational_platform_api.Services
                     transaction.Commit();
 
                     return groupEntity.Id;
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     transaction.Rollback();
 
@@ -75,7 +83,7 @@ namespace educational_platform_api.Services
         public void Update(UpdateGroupInput input)
         {
             Group group = _mapper.Map<Group>(input);
-            Group originalGroup = _dbContext.Groups.FirstOrDefault(g => g.Id == input.Id);
+            Group? originalGroup = _dbContext.Groups.FirstOrDefault(g => g.Id == input.Id);
             if (originalGroup is null)
             {
                 throw new EntityNotFoundException(nameof(Group));
@@ -90,7 +98,8 @@ namespace educational_platform_api.Services
                 .Include(g => g.ProfileRelations)
                 .Include(g => g.OrganizationRelation)
                 .FirstOrDefault(g => g.Id == id);
-            if (group is null) {
+            if (group is null)
+            {
                 throw new EntityNotFoundException(nameof(Group));
             }
 
@@ -103,7 +112,7 @@ namespace educational_platform_api.Services
             return _dbContext.Organizations
                 .Include(o => o.ProfileRelations)
                 .Include(o => o.GroupRelations)
-                .Any(o => o.ProfileRelations.Any(por => por.ProfileId == profileId) && 
+                .Any(o => o.ProfileRelations.Any(por => por.ProfileId == profileId) &&
                     o.GroupRelations.Any(gor => gor.GroupId == groupId));
         }
 
@@ -123,7 +132,7 @@ namespace educational_platform_api.Services
             {
                 throw new EntityNotFoundException(nameof(ProfileGroupRelation));
             }
-                
+
             _dbContext.ProfileGroupRelations.Remove(relation);
             _dbContext.SaveChanges(true);
         }

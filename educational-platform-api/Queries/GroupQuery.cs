@@ -12,7 +12,27 @@ namespace educational_platform_api.Queries
     public class GroupQuery
     {
         [Authorize]
-        [GraphQLName("groups")]
+        [GraphQLName("groups_admin")]
+        [UseOffsetPaging]
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<Group> GetGroups([Service] IGroupService groupService)
+        {
+            // TODO: Admin permission
+            return groupService.GetAll();
+        }
+
+        [Authorize]
+        [GraphQLName("groupById_admin")]
+        [UseProjection]
+        public IQueryable<Group> GetGroup([Service] IGroupService groupService, int id)
+        {
+            return groupService.GetById(id);
+        }
+
+        [Authorize]
+        [GraphQLName("myOrganizationGroups")]
         [UseProfile]
         [UseOffsetPaging]
         [UseProjection]
@@ -28,7 +48,7 @@ namespace educational_platform_api.Queries
                 options.AddProfile(profile.Id);
                 options.AddOrganization();
             });
-            return groupService.GetAllByProfile(profile.Id);
+            return groupService.GetByProfileOrganization(profile.Id);
         }
 
         [Authorize]

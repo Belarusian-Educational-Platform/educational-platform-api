@@ -12,7 +12,7 @@ namespace educational_platform_api.Queries
     public class ProfileQuery
     {
         [Authorize]
-        [GraphQLName("profiles")]
+        [GraphQLName("profiles_admin")]
         [UseOffsetPaging]
         [UseProjection]
         [UseFiltering]
