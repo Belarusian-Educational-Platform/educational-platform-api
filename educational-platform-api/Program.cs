@@ -4,7 +4,7 @@ using Keycloak.AuthServices.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var AllowOrigins = "_allowOrigins";
+var CORSPolicy = "_corsPolicy";
 
 var dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
@@ -43,12 +43,12 @@ builder.Services.AddValidators();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // CORS Policy
-builder.Services.AddCors(p => p.AddPolicy(AllowOrigins, builder =>
+builder.Services.AddCors(p => p.AddPolicy(CORSPolicy, builder =>
 {
-    builder.WithOrigins("https://localhost:44413")
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .AllowCredentials();
+    builder.WithOrigins("http://localhost:3000")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials();
 }));
 
 var app = builder.Build();
@@ -60,6 +60,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGraphQL();
+
+app.UseCors(CORSPolicy);
 
 app.UseHttpsRedirection();
 
