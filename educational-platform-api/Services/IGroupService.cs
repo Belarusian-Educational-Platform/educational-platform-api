@@ -6,7 +6,8 @@ namespace educational_platform_api.Services
 {
     public interface IGroupService
     {
-        public IQueryable<Group> GetAll();
+        public IQueryable<Group> GetAll(int organizationId);
+        public IQueryable<Group> GetAllByProfile(int profileId);
         public IQueryable<Group> GetById(int id);
 
         public int Create(CreateGroupInput input);

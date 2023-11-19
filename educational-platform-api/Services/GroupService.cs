@@ -25,10 +25,17 @@ namespace educational_platform_api.Services
             return _dbContext.DisposeAsync();
         }
 
-        public IQueryable<Group> GetAll()
+        public IQueryable<Group> GetAll(int organizationId)
         {
-            return _dbContext.Groups;
+            return _dbContext.Groups.Where(g => g.OrganizationRelation.OrganizationId == organizationId);
         }
+
+        public IQueryable<Group> GetAllByProfile(int profileId)
+        {
+            var organization = _dbContext.ProfileOrganizationRelations.Where(r => r.ProfileId == profileId);
+            return GetAll(organization.First().OrganizationId);
+        }
+
 
         public IQueryable<Group> GetById(int id)
         {

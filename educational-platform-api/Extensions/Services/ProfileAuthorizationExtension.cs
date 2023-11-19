@@ -12,6 +12,12 @@ namespace educational_platform_api.Extensions.Services
         {
             services.AddProfileAuthorization(options =>
             {
+                options.AddPolicy("GetMyOrganization", policy =>
+                {
+                    policy.AddRequirements(
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "view-private-information").ToPermission()
+                        );
+                });
                 options.AddPolicy("CreateProfile", policy =>
                 {
                     policy.AddRequirements(
@@ -48,7 +54,7 @@ namespace educational_platform_api.Extensions.Services
                 options.AddPolicy("GetMyOrganizationGroups", policy =>
                 {
                     policy.AddRequirements(
-                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "veiw-private-information")
+                        (ProfileAuthorizationPermissionLevel.PROFILE_ORGANIZATION, "view-private-information")
                             .ToPermission()
                     );
                 });
