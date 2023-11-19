@@ -2,7 +2,7 @@
 
 namespace ProfileAuthorization.Exceptions
 {
-    public class JSONPermissionsParseException : BaseException
+    public class JSONPermissionsParseException : BaseProfileAuthorizationException
     {
         public JSONPermissionsParseException()
         {

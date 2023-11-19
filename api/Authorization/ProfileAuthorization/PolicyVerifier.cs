@@ -1,24 +1,22 @@
-﻿using educational_platform_api.Authorization.ProfileAuthorization.Permission;
-using educational_platform_api.Exceptions.ProfileAuthorizationExceptions;
-using educational_platform_api.Types;
+﻿using ProfileAuthorization.Exceptions;
 
 namespace ProfileAuthorization
 {
-    public class ProfileAuthorizationPolicyVerifier : IProfileAuthorizationPolicyVerifier
+    public class PolicyVerifier : IPolicyVerifier
     {
-        private readonly IProfileAuthorizationPermissionService _permissionService;
-        private readonly IProfileAuthorizationVerificationOptionsService _verificationOptionsService;
+        private readonly IPermissionService _permissionService;
+        private readonly IVerificationOptionsService _verificationOptionsService;
 
-        public ProfileAuthorizationPolicyVerifier(
-            IProfileAuthorizationPermissionService permissionService, 
-            IProfileAuthorizationVerificationOptionsService verificationOptionsService)
+        public PolicyVerifier(
+            IPermissionService permissionService, 
+            IVerificationOptionsService verificationOptionsService)
         {
             _permissionService = permissionService;
             _verificationOptionsService = verificationOptionsService;
         }
 
-        public bool Verify(ProfileAuthorizationPolicy policy,
-            ProfileAuthorizationVerificationOptions verificationOptions)
+        public bool Verify(Policy policy,
+            VerificationOptions verificationOptions)
         {
             if (!verificationOptions.VerificationLevels.SetEquals(policy.VerificationLevels))
             {
@@ -32,7 +30,7 @@ namespace ProfileAuthorization
             var profilePermissions = _permissionService.GetProfilePermissions(verificationOptions);
 
 
-            foreach (ProfileAuthorizationPermission requirement in policy.Requierements)
+            foreach (Permission requirement in policy.Requierements)
             {
                 if (!profilePermissions.HasPermission(requirement))
                 {

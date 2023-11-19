@@ -1,17 +1,17 @@
-﻿using educational_platform_api.EntityFramework.Contexts;
-using educational_platform_api.Exceptions.RepositoryExceptions;
-using educational_platform_api.Models;
-using educational_platform_api.Types.Enums;
+﻿
+using api.EntityFramework.Contexts;
+using api.Exceptions.RepositoryExceptions;
+using api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ProfileAuthorization
 {
-    public class ProfileAuthorizationVerificationOptionsService : IProfileAuthorizationVerificationOptionsService, 
+    public class VerificationOptionsService : IVerificationOptionsService,
         IAsyncDisposable
     {
         private readonly MySQLContext _dbContext;
 
-        public ProfileAuthorizationVerificationOptionsService(IDbContextFactory<MySQLContext> dbContextFactory)
+        public VerificationOptionsService(IDbContextFactory<MySQLContext> dbContextFactory)
         {
             _dbContext = dbContextFactory.CreateDbContext();
         }
@@ -21,19 +21,20 @@ namespace ProfileAuthorization
             return _dbContext.DisposeAsync();
         }
 
-        public bool CheckOrganizationСorrespondence(ProfileAuthorizationVerificationOptions options)
+        public bool CheckOrganizationСorrespondence(VerificationOptions options)
         {
             var profile = _dbContext.Profiles
                 .Include(p => p.OrganizationRelation)
                 .FirstOrDefault(p => p.Id == options.ProfileId);
 
-            int organizationId = profile.OrganizationRelation.OrganizationId;
-
-            if (profile is null) {
+            if (profile is null)
+            {
                 throw new EntityNotFoundException(nameof(Profile));
             }
-            
-            if (options.VerificationLevels.Contains(ProfileAuthorizationPermissionLevel.PROFILE_GROUP))
+
+            int organizationId = profile.OrganizationRelation.OrganizationId;
+
+            if (options.VerificationLevels.Contains(PermissionLevel.PROFILE_GROUP))
             {
                 var group = _dbContext.Groups
                     .Include(g => g.OrganizationRelation)

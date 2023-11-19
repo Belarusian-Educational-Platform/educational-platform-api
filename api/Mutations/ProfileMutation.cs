@@ -1,12 +1,12 @@
 ﻿using AppAny.HotChocolate.FluentValidation;
-using api.Authorization.ProfileAuthorization;
 using api.DTOs.Profile;
-using api.Exceptions.ProfileAuthorizationExceptions;
 using api.Middlewares.UseProfile;
 using api.Models;
 using api.Services;
 using api.Validators.Profile;
 using HotChocolate.Authorization;
+using ProfileAuthorization;
+using ProfileAuthorization.Exceptions;
 
 namespace api.Mutations
 {
@@ -18,7 +18,7 @@ namespace api.Mutations
         [UseProfile]
         public int CreateProfile(
             [Service] IProfileService profileService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput input)
         {
@@ -56,7 +56,7 @@ namespace api.Mutations
         [UseProfile]
         public bool DeleteProfile(
             [Service] IProfileService profileService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             int id)
         {

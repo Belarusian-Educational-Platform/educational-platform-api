@@ -1,14 +1,14 @@
 ﻿using AppAny.HotChocolate.FluentValidation;
-using api.Authorization.ProfileAuthorization;
 using api.DTOs.Organization;
 using api.DTOs.Relations;
-using api.Exceptions.ProfileAuthorizationExceptions;
 using api.Middlewares.UseProfile;
 using api.Models;
 using api.Services;
 using api.Validators.Organization;
 using api.Validators.Relations;
 using HotChocolate.Authorization;
+using ProfileAuthorization;
+using ProfileAuthorization.Exceptions;
 
 namespace api.Mutations
 {
@@ -20,7 +20,7 @@ namespace api.Mutations
         [UseProfile]
         public bool UpdateProfileOrganizationRelation(
             [Service] IOrganizationService organizationService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<UpdateProfileOrganizationRelationInputValidator>]
                 UpdateProfileOrganizationRelationInput input)
@@ -59,7 +59,7 @@ namespace api.Mutations
         [UseProfile]
         public bool UpdateOrganization(
             [Service] IOrganizationService organizationService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<UpdateOrganizationInputValidator>] 
                 UpdateOrganizationInput input)

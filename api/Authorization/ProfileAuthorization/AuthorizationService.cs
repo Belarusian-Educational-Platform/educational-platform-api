@@ -2,12 +2,12 @@
 
 namespace ProfileAuthorization
 {
-    public class ProfileAuthorizationService : IAuthorizationService
+    public class AuthorizationService : IAuthorizationService
     {
         private readonly IPolicyProvider _policyProvider;
         private readonly IPolicyVerifier _policyVerifier;
 
-        public ProfileAuthorizationService(
+        public AuthorizationService(
             IPolicyProvider policyProvider,
             IPolicyVerifier policyVerifier)
         {

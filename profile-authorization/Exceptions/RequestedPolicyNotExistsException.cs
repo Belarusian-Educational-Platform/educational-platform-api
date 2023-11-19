@@ -2,7 +2,7 @@
 
 namespace ProfileAuthorization.Exceptions
 {
-    public class RequestedPolicyNotExistsException : BaseException
+    public class RequestedPolicyNotExistsException : BaseProfileAuthorizationException
     {
         public RequestedPolicyNotExistsException()
         {

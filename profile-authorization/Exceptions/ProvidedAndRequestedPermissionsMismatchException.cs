@@ -2,7 +2,7 @@
 
 namespace ProfileAuthorization.Exceptions
 {
-    public class ProvidedAndRequestedPermissionsMismatchException : BaseException
+    public class ProvidedAndRequestedPermissionsMismatchException : BaseProfileAuthorizationException
     {
         public ProvidedAndRequestedPermissionsMismatchException()
         {

@@ -1,14 +1,14 @@
 ﻿using AppAny.HotChocolate.FluentValidation;
-using api.Authorization.ProfileAuthorization;
 using api.DTOs.Group;
 using api.DTOs.Relations;
-using api.Exceptions.ProfileAuthorizationExceptions;
 using api.Middlewares.UseProfile;
 using api.Models;
 using api.Services;
 using api.Validators.Group;
 using api.Validators.Relations;
 using HotChocolate.Authorization;
+using ProfileAuthorization.Exceptions;
+using ProfileAuthorization;
 
 namespace api.Mutations
 {
@@ -20,7 +20,7 @@ namespace api.Mutations
         [UseProfile]
         public bool UpdateProfileGroupRelation(
             [Service] IGroupService groupService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<UpdateProfileGroupRelationInputValidator>]
                 UpdateProfileGroupRelationInput input)
@@ -48,7 +48,7 @@ namespace api.Mutations
         [UseProfile]
         public bool AddProfileToGroup(
             [Service] IGroupService groupService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<CreateProfileGroupRelationInputValidator>] 
                 CreateProfileGroupRelationInput input)
@@ -75,7 +75,7 @@ namespace api.Mutations
         [UseProfile]
         public bool DeleteProfileFromGroup(
             [Service] IGroupService groupService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             int profileId, int groupId)
         {
@@ -97,7 +97,7 @@ namespace api.Mutations
         [UseProfile]
         public int CreateGroup(
             [Service] IGroupService groupService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<CreateGroupInputValidator>] CreateGroupInput input)
         {
@@ -118,7 +118,7 @@ namespace api.Mutations
         [UseProfile]
         public bool UpdateGroup(
             [Service] IGroupService groupService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<UpdateGroupInputValidator>] UpdateGroupInput input)
         {
@@ -140,7 +140,7 @@ namespace api.Mutations
         [UseProfile]
         public bool DeleteGroup(
             [Service] IGroupService groupService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile,
             int id)
         {

@@ -1,10 +1,7 @@
-﻿using api.Authorization.ProfileAuthorization;
-using api.Middlewares.UseAccount;
-using api.Middlewares.UseProfile;
+﻿using api.Middlewares.UseAccount;
 using api.Models;
 using api.Services;
 using HotChocolate.Authorization;
-using HotChocolate.Data;
 
 namespace api.Queries
 {

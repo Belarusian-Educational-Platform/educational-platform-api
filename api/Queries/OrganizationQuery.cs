@@ -1,9 +1,8 @@
-﻿using api.Authorization.ProfileAuthorization;
-using api.Exceptions.ProfileAuthorizationExceptions;
-using api.Middlewares.UseProfile;
+﻿using api.Middlewares.UseProfile;
 using api.Models;
 using api.Services;
 using HotChocolate.Authorization;
+using ProfileAuthorization;
 
 namespace api.Queries
 {
@@ -36,14 +35,14 @@ namespace api.Queries
         [UseProjection]
         [UseProfile]
         public IQueryable<Organization> GetOrganization([Service] IOrganizationService organizationService, int id,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile)
         {
             profileAuthorizationService.Authorize(options =>
             {
                 options.AddPolicy("GetMyOrganization");
                 options.AddProfile(profile.Id);
-                options.AddOrganization(id);
+                options.AddOrganization();
             });
             return organizationService.GetById(id);
         }

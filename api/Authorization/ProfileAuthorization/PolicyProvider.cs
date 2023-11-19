@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Options;
-using profile_authorization.Policy;
 
 namespace ProfileAuthorization
 {

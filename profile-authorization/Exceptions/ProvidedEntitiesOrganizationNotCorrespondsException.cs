@@ -2,7 +2,7 @@
 
 namespace ProfileAuthorization.Exceptions
 {
-    public class ProvidedEntitiesOrganizationNotCorrespondsException : BaseException
+    public class ProvidedEntitiesOrganizationNotCorrespondsException : BaseProfileAuthorizationException
     {
         public ProvidedEntitiesOrganizationNotCorrespondsException()
         {

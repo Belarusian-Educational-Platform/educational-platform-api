@@ -2,7 +2,7 @@
 
 namespace ProfileAuthorization.Exceptions
 {
-    public class ProfileUnauthorizedException : BaseException
+    public class ProfileUnauthorizedException : BaseProfileAuthorizationException
     {
         public ProfileUnauthorizedException()
         {

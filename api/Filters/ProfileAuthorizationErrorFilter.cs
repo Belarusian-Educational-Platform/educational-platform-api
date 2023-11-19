@@ -1,4 +1,4 @@
-﻿using api.Exceptions.ProfileAuthorizationExceptions;
+﻿using ProfileAuthorization.Exceptions;
 
 namespace api.Filters
 {

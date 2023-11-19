@@ -1,10 +1,9 @@
-﻿using api.Authorization.ProfileAuthorization;
-using api.Exceptions.ProfileAuthorizationExceptions;
-using api.Middlewares.UseAccount;
-using api.Middlewares.UseProfile;
+﻿using api.Middlewares.UseProfile;
 using api.Models;
 using api.Services;
 using HotChocolate.Authorization;
+using ProfileAuthorization;
+using ProfileAuthorization.Exceptions;
 
 namespace api.Queries
 {
@@ -39,7 +38,7 @@ namespace api.Queries
         [UseFiltering]
         [UseSorting]
         public IQueryable<Group> GetGroups([Service] IGroupService groupService,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile)
         {
             profileAuthorizationService.Authorize(options =>
@@ -56,7 +55,7 @@ namespace api.Queries
         [UseProjection]
         [UseProfile]
         public IQueryable<Group> GetGroup([Service] IGroupService groupService, int id,
-            [Service] IProfileAuthorizationService profileAuthorizationService,
+            [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile)
         {
             if(!groupService.CheckOrganizationCorrespondence(profile.Id, id))
