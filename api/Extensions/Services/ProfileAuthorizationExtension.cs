@@ -1,5 +1,5 @@
 ﻿using ProfileAuthorization;
-using ProfileAuthorization.Extensions;
+using ProfileAuthorization.Data;
 
 namespace api.Extensions.Services
 {
@@ -9,94 +9,64 @@ namespace api.Extensions.Services
         {
             services.AddProfileAuthorization(options =>
             {
-                options.AddPolicy("GetMyOrganization", policy =>
+                options.AddPolicy(Policies.GET_MY_ORGANIZATION, policy =>
                 {
-                    policy.AddRequirements(
-                        (PermissionLevel.PROFILE_ORGANIZATION, "view-private-information").ToPermission()
-                        );
+                    policy.AddRequirements(OrganizationPermissions.VIEW_PRIVATE_INFORMATION);
                 });
-                options.AddPolicy("CreateProfile", policy =>
+                options.AddPolicy(Policies.CREATE_PROFILE, policy =>
                 {
-                    policy.AddRequirements(
-                        (PermissionLevel.PROFILE_ORGANIZATION, "create-profiles").ToPermission()
-                    );
+                    policy.AddRequirements(OrganizationPermissions.CREATE_PROFILES);
                 });
-                options.AddPolicy("DeleteProfile", policy =>
+                options.AddPolicy(Policies.DELETE_PROFILE, policy =>
                 {
-                    policy.AddRequirements(
-                        (PermissionLevel.PROFILE_ORGANIZATION, "delete-profiles").ToPermission()
-                    );
+                    policy.AddRequirements(OrganizationPermissions.DELETE_GROUPS);
                 });
-                options.AddPolicy("GetMyOrganizationProfiles", policy =>
+                options.AddPolicy(Policies.GET_MY_ORGANIZATION_PROFILES, policy =>
                 {
-                    policy.AddRequirements(
-                        (PermissionLevel.PROFILE_ORGANIZATION, "view-private-information")
-                            .ToPermission()
-                    );
+                    policy.AddRequirements(OrganizationPermissions.VIEW_PRIVATE_INFORMATION);
                 });
-                options.AddPolicy("UpdateOrganization", policy =>
+                options.AddPolicy(Policies.UPDATE_ORGANIZATION, policy =>
                 {
-                    policy.AddRequirements(
-                        (PermissionLevel.PROFILE_ORGANIZATION, "update")
-                            .ToPermission()
-                    );
+                    policy.AddRequirements(OrganizationPermissions.UPDATE);
                 });
-                options.AddPolicy("CreateGroup", policy =>
+                options.AddPolicy(Policies.CREATE_GROUP, policy =>
                 {
-                    policy.AddRequirements(
-                        (PermissionLevel.PROFILE_ORGANIZATION, "create-groups")
-                            .ToPermission()
-                    );
+                    policy.AddRequirements(OrganizationPermissions.CREATE_GROUPS);
                 });
-                options.AddPolicy("GetMyOrganizationGroups", policy =>
+                options.AddPolicy(Policies.GET_MY_ORGANIZATION_GROUPS, policy =>
                 {
-                    policy.AddRequirements(
-                        (PermissionLevel.PROFILE_ORGANIZATION, "view-private-information")
-                            .ToPermission()
-                    );
+                    policy.AddRequirements(OrganizationPermissions.VIEW_PRIVATE_INFORMATION);
                 });
-                options.AddPolicy("GetGroupProfiles", policy =>
+                options.AddPolicy(Policies.GET_GROUP_PROFILES, policy =>
                 {
                     policy.RequireAssertion(process =>
-                        process((PermissionLevel.PROFILE_ORGANIZATION, "view-groups-private-information")
-                            .ToPermission()) |
-                        process((PermissionLevel.PROFILE_GROUP, "view-private-information")
-                            .ToPermission())
+                        process(OrganizationPermissions.VIEW_GROUPS_PRIVATE_INFORMATION) |
+                        process(GroupPermissions.VIEW_PRIVATE_INFORMATION)
                     );
                 });
-                options.AddPolicy("UpdateGroup", policy =>
+                options.AddPolicy(Policies.UPDATE_GROUP, policy =>
                 {
                     policy.RequireAssertion(process =>
-                        process((PermissionLevel.PROFILE_ORGANIZATION, "update-groups")
-                            .ToPermission()) |
-                        process((PermissionLevel.PROFILE_GROUP, "update")
-                            .ToPermission())
+                        process(OrganizationPermissions.UPDATE_GROUPS) | process(GroupPermissions.UPDATE)
                     );
                 });
-                options.AddPolicy("DeleteGroup", policy =>
+                options.AddPolicy(Policies.DELETE_GROUP, policy =>
                 {
                     policy.RequireAssertion(process =>
-                        process((PermissionLevel.PROFILE_ORGANIZATION, "delete-groups")
-                            .ToPermission()) |
-                        process((PermissionLevel.PROFILE_GROUP, "delete")
-                            .ToPermission())
+                        process(OrganizationPermissions.DELETE_GROUPS) |
+                        process(GroupPermissions.DELETE)
                     );
                 });
-                options.AddPolicy("UpdateProfileGroupRelation", policy =>
+                options.AddPolicy(Policies.UPDATE_PROFILE_GROUP_RELATION, policy =>
                 {
                     policy.RequireAssertion(process =>
-                        process((PermissionLevel.PROFILE_ORGANIZATION, "edit-group-profiles-permissions")
-                            .ToPermission()) |
-                        process((PermissionLevel.PROFILE_GROUP, "edit-profiles-permissions")
-                            .ToPermission())
+                        process(OrganizationPermissions.EDIT_GROUP_PROFILES_PERMISSIONS) |
+                        process(GroupPermissions.EDIT_PROFILES_PERMISSIONS)
                     );
                 });
-                options.AddPolicy("UpdateProfileOrganizationRelation", policy =>
+                options.AddPolicy(Policies.UPDATE_PROFILE_ORGANIZATION_RELATION, policy =>
                 {
-                    policy.AddRequirements(
-                        (PermissionLevel.PROFILE_ORGANIZATION, "edit-profiles-permissions")
-                            .ToPermission()
-                    );
+                    policy.AddRequirements(OrganizationPermissions.EDIT_GROUP_PROFILES_PERMISSIONS);
                 });
             });
 
