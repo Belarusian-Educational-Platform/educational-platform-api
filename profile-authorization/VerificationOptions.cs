@@ -10,25 +10,30 @@
 
         public int GroupId { get; set; }
 
-        public void AddPolicy(string policyName)
+        public void UsePolicy(string policyName)
         {
             PolicyName = policyName;
         }
 
-        public void AddProfile(int id)
+        public void UseProfile(int id)
         {
             ProfileId = id;
         }
 
-        public void AddGroup(int id)
+        public void UseGroup(int id)
         {
             GroupId = id;
             VerificationLevels.Add(PermissionLevel.PROFILE_GROUP);
         }
 
-        public void AddOrganization()
+        public void UseOrganization()
         {
             VerificationLevels.Add(PermissionLevel.PROFILE_ORGANIZATION);
+        }
+
+        public void UseKeycloak()
+        {
+            VerificationLevels.Add(PermissionLevel.KEYCLOAK_ROLE);
         }
     }
 }

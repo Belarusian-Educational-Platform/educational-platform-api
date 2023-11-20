@@ -40,9 +40,9 @@ namespace api.Queries
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("GetMyOrganization");
-                options.AddProfile(profile.Id);
-                options.AddOrganization();
+                options.UsePolicy("GetMyOrganization");
+                options.UseProfile(profile.Id);
+                options.UseOrganization();
             });
             return organizationService.GetById(id);
         }

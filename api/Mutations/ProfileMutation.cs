@@ -24,9 +24,9 @@ namespace api.Mutations
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("CreateProfile");
-                options.AddProfile(profile.Id);
-                options.AddOrganization();
+                options.UsePolicy("CreateProfile");
+                options.UseProfile(profile.Id);
+                options.UseOrganization();
             });
 
             int ProfileId = profileService.Create(input);
@@ -62,9 +62,9 @@ namespace api.Mutations
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("DeleteProfile");
-                options.AddProfile(profile.Id);
-                options.AddOrganization();
+                options.UsePolicy("DeleteProfile");
+                options.UseProfile(profile.Id);
+                options.UseOrganization();
             });
 
             profileService.Delete(id);

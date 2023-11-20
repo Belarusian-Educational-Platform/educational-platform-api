@@ -9,6 +9,35 @@ namespace api.Extensions.Services
         {
             services.AddProfileAuthorization(options =>
             {
+                // GROUP_QUERY
+                options.AddPolicy(Policies.GET_GROUPS, policy =>
+                {
+                    policy.AddRequirements(KeycloakPermissions.ADMIN);
+                });
+                options.AddPolicy(Policies.GET_GROUP_BY_ID, policy => {
+                    policy.RequireAssertion(process => 
+                        process(OrganizationPermissions.VIEW_PRIVATE_INFORMATION) |
+                        process(GroupPermissions.VIEW_PRIVATE_INFORMATION) |
+                        process(KeycloakPermissions.ADMIN));
+                });
+                options.AddPolicy(Policies.GET_MY_ORGANIZATION_GROUPS, policy =>
+                {
+                    policy.AddRequirements(OrganizationPermissions.VIEW_PRIVATE_INFORMATION);
+                });
+
+                // PROFILE_QUERY
+                options.AddPolicy(Policies.GET_PROFILES, policy =>
+                {
+                    policy.AddRequirements(KeycloakPermissions.ADMIN);
+                });
+                options.AddPolicy(Policies.GET_PROFILE_BY_ID, policy => {
+                    policy.RequireAssertion(process => 
+                        process(OrganizationPermissions.VIEW_PRIVATE_INFORMATION) |
+                        process(KeycloakPermissions.ADMIN));
+                });
+
+
+
                 options.AddPolicy(Policies.GET_MY_ORGANIZATION, policy =>
                 {
                     policy.AddRequirements(OrganizationPermissions.VIEW_PRIVATE_INFORMATION);
@@ -33,10 +62,7 @@ namespace api.Extensions.Services
                 {
                     policy.AddRequirements(OrganizationPermissions.CREATE_GROUPS);
                 });
-                options.AddPolicy(Policies.GET_MY_ORGANIZATION_GROUPS, policy =>
-                {
-                    policy.AddRequirements(OrganizationPermissions.VIEW_PRIVATE_INFORMATION);
-                });
+                
                 options.AddPolicy(Policies.GET_GROUP_PROFILES, policy =>
                 {
                     policy.RequireAssertion(process =>
@@ -80,7 +106,7 @@ namespace api.Extensions.Services
             services.AddScoped<IPolicyProvider, PolicyProvider>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IPolicyVerifier, PolicyVerifier>();
-            services.AddScoped<IVerificationOptionsService, 
+            services.AddScoped<IVerificationOptionsService,
                 VerificationOptionsService>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
 

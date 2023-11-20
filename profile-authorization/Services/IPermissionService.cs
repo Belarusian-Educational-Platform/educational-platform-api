@@ -2,6 +2,6 @@
 {
     public interface IPermissionService
     {
-        PermissionSet GetProfilePermissions(VerificationOptions verificationOptions);
+        PermissionSet GetProfilePermissions(VerificationOptions verificationOptions, Policy policy);
     }
 }

@@ -1,7 +1,10 @@
 ﻿using api.Middlewares.UseAccount;
+using api.Middlewares.UseProfile;
 using api.Models;
 using api.Services;
 using HotChocolate.Authorization;
+using ProfileAuthorization;
+using ProfileAuthorization.Data;
 
 namespace api.Queries
 {
@@ -9,22 +12,39 @@ namespace api.Queries
     public class ProfileQuery
     {
         [Authorize]
-        [GraphQLName("profiles_admin")]
+        [GraphQLName("profiles")]
         [UseOffsetPaging]
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Profile> GetProfiles([Service] IProfileService profileService)
+        public IQueryable<Profile> GetProfiles([Service] IProfileService profileService,
+            [Service] IAuthorizationService authorizationService)
         {
-            //TODO admin permission
+            authorizationService.Authorize(options =>
+            {
+                options.UsePolicy(Policies.GET_PROFILES);
+                options.UseKeycloak();
+            });
+
             return profileService.GetAll();
         }
 
         [Authorize]
         [UseProjection]
         [GraphQLName("profileById")]
-        public IQueryable<Profile> GetProfile([Service] IProfileService profileService, int id)
+        [UseProfile]
+        public IQueryable<Profile> GetProfile([Service] IProfileService profileService,
+            [Service] IAuthorizationService authorizationService,
+            [Profile] Profile profile,
+            int id)
         {
+            authorizationService.Authorize(options => {
+                options.UsePolicy(Policies.GET_PROFILE_BY_ID);
+                options.UseProfile(profile.Id);
+                options.UseOrganization();
+                options.UseKeycloak();
+            });
+
             return profileService.GetById(id);
         }
 
@@ -34,7 +54,7 @@ namespace api.Queries
         [UseFiltering]
         [UseAccount]
         public IQueryable<Profile> GetMyProfiles(
-            [Service] IProfileService profileService, 
+            [Service] IProfileService profileService,
             [Account] Account account)
         {
             return profileService.GetByAccount(account.KeycloakId!);

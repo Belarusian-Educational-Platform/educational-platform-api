@@ -5,7 +5,7 @@ namespace ProfileAuthorization
 {
     public class PermissionSet
     {
-        private HashSet<Permission> permissions = new();
+        private HashSet<Permission> _permissions = new();
 
         private List<string> ParsePermissions(string rawPermissions)
         {
@@ -26,18 +26,28 @@ namespace ProfileAuthorization
             foreach (string parsedPermisson in parsedPermissions)
             {
                 var permission = new Permission(permissionLevel, parsedPermisson);
-                permissions.Add(permission);
+                _permissions.Add(permission);
             }
+        }
+
+        public void AddPermissions(params Permission[] permissions) {
+            foreach(var permission in permissions) {
+                _permissions.Add(permission);
+            }
+        }
+
+        public void Remove(PermissionLevel permissionLevel) {
+            _permissions.RemoveWhere(p => p.Level == permissionLevel);
         }
 
         public bool HasPermission(Permission permission)
         {
-            return permissions.Contains(permission);
+            return _permissions.Contains(permission);
         }
 
         public HashSet<Permission> GetPermissions() 
         { 
-            return permissions; 
+            return _permissions; 
         }
     }
 }

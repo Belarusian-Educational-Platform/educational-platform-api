@@ -1,4 +1,5 @@
-﻿using api.EntityFramework.Contexts;
+﻿using System.Security.Claims;
+using api.EntityFramework.Contexts;
 using api.Exceptions.RepositoryExceptions;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,12 @@ namespace ProfileAuthorization
     public class PermissionService : IPermissionService, IAsyncDisposable
     {
         private readonly MySQLContext _dbContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public PermissionService(IDbContextFactory<MySQLContext> dbContextFactory)
+        public PermissionService(IDbContextFactory<MySQLContext> dbContextFactory, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContextFactory.CreateDbContext();
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public ValueTask DisposeAsync()
@@ -19,8 +22,7 @@ namespace ProfileAuthorization
             return _dbContext.DisposeAsync();
         }
 
-        public PermissionSet GetProfilePermissions(
-            VerificationOptions verificationOptions)
+        public PermissionSet GetProfilePermissions(VerificationOptions verificationOptions, Policy policy)
         {
             PermissionSet permissionSet = new();
             string rawPermissions;
@@ -29,18 +31,14 @@ namespace ProfileAuthorization
                     .Include(p => p.OrganizationRelation)
                     .Include(p => p.GroupRelations)
                     .FirstOrDefault(p => p.Id == verificationOptions.ProfileId);
-            if (profile is null)
-            {
-                throw new EntityNotFoundException(nameof(Profile));
-            }
 
-            if (verificationOptions.VerificationLevels.Contains(PermissionLevel.PROFILE_ORGANIZATION))
+            if (policy.VerificationLevels.Contains(PermissionLevel.PROFILE_ORGANIZATION) && profile is not null)
             {
                 rawPermissions = profile.OrganizationRelation.Permissions;
 
                 permissionSet.AddPermissions(PermissionLevel.PROFILE_ORGANIZATION, rawPermissions);
             }
-            if (verificationOptions.VerificationLevels.Contains(PermissionLevel.PROFILE_GROUP))
+            if (policy.VerificationLevels.Contains(PermissionLevel.PROFILE_GROUP) && profile is not null)
             {
                 var groupRelation = profile.GroupRelations
                     .FirstOrDefault(pgr => pgr.GroupId == verificationOptions.GroupId);
@@ -48,6 +46,12 @@ namespace ProfileAuthorization
                 rawPermissions = groupRelation != null ? groupRelation.Permissions : "[]";
 
                 permissionSet.AddPermissions(PermissionLevel.PROFILE_GROUP, rawPermissions);
+            }
+            if (policy.VerificationLevels.Contains(PermissionLevel.KEYCLOAK_ROLE)) {
+                var roles = _httpContextAccessor.HttpContext!.User.FindAll(ClaimTypes.Role);
+                var permissions = roles.Select(r => new Permission(PermissionLevel.KEYCLOAK_ROLE, r.Value)).ToArray();
+
+                permissionSet.AddPermissions(permissions);
             }
 
             return permissionSet;

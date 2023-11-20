@@ -18,17 +18,16 @@ namespace ProfileAuthorization
         public bool Verify(Policy policy,
             VerificationOptions verificationOptions)
         {
-            if (!verificationOptions.VerificationLevels.SetEquals(policy.VerificationLevels))
+            if (!verificationOptions.VerificationLevels.IsSupersetOf(policy.VerificationLevels))
             {
                 throw new ProvidedAndRequestedPermissionsMismatchException();
             }
+            
+            var profilePermissions = _permissionService.GetProfilePermissions(verificationOptions, policy);
             if (!_verificationOptionsService.CheckOrganizationСorrespondence(verificationOptions))
             {
-                throw new ProvidedEntitiesOrganizationNotCorrespondsException();
+                profilePermissions.Remove(PermissionLevel.PROFILE_ORGANIZATION);
             }
-
-            var profilePermissions = _permissionService.GetProfilePermissions(verificationOptions);
-
 
             foreach (Permission requirement in policy.Requierements)
             {

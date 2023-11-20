@@ -27,10 +27,10 @@ namespace api.Mutations
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("UpdateProfileGroupRelation");
-                options.AddProfile(profile.Id);
-                options.AddGroup(input.GroupId);
-                options.AddOrganization();
+                options.UsePolicy("UpdateProfileGroupRelation");
+                options.UseProfile(profile.Id);
+                options.UseGroup(input.GroupId);
+                options.UseOrganization();
             });
 
             if (!groupService.CheckOrganizationCorrespondence(input.ProfileId, input.GroupId))
@@ -55,10 +55,10 @@ namespace api.Mutations
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("UpdateGroup");
-                options.AddProfile(profile.Id);
-                options.AddGroup(input.GroupId);
-                options.AddOrganization();
+                options.UsePolicy("UpdateGroup");
+                options.UseProfile(profile.Id);
+                options.UseGroup(input.GroupId);
+                options.UseOrganization();
             });
             if (!groupService.CheckOrganizationCorrespondence(input.ProfileId, input.GroupId))
             {
@@ -81,10 +81,10 @@ namespace api.Mutations
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("UpdateGroup");
-                options.AddProfile(profile.Id);
-                options.AddGroup(groupId);
-                options.AddOrganization();
+                options.UsePolicy("UpdateGroup");
+                options.UseProfile(profile.Id);
+                options.UseGroup(groupId);
+                options.UseOrganization();
             });
 
             groupService.DeleteProfileGroupRelation(profileId, groupId);
@@ -103,9 +103,9 @@ namespace api.Mutations
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("CreateGroup");
-                options.AddProfile(profile.Id);
-                options.AddOrganization();
+                options.UsePolicy("CreateGroup");
+                options.UseProfile(profile.Id);
+                options.UseOrganization();
             });
 
             int GroupId = groupService.Create(input);
@@ -124,10 +124,10 @@ namespace api.Mutations
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("UpdateGroup");
-                options.AddProfile(profile.Id);
-                options.AddGroup(input.Id);
-                options.AddOrganization();
+                options.UsePolicy("UpdateGroup");
+                options.UseProfile(profile.Id);
+                options.UseGroup(input.Id);
+                options.UseOrganization();
             });
 
             groupService.Update(input);
@@ -146,10 +146,10 @@ namespace api.Mutations
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("DeleteGroup");
-                options.AddProfile(profile.Id);
-                options.AddGroup(id);
-                options.AddOrganization();
+                options.UsePolicy("DeleteGroup");
+                options.UseProfile(profile.Id);
+                options.UseGroup(id);
+                options.UseOrganization();
             });
 
             groupService.Delete(id);

@@ -30,7 +30,12 @@ namespace api.Middlewares.UseProfile
                         throw new UnauthorizedAccessException();
                     }
 
-                    Profile profile = profileService.GetByAccount(keycloakId).First();
+
+                    // TODO : RETURN DEFAULT?
+                    Profile? profile = profileService.GetByAccount(keycloakId).FirstOrDefault();
+                    profile ??= new() {
+                        Id = -1
+                    };
 
                     context.ContextData.TryAdd(PROFILE_CONTEXT_DATA_KEY, profile);
                 }

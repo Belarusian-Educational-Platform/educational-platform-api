@@ -29,7 +29,7 @@ namespace ProfileAuthorization
 
             if (profile is null)
             {
-                throw new EntityNotFoundException(nameof(Profile));
+                return false;
             }
 
             int organizationId = profile.OrganizationRelation.OrganizationId;

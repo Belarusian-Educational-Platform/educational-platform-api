@@ -3,6 +3,7 @@ using api.Models;
 using api.Services;
 using HotChocolate.Authorization;
 using ProfileAuthorization;
+using ProfileAuthorization.Data;
 using ProfileAuthorization.Exceptions;
 
 namespace api.Queries
@@ -11,22 +12,39 @@ namespace api.Queries
     public class GroupQuery
     {
         [Authorize]
-        [GraphQLName("groups_admin")]
+        [GraphQLName("groups")]
         [UseOffsetPaging]
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Group> GetGroups([Service] IGroupService groupService)
+        public IQueryable<Group> GetGroups([Service] IGroupService groupService, 
+            [Service] IAuthorizationService authorizationService)
         {
-            // TODO: Admin permission
+            authorizationService.Authorize(options => {
+                options.UsePolicy(Policies.GET_GROUPS);
+                options.UseKeycloak();
+            });
+
             return groupService.GetAll();
         }
 
         [Authorize]
-        [GraphQLName("groupById_admin")]
+        [GraphQLName("groupById")]
         [UseProjection]
-        public IQueryable<Group> GetGroup([Service] IGroupService groupService, int id)
+        [UseProfile]
+        public IQueryable<Group> GetGroup([Service] IGroupService groupService,
+            [Service] IAuthorizationService authorizationService, 
+            [Profile] Profile profile,
+            int id)
         {
+            authorizationService.Authorize(options => {
+                options.UsePolicy(Policies.GET_GROUP_BY_ID);
+                options.UseProfile(profile.Id);
+                options.UseGroup(id);
+                options.UseOrganization();
+                options.UseKeycloak();
+            });
+
             return groupService.GetById(id);
         }
 
@@ -43,33 +61,12 @@ namespace api.Queries
         {
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("GetMyOrganizationGroups");
-                options.AddProfile(profile.Id);
-                options.AddOrganization();
+                options.UsePolicy(Policies.GET_MY_ORGANIZATION_GROUPS);
+                options.UseProfile(profile.Id);
+                options.UseOrganization();
             });
+            
             return groupService.GetByProfileOrganization(profile.Id);
-        }
-
-        [Authorize]
-        [GraphQLName("groupById")]
-        [UseProjection]
-        [UseProfile]
-        public IQueryable<Group> GetGroup([Service] IGroupService groupService, int id,
-            [Service] IAuthorizationService profileAuthorizationService,
-            [Profile] Profile profile)
-        {
-            if(!groupService.CheckOrganizationCorrespondence(profile.Id, id))
-            {
-                throw new ProfileUnauthorizedException();
-            }
-
-            profileAuthorizationService.Authorize(options =>
-            {
-                options.AddPolicy("GetMyOrganizationGroups");
-                options.AddProfile(profile.Id);
-                options.AddOrganization();
-            });
-            return groupService.GetById(id);
         }
     }
 }

@@ -32,9 +32,9 @@ namespace api.Mutations
 
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("UpdateProfileOrganizationRelation");
-                options.AddProfile(profile.Id);
-                options.AddOrganization();
+                options.UsePolicy("UpdateProfileOrganizationRelation");
+                options.UseProfile(profile.Id);
+                options.UseOrganization();
             });
 
             organizationService.UpdateProfileOrganizationRelation(input);
@@ -70,9 +70,9 @@ namespace api.Mutations
             }
             profileAuthorizationService.Authorize(options =>
             {
-                options.AddPolicy("UpdateOrganization");
-                options.AddProfile(profile.Id);
-                options.AddOrganization();
+                options.UsePolicy("UpdateOrganization");
+                options.UseProfile(profile.Id);
+                options.UseOrganization();
             });
 
             organizationService.Update(input);
