@@ -24,7 +24,7 @@ builder.Services.AddDbContext(dbConnectionString);
 builder.Services.SetupKeycloak(authenticationOptions);
 
 // Profile authorization
-builder.Services.SetupProfileAuthorization();
+builder.Services.AddProfileAuthorization();
 
 // GraphQL setup
 builder.Services

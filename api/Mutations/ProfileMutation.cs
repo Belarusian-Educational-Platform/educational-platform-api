@@ -13,63 +13,63 @@ namespace api.Mutations
     [ExtendObjectType(typeof(Mutation))]
     public class ProfileMutation
     {
-        [Authorize]
-        [GraphQLName("createProfile")]
-        [UseProfile]
-        public int CreateProfile(
-            [Service] IProfileService profileService,
-            [Service] IAuthorizationService profileAuthorizationService,
-            [Profile] Profile profile,
-            [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput input)
-        {
-            profileAuthorizationService.Authorize(options =>
-            {
-                options.UsePolicy("CreateProfile");
-                options.UseProfile(profile.Id);
-                options.UseOrganization();
-            });
+        // [Authorize]
+        // [GraphQLName("createProfile")]
+        // [UseProfile]
+        // public int CreateProfile(
+        //     [Service] IProfileService profileService,
+        //     [Service] IAuthorizationService profileAuthorizationService,
+        //     [Profile] Profile profile,
+        //     [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput input)
+        // {
+        //     profileAuthorizationService.Authorize(options =>
+        //     {
+        //         options.UsePolicy("CreateProfile");
+        //         options.UseProfile(profile.Id);
+        //         options.UseOrganization();
+        //     });
 
-            int ProfileId = profileService.Create(input);
+        //     int ProfileId = profileService.Create(input);
 
-            return ProfileId;
-        }
+        //     return ProfileId;
+        // }
 
-        [Authorize]
-        [GraphQLName("updateProfile")]
-        [UseProfile]
-        public bool UpdateProfile([Service] IProfileService profileService, 
-            [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput input,
-            [Profile] Profile profile)
-        {
-            if (profile.Id != input.Id)
-            {
-                throw new ProfileUnauthorizedException();
-            }
+        // [Authorize]
+        // [GraphQLName("updateProfile")]
+        // [UseProfile]
+        // public bool UpdateProfile([Service] IProfileService profileService, 
+        //     [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput input,
+        //     [Profile] Profile profile)
+        // {
+        //     if (profile.Id != input.Id)
+        //     {
+        //         throw new ProfileUnauthorizedException();
+        //     }
 
-            profileService.Update(input);
+        //     profileService.Update(input);
 
-            return true;
-        }
+        //     return true;
+        // }
 
-        [Authorize]
-        [GraphQLName("deleteProfile")]
-        [UseProfile]
-        public bool DeleteProfile(
-            [Service] IProfileService profileService,
-            [Service] IAuthorizationService profileAuthorizationService,
-            [Profile] Profile profile,
-            int id)
-        {
-            profileAuthorizationService.Authorize(options =>
-            {
-                options.UsePolicy("DeleteProfile");
-                options.UseProfile(profile.Id);
-                options.UseOrganization();
-            });
+        // [Authorize]
+        // [GraphQLName("deleteProfile")]
+        // [UseProfile]
+        // public bool DeleteProfile(
+        //     [Service] IProfileService profileService,
+        //     [Service] IAuthorizationService profileAuthorizationService,
+        //     [Profile] Profile profile,
+        //     int id)
+        // {
+        //     profileAuthorizationService.Authorize(options =>
+        //     {
+        //         options.UsePolicy("DeleteProfile");
+        //         options.UseProfile(profile.Id);
+        //         options.UseOrganization();
+        //     });
 
-            profileService.Delete(id);
+        //     profileService.Delete(id);
 
-            return true;
-        }
+        //     return true;
+        // }
     }
 }

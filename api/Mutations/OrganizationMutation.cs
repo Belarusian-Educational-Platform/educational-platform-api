@@ -15,78 +15,78 @@ namespace api.Mutations
     [ExtendObjectType(typeof(Mutation))]
     public class OrganizationMutation
     {
-        [Authorize]
-        [GraphQLName("updateProfileOrganizationRelation")]
-        [UseProfile]
-        public bool UpdateProfileOrganizationRelation(
-            [Service] IOrganizationService organizationService,
-            [Service] IAuthorizationService profileAuthorizationService,
-            [Profile] Profile profile,
-            [UseFluentValidation, UseValidator<UpdateProfileOrganizationRelationInputValidator>]
-                UpdateProfileOrganizationRelationInput input)
-        {
-            if (!organizationService.CheckProfileInOrganization(profile.Id, input.OrganizationId))
-            {
-                throw new ProfileUnauthorizedException();
-            }
+        // [Authorize]
+        // [GraphQLName("updateProfileOrganizationRelation")]
+        // [UseProfile]
+        // public bool UpdateProfileOrganizationRelation(
+        //     [Service] IOrganizationService organizationService,
+        //     [Service] IAuthorizationService profileAuthorizationService,
+        //     [Profile] Profile profile,
+        //     [UseFluentValidation, UseValidator<UpdateProfileOrganizationRelationInputValidator>]
+        //         UpdateProfileOrganizationRelationInput input)
+        // {
+        //     if (!organizationService.CheckProfileInOrganization(profile.Id, input.OrganizationId))
+        //     {
+        //         throw new ProfileUnauthorizedException();
+        //     }
 
-            profileAuthorizationService.Authorize(options =>
-            {
-                options.UsePolicy("UpdateProfileOrganizationRelation");
-                options.UseProfile(profile.Id);
-                options.UseOrganization();
-            });
+        //     profileAuthorizationService.Authorize(options =>
+        //     {
+        //         options.UsePolicy("UpdateProfileOrganizationRelation");
+        //         options.UseProfile(profile.Id);
+        //         options.UseOrganization();
+        //     });
 
-            organizationService.UpdateProfileOrganizationRelation(input);
+        //     organizationService.UpdateProfileOrganizationRelation(input);
 
-            return true;
-        }
+        //     return true;
+        // }
 
-        [Authorize(Roles = new[] { "Admin" })]
-        [GraphQLName("createOrganization")]
-        public int CreateOrganization(
-            [Service] IOrganizationService organizationService, 
-            [UseFluentValidation, UseValidator<CreateOrganizationInputValidator>] 
-                CreateOrganizationInput input)
-        {
-            int OrganizationId = organizationService.Create(input);
+        // [Authorize(Roles = new[] { "Admin" })]
+        // [GraphQLName("createOrganization")]
+        // public int CreateOrganization(
+        //     [Service] IOrganizationService organizationService, 
+        //     [UseFluentValidation, UseValidator<CreateOrganizationInputValidator>] 
+        //         CreateOrganizationInput input)
+        // {
+        //     int OrganizationId = organizationService.Create(input);
 
-            return OrganizationId;
-        }
+        //     return OrganizationId;
+        // }
 
-        [Authorize]
-        [GraphQLName("updateOrganization")]
-        [UseProfile]
-        public bool UpdateOrganization(
-            [Service] IOrganizationService organizationService,
-            [Service] IAuthorizationService profileAuthorizationService,
-            [Profile] Profile profile,
-            [UseFluentValidation, UseValidator<UpdateOrganizationInputValidator>] 
-                UpdateOrganizationInput input)
-        {
-            if (!organizationService.CheckProfileInOrganization(profile.Id, input.Id))
-            {
-                throw new ProfileUnauthorizedException();
-            }
-            profileAuthorizationService.Authorize(options =>
-            {
-                options.UsePolicy("UpdateOrganization");
-                options.UseProfile(profile.Id);
-                options.UseOrganization();
-            });
+        // [Authorize]
+        // [GraphQLName("updateOrganization")]
+        // [UseProfile]
+        // public bool UpdateOrganization(
+        //     [Service] IOrganizationService organizationService,
+        //     [Service] IAuthorizationService profileAuthorizationService,
+        //     [Profile] Profile profile,
+        //     [UseFluentValidation, UseValidator<UpdateOrganizationInputValidator>] 
+        //         UpdateOrganizationInput input)
+        // {
+        //     if (!organizationService.CheckProfileInOrganization(profile.Id, input.Id))
+        //     {
+        //         throw new ProfileUnauthorizedException();
+        //     }
+        //     profileAuthorizationService.Authorize(options =>
+        //     {
+        //         options.UsePolicy("UpdateOrganization");
+        //         options.UseProfile(profile.Id);
+        //         options.UseOrganization();
+        //     });
 
-            organizationService.Update(input);
+        //     organizationService.Update(input);
 
-            return true;
-        }
+        //     return true;
+        // }
 
-        [Authorize(Roles = new[] { "Admin" })]
-        [GraphQLName("deleteOrganization")]
-        public bool DeleteOrganization([Service] IOrganizationService organizationService, int id)
-        {
-            organizationService.Delete(id);
+        // [Authorize(Roles = new[] { "Admin" })]
+        // [GraphQLName("deleteOrganization")]
+        // public bool DeleteOrganization([Service] IOrganizationService organizationService, int id)
+        // {
+        //     organizationService.Delete(id);
 
-            return true;
-        }
+        //     return true;
+        // }
     }
 }

@@ -4,26 +4,22 @@ namespace ProfileAuthorization
 {
     public class AuthorizationService : IAuthorizationService
     {
-        private readonly IPolicyProvider _policyProvider;
-        private readonly IPolicyVerifier _policyVerifier;
+        private readonly IVerificationService _verificationService;
 
-        public AuthorizationService(
-            IPolicyProvider policyProvider,
-            IPolicyVerifier policyVerifier)
+        public AuthorizationService(IVerificationService verificationService)
         {
-            _policyProvider = policyProvider;
-            _policyVerifier = policyVerifier;
+            _verificationService = verificationService;
         }
 
-        public void Authorize(Action<VerificationOptions> configure)
+        public void Authorize(Action<VerificationOptions> configure, 
+            Predicate<IVerificationService> verify)
         {
             var verificationOptions = new VerificationOptions();
             configure(verificationOptions);
 
-            var policy = _policyProvider.GetPolicy(verificationOptions.PolicyName);
-            bool verificationResult = _policyVerifier.Verify(policy, verificationOptions);
+            _verificationService.UseOptions(verificationOptions);
 
-            if(!verificationResult)
+            if(!verify(_verificationService))
             {
                 throw new ProfileUnauthorizedException();
             }

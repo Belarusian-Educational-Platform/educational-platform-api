@@ -20,11 +20,10 @@ namespace api.Queries
         public IQueryable<Profile> GetProfiles([Service] IProfileService profileService,
             [Service] IAuthorizationService authorizationService)
         {
-            authorizationService.Authorize(options =>
-            {
-                options.UsePolicy(Policies.GET_PROFILES);
-                options.UseKeycloak();
-            });
+            authorizationService.Authorize(
+                options => {},
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN)
+            );
 
             return profileService.GetAll();
         }
@@ -38,12 +37,15 @@ namespace api.Queries
             [Profile] Profile profile,
             int id)
         {
-            authorizationService.Authorize(options => {
-                options.UsePolicy(Policies.GET_PROFILE_BY_ID);
-                options.UseProfile(profile.Id);
-                options.UseOrganization();
-                options.UseKeycloak();
-            });
+            authorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseOrganization();
+                }, verifier => verifier.Assert(KeycloakPermissions.ADMIN) || (
+                    verifier.RequireOrganizationCorrespondence(CorrespondsWith.PROFILE, id) &&
+                    verifier.Assert(OrganizationPermissions.VIEW_PRIVATE_INFORMATION)
+                )
+            );
 
             return profileService.GetById(id);
         }

@@ -20,10 +20,10 @@ namespace api.Queries
         public IQueryable<Group> GetGroups([Service] IGroupService groupService, 
             [Service] IAuthorizationService authorizationService)
         {
-            authorizationService.Authorize(options => {
-                options.UsePolicy(Policies.GET_GROUPS);
-                options.UseKeycloak();
-            });
+            authorizationService.Authorize(
+                options => {},
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN)
+            );
 
             return groupService.GetAll();
         }
@@ -37,13 +37,18 @@ namespace api.Queries
             [Profile] Profile profile,
             int id)
         {
-            authorizationService.Authorize(options => {
-                options.UsePolicy(Policies.GET_GROUP_BY_ID);
-                options.UseProfile(profile.Id);
-                options.UseGroup(id);
-                options.UseOrganization();
-                options.UseKeycloak();
-            });
+            authorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseGroup(id);
+                    options.UseOrganization();
+                },
+                verifier => verifier.Assert(assert => 
+                        assert(OrganizationPermissions.VIEW_PRIVATE_INFORMATION) || 
+                        assert(GroupPermissions.VIEW_PRIVATE_INFORMATION) || 
+                        assert(KeycloakPermissions.ADMIN)
+                    )
+            );
 
             return groupService.GetById(id);
         }
@@ -59,12 +64,13 @@ namespace api.Queries
             [Service] IAuthorizationService profileAuthorizationService,
             [Profile] Profile profile)
         {
-            profileAuthorizationService.Authorize(options =>
-            {
-                options.UsePolicy(Policies.GET_MY_ORGANIZATION_GROUPS);
-                options.UseProfile(profile.Id);
-                options.UseOrganization();
-            });
+            profileAuthorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseOrganization();
+                },
+                verifier => verifier.Assert(OrganizationPermissions.VIEW_PRIVATE_INFORMATION)
+            );
             
             return groupService.GetByProfileOrganization(profile.Id);
         }

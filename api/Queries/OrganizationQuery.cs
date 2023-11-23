@@ -3,6 +3,7 @@ using api.Models;
 using api.Services;
 using HotChocolate.Authorization;
 using ProfileAuthorization;
+using ProfileAuthorization.Data;
 
 namespace api.Queries
 {
@@ -10,40 +11,42 @@ namespace api.Queries
     public class OrganizationQuery
     {
         [Authorize]
-        [GraphQLName("organizations_admin")]
+        [GraphQLName("organizations")]
         [UseOffsetPaging]
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Organization> GetOrganizations([Service] IOrganizationService organizationService)
+        public IQueryable<Organization> GetOrganizations(
+            [Service] IOrganizationService organizationService,
+            [Service] IAuthorizationService authorizationService)
         {
-            //TODO: Admin permission
+            authorizationService.Authorize(
+                options => {},
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN)
+            );
+            
             return organizationService.GetAll();
-        }
-
-        [Authorize]
-        [GraphQLName("organizationById_admin")]
-        [UseProjection]
-        public IQueryable<Organization> GetOrganization([Service] IOrganizationService organizationService,
-            int id)
-        {
-            return organizationService.GetById(id);
         }
 
         [Authorize]
         [GraphQLName("organizationById")]
         [UseProjection]
         [UseProfile]
-        public IQueryable<Organization> GetOrganization([Service] IOrganizationService organizationService, int id,
-            [Service] IAuthorizationService profileAuthorizationService,
-            [Profile] Profile profile)
+        public IQueryable<Organization> GetOrganization(
+            [Service] IOrganizationService organizationService,
+            [Service] IAuthorizationService authorizationService,
+            [Profile] Profile profile,
+            int id)
         {
-            profileAuthorizationService.Authorize(options =>
-            {
-                options.UsePolicy("GetMyOrganization");
-                options.UseProfile(profile.Id);
-                options.UseOrganization();
-            });
+            authorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseOrganization(id);
+                },
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN) || 
+                    verifier.Assert(OrganizationPermissions.VIEW_PRIVATE_INFORMATION)
+            );
+
             return organizationService.GetById(id);
         }
     }

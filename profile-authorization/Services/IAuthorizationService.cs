@@ -2,6 +2,6 @@
 {
     public interface IAuthorizationService
     {
-        public void Authorize(Action<VerificationOptions> configure);
+        public void Authorize(Action<VerificationOptions> configure, Predicate<IVerificationService> verify);
     }
 }

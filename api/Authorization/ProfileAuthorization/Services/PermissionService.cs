@@ -22,37 +22,62 @@ namespace ProfileAuthorization
             return _dbContext.DisposeAsync();
         }
 
-        public PermissionSet GetProfilePermissions(VerificationOptions verificationOptions, Policy policy)
+        private Permission[] GetKeycloakPermissions(VerificationOptions options)
+        {
+            var roles = _httpContextAccessor.HttpContext!.User.FindAll(ClaimTypes.Role);
+
+            return roles.Select(r => new Permission(PermissionLevel.KEYCLOAK_ROLE, r.Value)).ToArray();
+        }
+
+        public PermissionSet GetProfilePermissions(VerificationOptions options)
         {
             PermissionSet permissionSet = new();
             string rawPermissions;
-
+            /* TODO : remove
+            Group - Profile - Organization
+            ------------------------------
+            1   1   1 - get gr-org perm - can get all
+            2   1   1 - nothing - can get org / no gr
+            1   1   2 - get gr perm - can get gr / no org
+            1   2   1 - nothing - no gr / no org
+            1   2   3 - nothing - no gr / no org
+            */
+            
             var profile = _dbContext.Profiles
                     .Include(p => p.OrganizationRelation)
                     .Include(p => p.GroupRelations)
-                    .FirstOrDefault(p => p.Id == verificationOptions.ProfileId);
+                    .FirstOrDefault(p => p.Id == options.ProfileId);
 
-            if (policy.VerificationLevels.Contains(PermissionLevel.PROFILE_ORGANIZATION) && profile is not null)
+            if (options.VerificationLevels.Contains(PermissionLevel.PROFILE_ORGANIZATION) && profile is not null)
             {
-                rawPermissions = profile.OrganizationRelation.Permissions;
-
-                permissionSet.AddPermissions(PermissionLevel.PROFILE_ORGANIZATION, rawPermissions);
+                if (options.OrganizationId != VerificationOptions.DEFAULT_ORGANIZATION_ID &&
+                    options.OrganizationId != profile.OrganizationRelation.OrganizationId) {
+                    rawPermissions = "[]";
+                } else {
+                    rawPermissions = profile.OrganizationRelation.Permissions;
+                }
+                permissionSet.AddPermissions(
+                    PermissionLevel.PROFILE_ORGANIZATION,
+                    rawPermissions
+                );
             }
-            if (policy.VerificationLevels.Contains(PermissionLevel.PROFILE_GROUP) && profile is not null)
+
+            if (options.VerificationLevels.Contains(PermissionLevel.PROFILE_GROUP) && profile is not null)
             {
                 var groupRelation = profile.GroupRelations
-                    .FirstOrDefault(pgr => pgr.GroupId == verificationOptions.GroupId);
+                    .FirstOrDefault(pgr => pgr.GroupId == options.GroupId);
 
-                rawPermissions = groupRelation != null ? groupRelation.Permissions : "[]";
-
-                permissionSet.AddPermissions(PermissionLevel.PROFILE_GROUP, rawPermissions);
+                rawPermissions = groupRelation is not null ? groupRelation.Permissions : "[]";
+                if (groupRelation is null) {
+                    permissionSet.Remove(PermissionLevel.PROFILE_ORGANIZATION);
+                }
+                permissionSet.AddPermissions(
+                    PermissionLevel.PROFILE_GROUP,
+                    rawPermissions
+                );
             }
-            if (policy.VerificationLevels.Contains(PermissionLevel.KEYCLOAK_ROLE)) {
-                var roles = _httpContextAccessor.HttpContext!.User.FindAll(ClaimTypes.Role);
-                var permissions = roles.Select(r => new Permission(PermissionLevel.KEYCLOAK_ROLE, r.Value)).ToArray();
 
-                permissionSet.AddPermissions(permissions);
-            }
+            permissionSet.AddPermissions(GetKeycloakPermissions(options));
 
             return permissionSet;
         }
