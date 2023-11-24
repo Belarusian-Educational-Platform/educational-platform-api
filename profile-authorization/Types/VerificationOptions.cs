@@ -2,13 +2,14 @@
 {
     public class VerificationOptions
     {
-        public const int DEFAULT_ORGANIZATION_ID = -1;
         public const int DEFAULT_PROFILE_ID = -1;
+        public const int DEFAULT_GROUP_ID = -1;
+        public const int DEFAULT_ORGANIZATION_ID = -1;
 
         public HashSet<PermissionLevel> VerificationLevels = new();
         public int ProfileId = DEFAULT_PROFILE_ID;
-        public int GroupId { get; set; }
-        public int OrganizationId { get; set; }
+        public int GroupId = DEFAULT_GROUP_ID;
+        public int OrganizationId = DEFAULT_ORGANIZATION_ID;
 
         public void UseProfile(int id)
         {

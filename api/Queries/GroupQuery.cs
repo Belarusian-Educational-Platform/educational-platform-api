@@ -43,11 +43,9 @@ namespace api.Queries
                     options.UseGroup(id);
                     options.UseOrganization();
                 },
-                verifier => verifier.Assert(assert => 
-                        assert(OrganizationPermissions.VIEW_PRIVATE_INFORMATION) || 
-                        assert(GroupPermissions.VIEW_PRIVATE_INFORMATION) || 
-                        assert(KeycloakPermissions.ADMIN)
-                    )
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN) || 
+                    verifier.Assert(OrganizationPermissions.VIEW_PRIVATE_INFORMATION) || 
+                    verifier.Assert(GroupPermissions.VIEW_PRIVATE_INFORMATION) 
             );
 
             return groupService.GetById(id);

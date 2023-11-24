@@ -33,25 +33,19 @@ namespace ProfileAuthorization
         {
             PermissionSet permissionSet = new();
             string rawPermissions;
-            /* TODO : remove
-            Group - Profile - Organization
-            ------------------------------
-            1   1   1 - get gr-org perm - can get all
-            2   1   1 - nothing - can get org / no gr
-            1   1   2 - get gr perm - can get gr / no org
-            1   2   1 - nothing - no gr / no org
-            1   2   3 - nothing - no gr / no org
-            */
             
             var profile = _dbContext.Profiles
                     .Include(p => p.OrganizationRelation)
                     .Include(p => p.GroupRelations)
                     .FirstOrDefault(p => p.Id == options.ProfileId);
 
+            if (options.OrganizationId == VerificationOptions.DEFAULT_ORGANIZATION_ID && profile is not null) {
+                options.OrganizationId = profile.OrganizationRelation.OrganizationId;
+            }
+
             if (options.VerificationLevels.Contains(PermissionLevel.PROFILE_ORGANIZATION) && profile is not null)
             {
-                if (options.OrganizationId != VerificationOptions.DEFAULT_ORGANIZATION_ID &&
-                    options.OrganizationId != profile.OrganizationRelation.OrganizationId) {
+                if (options.OrganizationId != profile.OrganizationRelation.OrganizationId) {
                     rawPermissions = "[]";
                 } else {
                     rawPermissions = profile.OrganizationRelation.Permissions;

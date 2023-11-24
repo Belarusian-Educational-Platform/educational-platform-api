@@ -9,152 +9,163 @@ using api.Validators.Relations;
 using HotChocolate.Authorization;
 using ProfileAuthorization.Exceptions;
 using ProfileAuthorization;
+using ProfileAuthorization.Data;
+using Microsoft.Extensions.Options;
 
 namespace api.Mutations
 {
     [ExtendObjectType(typeof(Mutation))]
     public class GroupMutation
     {
-        // [Authorize]
-        // [GraphQLName("updateProfileGroupRelation")]
-        // [UseProfile]
-        // public bool UpdateProfileGroupRelation(
-        //     [Service] IGroupService groupService,
-        //     [Service] IAuthorizationService profileAuthorizationService,
-        //     [Profile] Profile profile,
-        //     [UseFluentValidation, UseValidator<UpdateProfileGroupRelationInputValidator>]
-        //         UpdateProfileGroupRelationInput input)
-        // {
-        //     profileAuthorizationService.Authorize(options =>
-        //     {
-        //         options.UsePolicy("UpdateProfileGroupRelation");
-        //         options.UseProfile(profile.Id);
-        //         options.UseGroup(input.GroupId);
-        //         options.UseOrganization();
-        //     });
+        [Authorize]
+        [GraphQLName("updateProfileGroupRelation")]
+        [UseProfile]
+        public bool UpdateProfileGroupRelation(
+            [Service] IGroupService groupService,
+            [Service] IAuthorizationService authorizationService,
+            [Profile] Profile profile,
+            [UseFluentValidation, UseValidator<UpdateProfileGroupRelationInputValidator>]
+                UpdateProfileGroupRelationInput input)
+        {
+            authorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseGroup(input.GroupId);
+                    options.UseOrganization();
+                },
+                // TODO : FOR WHAT WE NEED EDIT_PERMIISONS
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN) || 
+                    verifier.Assert(OrganizationPermissions.EDIT_GROUP_PROFILES_PERMISSIONS) ||
+                    verifier.Assert(GroupPermissions.EDIT_PROFILES_PERMISSIONS)
+            );
 
-        //     if (!groupService.CheckOrganizationCorrespondence(input.ProfileId, input.GroupId))
-        //     {
-        //         throw new ProfileUnauthorizedException();
-        //     }
+            groupService.UpdateProfileGroupRelation(input);
 
-        //     groupService.UpdateProfileGroupRelation(input);
+            return true;
+        }
 
-        //     return true;
-        // }
+        [Authorize]
+        [GraphQLName("addProfileToGroup")]
+        [UseProfile]
+        public bool AddProfileToGroup(
+            [Service] IGroupService groupService,
+            [Service] IAuthorizationService authorizationService,
+            [Profile] Profile profile,
+            [UseFluentValidation, UseValidator<CreateProfileGroupRelationInputValidator>] 
+                CreateProfileGroupRelationInput input)
+        {
+            authorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseGroup(input.GroupId);
+                    options.UseOrganization();
+                },
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN) || 
+                    verifier.Assert(OrganizationPermissions.UPDATE_GROUPS) ||
+                    verifier.Assert(GroupPermissions.UPDATE)
+            );
 
-        // [Authorize]
-        // [GraphQLName("addProfileToGroup")]
-        // [UseProfile]
-        // public bool AddProfileToGroup(
-        //     [Service] IGroupService groupService,
-        //     [Service] IAuthorizationService profileAuthorizationService,
-        //     [Profile] Profile profile,
-        //     [UseFluentValidation, UseValidator<CreateProfileGroupRelationInputValidator>] 
-        //         CreateProfileGroupRelationInput input)
-        // {
-        //     profileAuthorizationService.Authorize(options =>
-        //     {
-        //         options.UsePolicy("UpdateGroup");
-        //         options.UseProfile(profile.Id);
-        //         options.UseGroup(input.GroupId);
-        //         options.UseOrganization();
-        //     });
-        //     if (!groupService.CheckOrganizationCorrespondence(input.ProfileId, input.GroupId))
-        //     {
-        //         throw new ProfileUnauthorizedException();
-        //     }
+            groupService.CreateProfileGroupRelation(input);
 
-        //     groupService.CreateProfileGroupRelation(input);
+            return true;
+        }
 
-        //     return true;
-        // }
+        [Authorize]
+        [GraphQLName("deleteProfileFromGroup")]
+        [UseProfile]
+        public bool DeleteProfileFromGroup(
+            [Service] IGroupService groupService,
+            [Service] IAuthorizationService authorizationService,
+            [Profile] Profile profile,
+            int profileId, int groupId)
+        {
+            authorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseGroup(groupId);
+                    options.UseOrganization();
+                },
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN) || 
+                    verifier.Assert(OrganizationPermissions.UPDATE_GROUPS) ||
+                    verifier.Assert(GroupPermissions.UPDATE)
+            );
 
-        // [Authorize]
-        // [GraphQLName("deleteProfileFromGroup")]
-        // [UseProfile]
-        // public bool DeleteProfileFromGroup(
-        //     [Service] IGroupService groupService,
-        //     [Service] IAuthorizationService profileAuthorizationService,
-        //     [Profile] Profile profile,
-        //     int profileId, int groupId)
-        // {
-        //     profileAuthorizationService.Authorize(options =>
-        //     {
-        //         options.UsePolicy("UpdateGroup");
-        //         options.UseProfile(profile.Id);
-        //         options.UseGroup(groupId);
-        //         options.UseOrganization();
-        //     });
+            groupService.DeleteProfileGroupRelation(profileId, groupId);
 
-        //     groupService.DeleteProfileGroupRelation(profileId, groupId);
+            return true;
+        }
 
-        //     return true;
-        // }
+        [Authorize]
+        [GraphQLName("createGroup")]
+        [UseProfile]
+        public int CreateGroup(
+            [Service] IGroupService groupService,
+            [Service] IAuthorizationService authorizationService,
+            [Profile] Profile profile,
+            [UseFluentValidation, UseValidator<CreateGroupInputValidator>] CreateGroupInput input)
+        {
+            authorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseOrganization();
+                },
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN) || 
+                    verifier.Assert(OrganizationPermissions.CREATE_GROUPS)
+            );
 
-        // [Authorize]
-        // [GraphQLName("createGroup")]
-        // [UseProfile]
-        // public int CreateGroup(
-        //     [Service] IGroupService groupService,
-        //     [Service] IAuthorizationService profileAuthorizationService,
-        //     [Profile] Profile profile,
-        //     [UseFluentValidation, UseValidator<CreateGroupInputValidator>] CreateGroupInput input)
-        // {
-        //     profileAuthorizationService.Authorize(options =>
-        //     {
-        //         options.UsePolicy("CreateGroup");
-        //         options.UseProfile(profile.Id);
-        //         options.UseOrganization();
-        //     });
+            int groupId = groupService.Create(input);
 
-        //     int GroupId = groupService.Create(input);
+            return groupId;
+        }
 
-        //     return GroupId;
-        // }
+        [Authorize]
+        [GraphQLName("updateGroup")]
+        [UseProfile]
+        public bool UpdateGroup(
+            [Service] IGroupService groupService,
+            [Service] IAuthorizationService authorizationService,
+            [Profile] Profile profile,
+            [UseFluentValidation, UseValidator<UpdateGroupInputValidator>] UpdateGroupInput input)
+        {
+            authorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseGroup(input.Id);
+                    options.UseOrganization();
+                },
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN) || 
+                    verifier.Assert(OrganizationPermissions.UPDATE_GROUPS) ||
+                    verifier.Assert(GroupPermissions.UPDATE)
+            );
 
-        // [Authorize]
-        // [GraphQLName("updateGroup")]
-        // [UseProfile]
-        // public bool UpdateGroup(
-        //     [Service] IGroupService groupService,
-        //     [Service] IAuthorizationService profileAuthorizationService,
-        //     [Profile] Profile profile,
-        //     [UseFluentValidation, UseValidator<UpdateGroupInputValidator>] UpdateGroupInput input)
-        // {
-        //     profileAuthorizationService.Authorize(options =>
-        //     {
-        //         options.UsePolicy("UpdateGroup");
-        //         options.UseProfile(profile.Id);
-        //         options.UseGroup(input.Id);
-        //         options.UseOrganization();
-        //     });
+            groupService.Update(input);
 
-        //     groupService.Update(input);
+            return true;
+        }
 
-        //     return true;
-        // }
+        [Authorize]
+        [GraphQLName("deleteGroup")]
+        [UseProfile]
+        public bool DeleteGroup(
+            [Service] IGroupService groupService,
+            [Service] IAuthorizationService authorizationService,
+            [Profile] Profile profile,
+            int id)
+        {
+            authorizationService.Authorize(
+                options => {
+                    options.UseProfile(profile.Id);
+                    options.UseGroup(id);
+                    options.UseOrganization();
+                },
+                verifier => verifier.Assert(KeycloakPermissions.ADMIN) || 
+                    verifier.Assert(OrganizationPermissions.DELETE_GROUPS) ||
+                    verifier.Assert(GroupPermissions.DELETE)
+            );
 
-        // [Authorize]
-        // [GraphQLName("deleteGroup")]
-        // [UseProfile]
-        // public bool DeleteGroup(
-        //     [Service] IGroupService groupService,
-        //     [Service] IAuthorizationService profileAuthorizationService,
-        //     [Profile] Profile profile,
-        //     int id)
-        // {
-        //     profileAuthorizationService.Authorize(options =>
-        //     {
-        //         options.UsePolicy("DeleteGroup");
-        //         options.UseProfile(profile.Id);
-        //         options.UseGroup(id);
-        //         options.UseOrganization();
-        //     });
+            groupService.Delete(id);
 
-        //     groupService.Delete(id);
-
-        //     return true;
-        // }
+            return true;
+        }
     }
 }

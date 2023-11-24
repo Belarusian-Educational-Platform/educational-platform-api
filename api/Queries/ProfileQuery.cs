@@ -42,7 +42,7 @@ namespace api.Queries
                     options.UseProfile(profile.Id);
                     options.UseOrganization();
                 }, verifier => verifier.Assert(KeycloakPermissions.ADMIN) || (
-                    verifier.RequireOrganizationCorrespondence(CorrespondsWith.PROFILE, id) &&
+                    verifier.RequireOrganizationCorrespondence<Profile>(id) &&
                     verifier.Assert(OrganizationPermissions.VIEW_PRIVATE_INFORMATION)
                 )
             );
