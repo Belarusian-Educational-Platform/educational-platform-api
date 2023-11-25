@@ -16,11 +16,11 @@ namespace api.Queries
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Organization> GetOrganizations(
+        public async Task<IQueryable<Organization>> GetOrganizations(
             [Service] IOrganizationService organizationService,
             [Service] IAuthorizationService authorizationService)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {},
                 verifier => verifier.Assert(KeycloakPermissions.ADMIN)
             );
@@ -32,13 +32,13 @@ namespace api.Queries
         [GraphQLName("organizationById")]
         [UseProjection]
         [UseProfile]
-        public IQueryable<Organization> GetOrganization(
+        public async Task<IQueryable<Organization>> GetOrganization(
             [Service] IOrganizationService organizationService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             int id)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseOrganization(id);

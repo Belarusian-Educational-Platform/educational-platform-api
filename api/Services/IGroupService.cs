@@ -8,17 +8,15 @@ namespace api.Services
     {
         public IQueryable<Group> GetAll();
         public IQueryable<Group> GetByOrganization(int organizationId);
-        public IQueryable<Group> GetByProfileOrganization(int profileId);
+        public Task<IQueryable<Group>> GetByProfileOrganization(int profileId);
         public IQueryable<Group> GetById(int id);
 
-        public int Create(CreateGroupInput input);
-        public void Update(UpdateGroupInput input);
-        public void Delete(int id);
+        public Task<int> Create(CreateGroupInput input);
+        public Task Update(UpdateGroupInput input);
+        public Task Delete(int id);
 
-        public void UpdateProfileGroupRelation(UpdateProfileGroupRelationInput input);
-
-        public bool CheckOrganizationCorrespondence(int profileId, int groupId);
-        public void CreateProfileGroupRelation(CreateProfileGroupRelationInput input);
-        public void DeleteProfileGroupRelation(int profileId, int groupId);
+        public Task UpdateProfileGroupRelation(UpdateProfileGroupRelationInput input);
+        public Task CreateProfileGroupRelation(CreateProfileGroupRelationInput input);
+        public Task DeleteProfileGroupRelation(int profileId, int groupId);
     }
 }

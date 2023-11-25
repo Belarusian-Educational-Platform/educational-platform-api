@@ -20,14 +20,14 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("updateProfileGroupRelation")]
         [UseProfile]
-        public bool UpdateProfileGroupRelation(
+        public async Task<bool> UpdateProfileGroupRelation(
             [Service] IGroupService groupService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<UpdateProfileGroupRelationInputValidator>]
                 UpdateProfileGroupRelationInput input)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseGroup(input.GroupId);
@@ -39,7 +39,7 @@ namespace api.Mutations
                     verifier.Assert(GroupPermissions.EDIT_PROFILES_PERMISSIONS)
             );
 
-            groupService.UpdateProfileGroupRelation(input);
+            await groupService.UpdateProfileGroupRelation(input);
 
             return true;
         }
@@ -47,14 +47,14 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("addProfileToGroup")]
         [UseProfile]
-        public bool AddProfileToGroup(
+        public async Task<bool> AddProfileToGroup(
             [Service] IGroupService groupService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<CreateProfileGroupRelationInputValidator>] 
                 CreateProfileGroupRelationInput input)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseGroup(input.GroupId);
@@ -65,7 +65,7 @@ namespace api.Mutations
                     verifier.Assert(GroupPermissions.UPDATE)
             );
 
-            groupService.CreateProfileGroupRelation(input);
+            await groupService.CreateProfileGroupRelation(input);
 
             return true;
         }
@@ -73,13 +73,13 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("deleteProfileFromGroup")]
         [UseProfile]
-        public bool DeleteProfileFromGroup(
+        public async Task<bool> DeleteProfileFromGroup(
             [Service] IGroupService groupService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             int profileId, int groupId)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseGroup(groupId);
@@ -90,7 +90,7 @@ namespace api.Mutations
                     verifier.Assert(GroupPermissions.UPDATE)
             );
 
-            groupService.DeleteProfileGroupRelation(profileId, groupId);
+            await groupService.DeleteProfileGroupRelation(profileId, groupId);
 
             return true;
         }
@@ -98,13 +98,13 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("createGroup")]
         [UseProfile]
-        public int CreateGroup(
+        public async Task<int> CreateGroup(
             [Service] IGroupService groupService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<CreateGroupInputValidator>] CreateGroupInput input)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseOrganization();
@@ -113,7 +113,7 @@ namespace api.Mutations
                     verifier.Assert(OrganizationPermissions.CREATE_GROUPS)
             );
 
-            int groupId = groupService.Create(input);
+            int groupId = await groupService.Create(input);
 
             return groupId;
         }
@@ -121,13 +121,13 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("updateGroup")]
         [UseProfile]
-        public bool UpdateGroup(
+        public async Task<bool> UpdateGroup(
             [Service] IGroupService groupService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<UpdateGroupInputValidator>] UpdateGroupInput input)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseGroup(input.Id);
@@ -138,7 +138,7 @@ namespace api.Mutations
                     verifier.Assert(GroupPermissions.UPDATE)
             );
 
-            groupService.Update(input);
+            await groupService.Update(input);
 
             return true;
         }
@@ -146,13 +146,13 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("deleteGroup")]
         [UseProfile]
-        public bool DeleteGroup(
+        public async Task<bool> DeleteGroup(
             [Service] IGroupService groupService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             int id)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseGroup(id);
@@ -163,7 +163,7 @@ namespace api.Mutations
                     verifier.Assert(GroupPermissions.DELETE)
             );
 
-            groupService.Delete(id);
+            await groupService.Delete(id);
 
             return true;
         }

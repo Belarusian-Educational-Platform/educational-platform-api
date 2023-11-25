@@ -16,13 +16,13 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("createProfile")]
         [UseProfile]
-        public int CreateProfile(
+        public async Task<int> CreateProfile(
             [Service] IProfileService profileService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<CreateProfileInputValidator>] CreateProfileInput input)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseOrganization();
@@ -31,7 +31,7 @@ namespace api.Mutations
                     verifier.Assert(OrganizationPermissions.CREATE_PROFILES)
             );
 
-            int ProfileId = profileService.Create(input);
+            int ProfileId = await profileService.Create(input);
 
             return ProfileId;
         }
@@ -39,13 +39,13 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("updateProfile")]
         [UseProfile]
-        public bool UpdateProfile(
+        public async Task<bool> UpdateProfile(
             [Service] IProfileService profileService, 
             [Service] IAuthorizationService authorizationService,
             [UseFluentValidation, UseValidator<UpdateProfileInputValidator>] UpdateProfileInput input,
             [Profile] Profile profile)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                 },
@@ -53,7 +53,7 @@ namespace api.Mutations
                     verifier.RequireEntityCorrespondence<Profile>(input.Id)
             );
 
-            profileService.Update(input);
+            await profileService.Update(input);
 
             return true;
         }
@@ -61,13 +61,13 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("deleteProfile")]
         [UseProfile]
-        public bool DeleteProfile(
+        public async Task<bool> DeleteProfile(
             [Service] IProfileService profileService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             int id)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseOrganization();
@@ -78,7 +78,7 @@ namespace api.Mutations
                 )
             );
 
-            profileService.Delete(id);
+            await profileService.Delete(id);
 
             return true;
         }

@@ -9,11 +9,11 @@ namespace api.Services
         public IQueryable<Organization> GetAll();
         public IQueryable<Organization> GetById(int id);
 
-        public int Create(CreateOrganizationInput input);
-        public void Update(UpdateOrganizationInput input);
-        public void Delete(int id);
+        public Task<int> Create(CreateOrganizationInput input);
+        public Task Update(UpdateOrganizationInput input);
+        public Task Delete(int id);
 
-        public void UpdateProfileOrganizationRelation(UpdateProfileOrganizationRelationInput input);
-        public bool CheckProfileInOrganization(int profileId, int organizationId);
+        public Task UpdateProfileOrganizationRelation(UpdateProfileOrganizationRelationInput input);
+        public Task<bool> CheckProfileInOrganization(int profileId, int organizationId);
     }
 }

@@ -39,63 +39,63 @@ namespace api.Services
             return _dbContext.Profiles.Where(p => p.KeycloakId == keycloakId);
         }
 
-        public int Create(CreateProfileInput input)
+        public async Task<int> Create(CreateProfileInput input)
         {
-            using (var transaction = _dbContext.Database.BeginTransaction())
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                try
+                Profile profile = _mapper.Map<Profile>(input);
+                Profile profileEntity = (await _dbContext.Profiles.AddAsync(profile)).Entity;
+                await _dbContext.SaveChangesAsync();
+
+                ProfileOrganizationRelation organizationRelation = new ProfileOrganizationRelation()
                 {
-                    Profile profile = _mapper.Map<Profile>(input);
-                    Profile profileEntity = _dbContext.Profiles.Add(profile).Entity;
-                    _dbContext.SaveChanges();
+                    ProfileId = profileEntity.Id,
+                    OrganizationId = input.OrganizationId,
+                    Permissions = "[\"view-private-information\"]"
+                };
+                await _dbContext.ProfileOrganizationRelations.AddAsync(organizationRelation);
+                await _dbContext.SaveChangesAsync();
 
-                    ProfileOrganizationRelation organizationRelation = new ProfileOrganizationRelation()
-                    {
-                        ProfileId = profileEntity.Id,
-                        OrganizationId = input.OrganizationId,
-                        Permissions = "[\"view-private-information\"]"
-                    };
-                    _dbContext.ProfileOrganizationRelations.Add(organizationRelation);
-                    _dbContext.SaveChanges();
+                await transaction.CommitAsync();
 
-                    transaction.Commit();
+                return profileEntity.Id;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
 
-                    return profileEntity.Id;
-                } catch (Exception ex)
-                {
-                    transaction.Rollback();
-
-                    throw;
-                }
+                throw;
             }
         }
 
    
-        public void Update(UpdateProfileInput input)
+        public async Task Update(UpdateProfileInput input)
         {
             Profile profile = _mapper.Map<Profile>(input);
-            Profile originalProfile = _dbContext.Profiles.FirstOrDefault(p => p.Id == input.Id);
+            Profile? originalProfile = await _dbContext.Profiles
+                .FirstOrDefaultAsync(p => p.Id == input.Id);
             if (originalProfile is null)
             {
                 throw new EntityNotFoundException(nameof(Profile));
             }
             ORMExtention.CopyNotNullProperties(profile, originalProfile);
 
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Profile? profile = _dbContext.Profiles
+            Profile? profile = await _dbContext.Profiles
                 .Include(p => p.OrganizationRelation)
                 .Include(p => p.GroupRelations)
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
             if (profile is null) {
                 throw new EntityNotFoundException(nameof(Profile));
             }
 
             _dbContext.Profiles.Remove(profile);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

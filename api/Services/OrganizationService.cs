@@ -35,39 +35,39 @@ namespace api.Services
             return _dbContext.Organizations.Where(o => o.Id == id);
         }
 
-        public int Create(CreateOrganizationInput input)
+        public async Task<int> Create(CreateOrganizationInput input)
         {
             Organization organization = _mapper.Map<Organization>(input);
-            Organization organizationEntity = _dbContext.Organizations.Add(organization).Entity;
-            _dbContext.SaveChanges();
+            Organization organizationEntity = (await _dbContext.Organizations
+                .AddAsync(organization)).Entity;
+            await _dbContext.SaveChangesAsync();
             
             return organizationEntity.Id;
         }
 
-        public void Update(UpdateOrganizationInput input)
+        public async Task Update(UpdateOrganizationInput input)
         {
             Organization organization = _mapper.Map<Organization>(input);
-            Organization? originalOrganization = _dbContext.Organizations
-                .FirstOrDefault(o => o.Id == input.Id);
+            Organization? originalOrganization = await _dbContext.Organizations
+                .FirstOrDefaultAsync(o => o.Id == input.Id);
             if (originalOrganization is null)
             {
                 throw new EntityNotFoundException(nameof(Organization));
             }
             ORMExtention.CopyNotNullProperties(organization, originalOrganization);
 
-
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Organization? organization = _dbContext.Organizations
+            Organization? organization = await _dbContext.Organizations
                 .Include(o => o.GroupRelations)
                     .ThenInclude(gor => gor.Group)
                 .Include(o => o.ProfileRelations)
                     .ThenInclude(por => por.Profile)
                         .ThenInclude(p => p.GroupRelations)
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if (organization is null)
             {
@@ -85,21 +85,22 @@ namespace api.Services
             _dbContext.Groups.RemoveRange(groups);
             _dbContext.Profiles.RemoveRange(profiles);
 
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public bool CheckProfileInOrganization(int profileId, int organizationId)
+        public async Task<bool> CheckProfileInOrganization(int profileId, int organizationId)
         {
-            return _dbContext.ProfileOrganizationRelations
-                .Any(por => por.ProfileId == profileId && por.OrganizationId == organizationId);
+            return await _dbContext.ProfileOrganizationRelations
+                .AnyAsync(por => por.ProfileId == profileId && 
+                    por.OrganizationId == organizationId);
         }
 
-        public void UpdateProfileOrganizationRelation(UpdateProfileOrganizationRelationInput input)
+        public async Task UpdateProfileOrganizationRelation(UpdateProfileOrganizationRelationInput input)
         {
             ProfileOrganizationRelation relation = _mapper.Map<ProfileOrganizationRelation>(input);
 
             _dbContext.Entry(relation).State = EntityState.Modified;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -19,14 +19,14 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("updateProfileOrganizationRelation")]
         [UseProfile]
-        public bool UpdateProfileOrganizationRelation(
+        public async Task<bool> UpdateProfileOrganizationRelation(
             [Service] IOrganizationService organizationService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<UpdateProfileOrganizationRelationInputValidator>]
                 UpdateProfileOrganizationRelationInput input)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseOrganization(input.OrganizationId);
@@ -36,25 +36,25 @@ namespace api.Mutations
                     verifier.Assert(OrganizationPermissions.UPDATE)
             );
 
-            organizationService.UpdateProfileOrganizationRelation(input);
+            await organizationService.UpdateProfileOrganizationRelation(input);
 
             return true;
         }
 
         [Authorize]
         [GraphQLName("createOrganization")]
-        public int CreateOrganization(
+        public async Task<int> CreateOrganization(
             [Service] IOrganizationService organizationService, 
             [Service] IAuthorizationService authorizationService,
             [UseFluentValidation, UseValidator<CreateOrganizationInputValidator>] 
                 CreateOrganizationInput input)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {},
                 verifier => verifier.Assert(KeycloakPermissions.ADMIN)
             );
 
-            int organizationId = organizationService.Create(input);
+            int organizationId = await organizationService.Create(input);
 
             return organizationId;
         }
@@ -62,14 +62,14 @@ namespace api.Mutations
         [Authorize]
         [GraphQLName("updateOrganization")]
         [UseProfile]
-        public bool UpdateOrganization(
+        public async Task<bool> UpdateOrganization(
             [Service] IOrganizationService organizationService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             [UseFluentValidation, UseValidator<UpdateOrganizationInputValidator>] 
                 UpdateOrganizationInput input)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseOrganization(input.Id);
@@ -78,23 +78,23 @@ namespace api.Mutations
                     verifier.Assert(OrganizationPermissions.UPDATE)
             );
 
-            organizationService.Update(input);
+            await organizationService.Update(input);
 
             return true;
         }
 
         [Authorize]
         [GraphQLName("deleteOrganization")]
-        public bool DeleteOrganization(
+        public async Task<bool> DeleteOrganization(
             [Service] IOrganizationService organizationService, 
             [Service] IAuthorizationService authorizationService,
             int id)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {},
                 verifier => verifier.Assert(KeycloakPermissions.ADMIN)
             );
-            organizationService.Delete(id);
+            await organizationService.Delete(id);
 
             return true;
         }

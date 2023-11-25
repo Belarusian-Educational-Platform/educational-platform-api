@@ -35,12 +35,11 @@ namespace api.Services
             return _dbContext.Groups.Where(g => g.OrganizationRelation.OrganizationId == organizationId);
         }
 
-        public IQueryable<Group> GetByProfileOrganization(int profileId)
+        public async Task<IQueryable<Group>> GetByProfileOrganization(int profileId)
         {
-            var organizationId = _dbContext.ProfileOrganizationRelations
-                .FirstOrDefault(por => por.ProfileId == profileId)!
-                .OrganizationId;
-            return GetByOrganization(organizationId);
+            var organization = await _dbContext.ProfileOrganizationRelations
+                .FirstOrDefaultAsync(por => por.ProfileId == profileId);
+            return GetByOrganization(organization!.OrganizationId);
         }
 
         public IQueryable<Group> GetById(int id)
@@ -48,101 +47,93 @@ namespace api.Services
             return _dbContext.Groups.Where(g => g.Id == id);
         }
 
-        public int Create(CreateGroupInput input)
+        public async Task<int> Create(CreateGroupInput input)
         {
-            using (var transaction = _dbContext.Database.BeginTransaction())
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                try
-                {
-                    Group group = _mapper.Map<Group>(input);
-                    Group groupEntity = _dbContext.Groups.Add(group).Entity;
-                    _dbContext.SaveChanges();
+                Group group = _mapper.Map<Group>(input);
+                Group groupEntity = (await _dbContext.Groups.AddAsync(group)).Entity;
+                await _dbContext.SaveChangesAsync();
 
-                    GroupOrganizationRelation organizationRelation =
-                        new()
-                        {
-                            GroupId = groupEntity.Id,
-                            OrganizationId = input.OrganizationId
-                        };
-                    _dbContext.GroupOrganizationRelations.Add(organizationRelation);
-                    _dbContext.SaveChanges();
+                GroupOrganizationRelation organizationRelation =
+                    new()
+                    {
+                        GroupId = groupEntity.Id,
+                        OrganizationId = input.OrganizationId
+                    };
+                await _dbContext.GroupOrganizationRelations.AddAsync(organizationRelation);
+                await _dbContext.SaveChangesAsync();
 
-                    transaction.Commit();
+                await transaction.CommitAsync();
 
-                    return groupEntity.Id;
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
+                return groupEntity.Id;
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
 
-                    throw;
-                }
+                throw;
             }
         }
 
-        public void Update(UpdateGroupInput input)
+        public async Task Update(UpdateGroupInput input)
         {
             Group group = _mapper.Map<Group>(input);
-            Group? originalGroup = _dbContext.Groups.FirstOrDefault(g => g.Id == input.Id);
+            Group? originalGroup = await _dbContext.Groups
+                .FirstOrDefaultAsync(g => g.Id == input.Id);
+
             if (originalGroup is null)
             {
                 throw new EntityNotFoundException(nameof(Group));
             }
+
             ORMExtention.CopyNotNullProperties(group, originalGroup);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Group? group = _dbContext.Groups
+            Group? group = await _dbContext.Groups
                 .Include(g => g.ProfileRelations)
                 .Include(g => g.OrganizationRelation)
-                .FirstOrDefault(g => g.Id == id);
+                .FirstOrDefaultAsync(g => g.Id == id);
             if (group is null)
             {
                 throw new EntityNotFoundException(nameof(Group));
             }
 
             _dbContext.Groups.Remove(group);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public bool CheckOrganizationCorrespondence(int profileId, int groupId)
-        {
-            return _dbContext.Organizations
-                .Include(o => o.ProfileRelations)
-                .Include(o => o.GroupRelations)
-                .Any(o => o.ProfileRelations.Any(por => por.ProfileId == profileId) &&
-                    o.GroupRelations.Any(gor => gor.GroupId == groupId));
-        }
-
-        public void CreateProfileGroupRelation(CreateProfileGroupRelationInput input)
+        public async Task CreateProfileGroupRelation(CreateProfileGroupRelationInput input)
         {
             ProfileGroupRelation relation = _mapper.Map<ProfileGroupRelation>(input);
 
-            _dbContext.ProfileGroupRelations.Add(relation);
-            _dbContext.SaveChanges(true);
+            await _dbContext.ProfileGroupRelations.AddAsync(relation);
+            await _dbContext.SaveChangesAsync(true);
         }
 
-        public void DeleteProfileGroupRelation(int profileId, int groupId)
+        public async Task DeleteProfileGroupRelation(int profileId, int groupId)
         {
-            ProfileGroupRelation? relation = _dbContext.ProfileGroupRelations
-                .FirstOrDefault(pgr => pgr.ProfileId == profileId && pgr.GroupId == groupId);
+            ProfileGroupRelation? relation = await _dbContext.ProfileGroupRelations
+                .FirstOrDefaultAsync(pgr => pgr.ProfileId == profileId && pgr.GroupId == groupId);
             if (relation is null)
             {
                 throw new EntityNotFoundException(nameof(ProfileGroupRelation));
             }
 
             _dbContext.ProfileGroupRelations.Remove(relation);
-            _dbContext.SaveChanges(true);
+            await _dbContext.SaveChangesAsync(true);
         }
 
-        public void UpdateProfileGroupRelation(UpdateProfileGroupRelationInput input)
+        public async Task UpdateProfileGroupRelation(UpdateProfileGroupRelationInput input)
         {
             ProfileGroupRelation relation = _mapper.Map<ProfileGroupRelation>(input);
 
             _dbContext.Entry(relation).State = EntityState.Modified;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

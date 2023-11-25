@@ -2,6 +2,7 @@
 using api.Services;
 using api.Types;
 using HotChocolate.Resolvers;
+using Microsoft.EntityFrameworkCore;
 using ProfileAuthorization;
 using System.Security.Claims;
 
@@ -33,15 +34,15 @@ namespace api.Middlewares.UseProfile
 
 
                     // TODO : RETURN DEFAULT?
-                    Profile? profile = profileService.GetByAccount(keycloakId).FirstOrDefault();
+                    Profile? profile = await profileService.GetByAccount(keycloakId)
+                        .FirstOrDefaultAsync();
                     profile ??= new() {
                         Id = VerificationOptions.DEFAULT_PROFILE_ID
                     };
 
                     context.ContextData.TryAdd(PROFILE_CONTEXT_DATA_KEY, profile);
                 }
-            } else
-            {
+            } else {
                 throw new UnauthorizedAccessException();
             }
 

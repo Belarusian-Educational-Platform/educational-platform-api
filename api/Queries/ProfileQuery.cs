@@ -17,10 +17,10 @@ namespace api.Queries
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Profile> GetProfiles([Service] IProfileService profileService,
+        public async Task<IQueryable<Profile>> GetProfiles([Service] IProfileService profileService,
             [Service] IAuthorizationService authorizationService)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {},
                 verifier => verifier.Assert(KeycloakPermissions.ADMIN)
             );
@@ -32,12 +32,12 @@ namespace api.Queries
         [UseProjection]
         [GraphQLName("profileById")]
         [UseProfile]
-        public IQueryable<Profile> GetProfile([Service] IProfileService profileService,
+        public async Task<IQueryable<Profile>> GetProfile([Service] IProfileService profileService,
             [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile,
             int id)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseOrganization();

@@ -3,6 +3,7 @@ using api.Models;
 using api.Models.Base;
 using api.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace ProfileAuthorization
 {
@@ -92,9 +93,9 @@ namespace ProfileAuthorization
             return false;
         }
 
-        public void UseOptions(VerificationOptions options)
+        public async Task UseOptions(VerificationOptions options)
         {
-            _permissions = _permissionService.GetProfilePermissions(options);
+            _permissions = await _permissionService.GetProfilePermissions(options);
             _options = options;
         }
     }

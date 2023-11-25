@@ -2,6 +2,6 @@
 {
     public interface IPermissionService
     {
-        PermissionSet GetProfilePermissions(VerificationOptions verificationOptions);
+        Task<PermissionSet> GetProfilePermissions(VerificationOptions verificationOptions);
     }
 }

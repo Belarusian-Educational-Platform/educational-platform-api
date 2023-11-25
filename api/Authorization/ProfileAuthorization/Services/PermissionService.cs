@@ -29,15 +29,15 @@ namespace ProfileAuthorization
             return roles.Select(r => new Permission(PermissionLevel.KEYCLOAK_ROLE, r.Value)).ToArray();
         }
 
-        public PermissionSet GetProfilePermissions(VerificationOptions options)
+        public async Task<PermissionSet> GetProfilePermissions(VerificationOptions options)
         {
             PermissionSet permissionSet = new();
             string rawPermissions;
             
-            var profile = _dbContext.Profiles
+            var profile = await _dbContext.Profiles
                     .Include(p => p.OrganizationRelation)
                     .Include(p => p.GroupRelations)
-                    .FirstOrDefault(p => p.Id == options.ProfileId);
+                    .FirstOrDefaultAsync(p => p.Id == options.ProfileId);
 
             if (options.OrganizationId == VerificationOptions.DEFAULT_ORGANIZATION_ID && profile is not null) {
                 options.OrganizationId = profile.OrganizationRelation.OrganizationId;

@@ -11,13 +11,13 @@ namespace ProfileAuthorization
             _verificationService = verificationService;
         }
 
-        public void Authorize(Action<VerificationOptions> configure, 
+        public async Task Authorize(Action<VerificationOptions> configure, 
             Predicate<IVerificationService> verify)
         {
             var verificationOptions = new VerificationOptions();
             configure(verificationOptions);
 
-            _verificationService.UseOptions(verificationOptions);
+            await _verificationService.UseOptions(verificationOptions);
 
             if(!verify(_verificationService))
             {

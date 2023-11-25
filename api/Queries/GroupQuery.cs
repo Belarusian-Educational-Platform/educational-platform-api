@@ -17,11 +17,11 @@ namespace api.Queries
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Group> GetGroups([Service] IGroupService groupService, 
+        public async Task<IQueryable<Group>> GetGroups([Service] IGroupService groupService,
             [Service] IAuthorizationService authorizationService)
         {
-            authorizationService.Authorize(
-                options => {},
+            await authorizationService.Authorize(
+                options => { },
                 verifier => verifier.Assert(KeycloakPermissions.ADMIN)
             );
 
@@ -32,12 +32,12 @@ namespace api.Queries
         [GraphQLName("groupById")]
         [UseProjection]
         [UseProfile]
-        public IQueryable<Group> GetGroup([Service] IGroupService groupService,
+        public async Task<IQueryable<Group>> GetGroup([Service] IGroupService groupService,
             [Service] IAuthorizationService authorizationService, 
             [Profile] Profile profile,
             int id)
         {
-            authorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseGroup(id);
@@ -58,11 +58,11 @@ namespace api.Queries
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Group> GetGroups([Service] IGroupService groupService,
-            [Service] IAuthorizationService profileAuthorizationService,
+        public async Task<IQueryable<Group>> GetGroups([Service] IGroupService groupService,
+            [Service] IAuthorizationService authorizationService,
             [Profile] Profile profile)
         {
-            profileAuthorizationService.Authorize(
+            await authorizationService.Authorize(
                 options => {
                     options.UseProfile(profile.Id);
                     options.UseOrganization();
@@ -70,7 +70,7 @@ namespace api.Queries
                 verifier => verifier.Assert(OrganizationPermissions.VIEW_PRIVATE_INFORMATION)
             );
             
-            return groupService.GetByProfileOrganization(profile.Id);
+            return await groupService.GetByProfileOrganization(profile.Id);
         }
     }
 }
