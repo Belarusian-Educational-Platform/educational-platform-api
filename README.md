@@ -1,5 +1,6 @@
-<h1 align='center'>educational-platform-api</h1>
 
+<h1 align='center'>educational-platform-api</h1>
+A GraphQL API that implements queries for CRUD operations for users, groups and organizations. It uses the keycloak server for authentication. Designed as a core for the educational platform development in future.
 <h2 align='center'>Configuring</h2>
 
 appsetting.json
